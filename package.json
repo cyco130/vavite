@@ -16,8 +16,6 @@
 		"watch:browser-runner": "tsup src/browser-runner.ts --platform=neutral --target=es2020 --format esm --watch src",
 		"prepack": "pnpm build"
 	},
-	"author": "Fatih Aygün <cyco130@gmail.com>",
-	"license": "MIT",
 	"dependencies": {
 		"fast-glob": "^3.2.7",
 		"kleur": "^4.1.4",
@@ -32,5 +30,8 @@
 		"npm-run-all": "^4.1.5",
 		"tsup": "^5.10.1",
 		"typescript": "^4.5.2"
-	}
+	},
+	"license": "MIT",
+	"repository": "https://github.com/cyco130/vavite.git",
+	"author": "Fatih Aygün <cyco130@gmail.com>"
 }
