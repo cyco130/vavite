@@ -1,0 +1,27 @@
+{
+	"name": "vavite",
+	"version": "0.1.0",
+	"description": "Vite powered test runner",
+	"main": "dist/lib.js",
+	"types": "dist/lib.d.ts",
+	"bin": "cli.cjs",
+	"scripts": {
+		"build": "rm -rf dist && pnpm build:cli && pnpm build:lib",
+		"build:cli": "tsup src/cli.ts src/worker.ts",
+		"build:lib": "tsup src/lib.ts --dts --platform=neutral --target=es2020",
+		"prepack": "pnpm build"
+	},
+	"author": "Fatih Aygün <cyco130@gmail.com>",
+	"license": "MIT",
+	"dependencies": {
+		"fast-glob": "^3.2.7",
+		"kleur": "^4.1.4",
+		"uvu": "^0.5.2",
+		"vite": "^2.7.0-beta.11"
+	},
+	"devDependencies": {
+		"@types/node": "^16.11.11",
+		"tsup": "^5.10.1",
+		"typescript": "^4.5.2"
+	}
+}

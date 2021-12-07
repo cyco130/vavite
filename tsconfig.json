@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"lib": ["ES2020", "DOM"],
+		"module": "ES2020",
+		"esModuleInterop": true,
+		"isolatedModules": true,
+		"jsx": "react",
+		"target": "es6",
+		"moduleResolution": "node",
+		"types": ["node"],
+		"skipLibCheck": true
+	},
+	"include": ["src/**/*.ts"]
+}
