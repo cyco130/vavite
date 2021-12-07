@@ -2,6 +2,7 @@
 	"compilerOptions": {
 		"strict": true,
 		"lib": ["ES2020", "DOM"],
+		"resolveJsonModule": true,
 		"module": "ES2020",
 		"esModuleInterop": true,
 		"isolatedModules": true,

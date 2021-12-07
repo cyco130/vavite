@@ -2,13 +2,18 @@
 	"name": "vavite",
 	"version": "0.1.0",
 	"description": "Vite powered test runner",
-	"main": "dist/lib.js",
+	"module": "dist/lib.mjs",
 	"types": "dist/lib.d.ts",
 	"bin": "cli.cjs",
 	"scripts": {
-		"build": "rm -rf dist && pnpm build:cli && pnpm build:lib",
-		"build:cli": "tsup src/cli.ts src/worker.ts",
-		"build:lib": "tsup src/lib.ts --dts --platform=neutral --target=es2020",
+		"watch": "rm -rf dist && run-p watch:*",
+		"build": "rm -rf dist && run-p build:*",
+		"build:cli": "tsup src/cli.ts src/worker.ts --splitting",
+		"build:lib": "tsup src/lib.ts --dts --platform=neutral --target=es2020 --format esm",
+		"build:browser-runner": "tsup src/browser-runner.ts --platform=neutral --target=es2020 --format esm",
+		"watch:cli": "tsup src/cli.ts src/worker.ts --splitting --watch src",
+		"watch:lib": "tsup src/lib.ts --dts --platform=neutral --target=es2020 --format esm --watch src",
+		"watch:browser-runner": "tsup src/browser-runner.ts --platform=neutral --target=es2020 --format esm --watch src",
 		"prepack": "pnpm build"
 	},
 	"author": "Fatih Aygün <cyco130@gmail.com>",
@@ -16,11 +21,15 @@
 	"dependencies": {
 		"fast-glob": "^3.2.7",
 		"kleur": "^4.1.4",
+		"puppeteer-core": "^12.0.1",
 		"uvu": "^0.5.2",
-		"vite": "^2.7.0-beta.11"
+		"vite": "^2.7.0-beta.11",
+		"which": "^2.0.2"
 	},
 	"devDependencies": {
 		"@types/node": "^16.11.11",
+		"@types/which": "^2.0.1",
+		"npm-run-all": "^4.1.5",
 		"tsup": "^5.10.1",
 		"typescript": "^4.5.2"
 	}

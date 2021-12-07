@@ -1,4 +1,4 @@
-import { parentPort, threadId } from "worker_threads";
+import { parentPort } from "worker_threads";
 import { createServer } from "vite";
 
 if (!parentPort) {
@@ -8,7 +8,7 @@ if (!parentPort) {
 async function main() {
 	const server = await createServer({
 		server: { hmr: false, middlewareMode: true },
-		optimizeDeps: { include: [] },
+		optimizeDeps: { include: ["vavite"] },
 	});
 
 	parentPort!.postMessage("ready");

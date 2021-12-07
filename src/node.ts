@@ -1,14 +1,10 @@
 import path from "path";
 import { Worker } from "worker_threads";
-import glob from "fast-glob";
 import { red, green, white } from "kleur/colors";
 import { underline } from "kleur";
 import { cpus } from "os";
 
-async function main() {
-	const fileSpecs = process.argv.slice(2);
-	const files = await glob(fileSpecs);
-
+export async function main(files: string[]) {
 	if (!files.length) {
 		console.error("No tests found");
 		process.exit(1);
@@ -18,9 +14,16 @@ async function main() {
 	let failed = false;
 	let workerCount = Math.min(files.length, cpus().length);
 
+	const isTty = process.stdout.isTTY;
+
 	Array(workerCount)
 		.fill(0)
-		.map(() => new Worker(path.resolve(__dirname, "./worker.js")))
+		.map(
+			() =>
+				new Worker(path.resolve(__dirname, "./worker.js"), {
+					env: { FORCE_COLOR: isTty ? "1" : undefined },
+				}),
+		)
 		.map((worker) => {
 			worker.on("message", (msg: any) => {
 				if (msg === "ready") {
@@ -62,8 +65,3 @@ async function main() {
 			});
 		});
 }
-
-main().catch((err) => {
-	console.error(err);
-	process.exit(1);
-});
