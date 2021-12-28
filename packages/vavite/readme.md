@@ -46,8 +46,7 @@ export interface IncomingRequest {
   /** HTTP method */
   method: string;
   /** Request headers */
-  headers: Record<string, string | 
-  >;
+  headers: Record<string, string | undefined>;
   /** Request body */
   body: RequestBody;
 }
