@@ -1,5 +1,5 @@
 import { getAssetFromKV, NotFoundError } from "@cloudflare/kv-asset-handler";
-import handler from "vavite/handler";
+import handler from "@vavite/handler";
 
 addEventListener("fetch", async (event: FetchEvent) => {
 	event.respondWith(generateResponse(event));

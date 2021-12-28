@@ -1,4 +1,4 @@
-import userHandler from "vavite/handler";
+import userHandler from "@vavite/handler";
 
 import type { IncomingMessage, ServerResponse } from "http";
 import type { IncomingRequest, OutgoingResponse, RawResponse } from "vavite";

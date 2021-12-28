@@ -4,7 +4,7 @@ import { parseRequest } from "./node-helpers";
 import { OutgoingResponse, RawResponse } from ".";
 
 // @ts-ignore
-import handler from "vavite/handler";
+import handler from "@vavite/handler";
 
 export interface VaviteMiddlewareOptions {
 	trustProxy?: boolean;

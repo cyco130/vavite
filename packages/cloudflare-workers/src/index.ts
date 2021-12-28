@@ -38,6 +38,7 @@ export default function vaviteCloudflareWorkers(): Plugin {
 
 				ssr: {
 					target: "webworker",
+					noExternal: ["@vavite/cloudflare-workers"],
 				},
 
 				resolve: {

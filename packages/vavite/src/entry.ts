@@ -1,12 +1,16 @@
 import { createServer, ServerResponse } from "http";
 import sirv from "sirv";
 import { createMiddleware } from "./middleware";
+import path from "path";
 
 const trustProxy = process.env.TRUST_PROXY === "1" || false;
 const HOST = process.env.HOST || "localhost";
 const PORT = Number(process.env.PORT) || 3000;
 
-const fileServer = sirv("dist/client", { etag: true, maxAge: 0 });
+const fileServer = sirv(path.resolve(__dirname, "../client"), {
+	etag: true,
+	maxAge: 0,
+});
 
 const middleware = createMiddleware({
 	trustProxy,

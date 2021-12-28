@@ -26,7 +26,9 @@ export default function vavite({
 			async resolveId(id, importer, options) {
 				if (id === "index.js") {
 					const resolved = await this.resolve(
-						serverEntry || resolvedConfig.vavite?.serverEntry || "vavite/entry",
+						serverEntry ||
+							resolvedConfig.vavite?.serverEntry ||
+							path.resolve(__dirname, "entry.js"),
 						importer,
 						{
 							...options,
@@ -64,7 +66,7 @@ export default function vavite({
 						importer,
 						options,
 					);
-				} else if (id === "vavite/handler") {
+				} else if (id === "@vavite/handler") {
 					return this.resolve(handlerPath);
 				}
 			},
@@ -88,10 +90,11 @@ export default function vavite({
 
 				const ssr = {
 					noExternal: [
-						"vavite/handler",
+						"@vavite/handler",
 						"@vavite/manifest",
 						"@vavite/ssr-manifest",
 						"@vavite/html",
+						"vavite",
 					],
 				};
 

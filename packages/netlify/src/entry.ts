@@ -1,4 +1,4 @@
-import userHandler from "vavite/handler";
+import userHandler from "@vavite/handler";
 import type { NetlifyFunction } from "netlify-lambda-types";
 
 export const handler: NetlifyFunction = async (event) => {

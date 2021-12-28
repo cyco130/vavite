@@ -1,6 +1,6 @@
 {
 	"name": "vavite",
-	"version": "1.0.0-beta.2",
+	"version": "1.0.0-beta.3",
 	"type": "module",
 	"module": "./dist/index.js",
 	"files": [

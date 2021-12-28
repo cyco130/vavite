@@ -35,6 +35,10 @@ export default function vaviteVercel(): Plugin {
 					serverOutDir,
 				},
 
+				ssr: {
+					noExternal: ["@vavite/vercel"],
+				},
+
 				build: {
 					outDir: cfg.build?.ssr ? serverOutDir : clientOutDir,
 				},

@@ -35,6 +35,10 @@ export default function vaviteNetlify(): Plugin {
 					serverOutDir,
 				},
 
+				ssr: {
+					noExternal: ["@vavite/netlify"],
+				},
+
 				build: {
 					outDir: cfg.build?.ssr ? serverOutDir : clientOutDir,
 				},

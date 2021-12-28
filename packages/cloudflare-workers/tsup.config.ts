@@ -13,5 +13,6 @@ export default defineConfig([
 		format: ["esm"],
 		platform: "browser",
 		target: "es2020",
+		external: ["@vavite/handler"],
 	},
 ]);
