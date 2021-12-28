@@ -97,7 +97,7 @@ export type ResponseBody =
 
 The response can also be in the form of `{ raw: ... }`. If it is, it will be passed as a raw response to the environment adapter.
 
-Your handler can also return `undefined` or a promise that resolves to `undefined` to signal that it didn't handle the request. If your using a middleware adapter, it will pass the request to the next middleware; otherwise a generic 404 response will be returned.
+Your handler can also return `undefined` or a promise that resolves to `undefined` to signal that it didn't handle the request. If you're using a middleware adapter, it will pass the request to the next middleware; otherwise a generic 404 response will be returned.
 
 ## Raw request and response for built-in adapters
 
