@@ -1,5 +1,5 @@
-import type { RequestHandler, ResponseBody, IncomingRequest } from "vavite";
-import manifest from "vavite/manifest";
+import { RequestHandler, IncomingRequest, ResponseBody } from "vavite";
+import manifest from "@vavite/manifest";
 
 export type RenderResult =
 	| { raw: ResponseBody }

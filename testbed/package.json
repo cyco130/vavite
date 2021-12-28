@@ -6,6 +6,7 @@
 		"start": "node dist/server",
 		"dev": "vite dev",
 		"build": "vite build",
+		"typecheck": "tsc -p tsconfig.json --noEmit",
 		"prepack": "pnpm build"
 	},
 	"files": [

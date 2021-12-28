@@ -1,6 +1,6 @@
 {
 	"name": "vavite",
-	"version": "1.0.0-beta.0",
+	"version": "1.0.0-beta.2",
 	"type": "module",
 	"module": "./dist/index.js",
 	"files": [
@@ -37,6 +37,7 @@
 	"scripts": {
 		"build": "tsup",
 		"dev": "tsup --watch",
+		"typecheck": "tsc -p tsconfig.json --noEmit",
 		"prepack": "rm -rf dist && pnpm build"
 	},
 	"peerDependencies": {

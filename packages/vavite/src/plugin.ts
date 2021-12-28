@@ -37,7 +37,7 @@ export default function vavite({
 					if (resolved) serverEntryPath = resolved.id;
 
 					return resolved;
-				} else if (id === "vavite/manifest") {
+				} else if (id === "@vavite/manifest") {
 					if (resolvedConfig.command === "serve") return id;
 
 					return this.resolve(
@@ -45,7 +45,7 @@ export default function vavite({
 						importer,
 						options,
 					);
-				} else if (id === "vavite/ssr-manifest") {
+				} else if (id === "@vavite/ssr-manifest") {
 					if (resolvedConfig.command === "serve") return id;
 
 					return this.resolve(
@@ -53,7 +53,7 @@ export default function vavite({
 						importer,
 						options,
 					);
-				} else if (id === "vavite/html") {
+				} else if (id === "@vavite/html") {
 					return this.resolve(
 						path.join(
 							resolvedConfig.command === "serve"
@@ -70,9 +70,9 @@ export default function vavite({
 			},
 
 			load(id) {
-				if (id === "vavite/manifest") {
+				if (id === "@vavite/manifest") {
 					return MANIFEST_STUB;
-				} else if (id === "vavite/ssr-manifest") {
+				} else if (id === "@vavite/ssr-manifest") {
 					return SSR_MANIFEST_STUB;
 				}
 			},
@@ -86,13 +86,20 @@ export default function vavite({
 					serverOutDir: path.join(outDir || "dist", "server"),
 				};
 
+				const ssr = {
+					noExternal: [
+						"vavite/handler",
+						"@vavite/manifest",
+						"@vavite/ssr-manifest",
+						"@vavite/html",
+					],
+				};
+
 				if (config.build?.ssr) {
 					return {
 						vavite,
 						publicDir: false,
-						ssr: {
-							noExternal: ["vavite/handler", "vavite/manifest"],
-						},
+						ssr,
 						build: {
 							outDir: vavite.serverOutDir,
 						},
@@ -100,6 +107,7 @@ export default function vavite({
 				} else {
 					return {
 						vavite,
+						ssr,
 						build: {
 							manifest: true,
 							ssrManifest: true,

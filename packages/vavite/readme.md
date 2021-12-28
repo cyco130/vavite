@@ -25,9 +25,9 @@ If you're using an adapter, the dev server works the same way while the build wi
 
 ## Accessing client build artifacts
 
-Your server-side code can access the manifests from the client build by importing them via `vavite/manifest` and `vavite/ssr-manifest`. In dev mode, the SSR manifest will be an empty object while the client manifest will be a special proxy object that maps each file to itself.
+Your server-side code can access the manifests from the client build by importing them via `@vavite/manifest` and `@vavite/ssr-manifest`. In dev mode, the SSR manifest will be an empty object while the client manifest will be a special proxy object that maps each file to itself.
 
-You can also access the content of `index.html` (if it exists) in its processed form by importing `vavite/html`. In dev, it will return the unprocessed `index.html`: vavite will call `transformIndexHtml` for you if your response's content type is `text/html`.
+You can also access the content of `index.html` (if it exists) in its processed form by importing `@vavite/html`. In dev, it will return the unprocessed `index.html`: vavite will call `transformIndexHtml` for you if your response's content type is `text/html`.
 
 When authoring an adapter or a custom entry, user's handler module is accessible via `vavite/handler`.
 
@@ -105,16 +105,16 @@ The built-in adapters pass `{ req: http.IncomingRequest, res: ServerResponse }` 
 
 ## Package exports
 
-| Entry                 | Description                                          |
-| --------------------- | ---------------------------------------------------- |
-| `vavite`              | Vite plugin and types                                |
-| `vavite/entry`        | Entry point for Node HTTP server with `sirv` bundled |
-| `vavite/no-sirv`      | Entry point for Node HTTP server without `sirv`      |
-| `vavite/middleware`   | Entry point for connect-like middleware (no `sirv`)  |
-| `vavite/handler`      | Resolves to the user's handler entry                 |
-| `vavite/manifest`     | Vite manifest                                        |
-| `vavite/ssr-manifest` | Vite SSR manifest                                    |
-| `vavite/html`         | Contents of `index.html`                             |
+| Entry                  | Description                                          |
+| ---------------------- | ---------------------------------------------------- |
+| `vavite`               | Vite plugin and types                                |
+| `vavite/entry`         | Entry point for Node HTTP server with `sirv` bundled |
+| `vavite/no-sirv`       | Entry point for Node HTTP server without `sirv`      |
+| `vavite/middleware`    | Entry point for connect-like middleware (no `sirv`)  |
+| `vavite/handler`       | Resolves to the user's handler entry                 |
+| `@vavite/manifest`     | Vite manifest                                        |
+| `@vavite/ssr-manifest` | Vite SSR manifest                                    |
+| `@vavite/html`         | Contents of `index.html`                             |
 
 ## Adapter authoring check-list
 
