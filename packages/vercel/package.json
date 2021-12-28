@@ -1,0 +1,40 @@
+{
+	"name": "@vavite/vercel",
+	"version": "1.0.0-beta.0",
+	"type": "module",
+	"module": "./dist/index.js",
+	"files": [
+		"dist",
+		"*.d.ts"
+	],
+	"main": "./dist/index.cjs",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		},
+		"./entry": "./dist/entry.js"
+	},
+	"description": "Vercel adapter for vavite",
+	"author": "Fatih Aygün <cyco130@gmail.com>",
+	"repository": "https://github.com/cyco130/vavite",
+	"license": "MIT",
+	"scripts": {
+		"build": "tsup",
+		"dev": "tsup --watch",
+		"prepack": "rm -rf dist && pnpm build"
+	},
+	"peerDependencies": {
+		"vavite": "workspace:*",
+		"vite": "^2.7.6"
+	},
+	"devDependencies": {
+		"tsup": "^5.11.9",
+		"typescript": "^4.5.4",
+		"vavite": "workspace:*",
+		"vite": "^2.7.6"
+	},
+	"dependencies": {
+		"esbuild": "^0.14.8"
+	}
+}

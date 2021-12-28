@@ -1,0 +1,3 @@
+[build]
+command = "DEPLOY_TARGET=netlify npx vite build"
+publish = "netlify/static"

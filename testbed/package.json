@@ -1,0 +1,31 @@
+{
+	"name": "vavite-kitchen-sink",
+	"private": true,
+	"version": "0.0.0",
+	"scripts": {
+		"start": "node dist/server",
+		"dev": "vite dev",
+		"build": "vite build",
+		"prepack": "pnpm build"
+	},
+	"files": [
+		"dist"
+	],
+	"devDependencies": {
+		"@types/node-fetch": "^2.5.12",
+		"@vavite/cloudflare-workers": "workspace:*",
+		"@vavite/netlify": "workspace:*",
+		"@vavite/vercel": "workspace:*",
+		"node-fetch": "^2.6.6",
+		"typescript": "^4.5.4",
+		"vavite": "workspace:*",
+		"vite": "^2.7.6",
+		"vitest": "^0.0.115"
+	},
+	"dependencies": {
+		"@types/react": "^17.0.38",
+		"@types/react-dom": "^17.0.11",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2"
+	}
+}
