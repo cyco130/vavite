@@ -29,7 +29,7 @@ Your server-side code can access the manifests from the client build by importin
 
 You can also access the content of `index.html` (if it exists) in its processed form by importing `@vavite/html`. In dev, it will return the unprocessed `index.html`: vavite will call `transformIndexHtml` for you if your response's content type is `text/html`.
 
-When authoring an adapter or a custom entry, user's handler module is accessible via `vavite/handler`.
+When authoring an adapter or a custom entry, user's handler module is accessible via `@vavite/handler`.
 
 ## Request and response formats
 
@@ -111,7 +111,7 @@ The built-in adapters pass `{ req: http.IncomingRequest, res: ServerResponse }` 
 | `vavite/entry`         | Entry point for Node HTTP server with `sirv` bundled |
 | `vavite/no-sirv`       | Entry point for Node HTTP server without `sirv`      |
 | `vavite/middleware`    | Entry point for connect-like middleware (no `sirv`)  |
-| `vavite/handler`       | Resolves to the user's handler entry                 |
+| `@vavite/handler`      | Resolves to the user's handler entry                 |
 | `@vavite/manifest`     | Vite manifest                                        |
 | `@vavite/ssr-manifest` | Vite SSR manifest                                    |
 | `@vavite/html`         | Contents of `index.html`                             |

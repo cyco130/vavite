@@ -25,7 +25,6 @@
 			"import": "./dist/entry.js",
 			"require": "./dist/entry.cjs"
 		},
-		"./handler": "./dist/stub.cjs",
 		"./manifest": "./dist/stub.cjs",
 		"./ssr-manifest": "./dist/stub.cjs",
 		"./html": "./dist/stub.cjs"
