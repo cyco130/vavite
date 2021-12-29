@@ -43,7 +43,7 @@ export default function vavite({
 					if (resolvedConfig.command === "serve") return id;
 
 					return this.resolve(
-						path.join("/", resolvedConfig.vavite.clientOutDir, "manifest.json"),
+						path.join(resolvedConfig.vavite.clientOutDir, "manifest.json"),
 						importer,
 						options,
 					);
