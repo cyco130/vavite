@@ -36,17 +36,19 @@
 	"scripts": {
 		"build": "tsup",
 		"dev": "tsup --watch",
-		"typecheck": "tsc -p tsconfig.json --noEmit",
-		"prepack": "rm -rf dist && pnpm build"
+		"prepack": "rm -rf dist && pnpm build",
+		"typecheck": "tsc -p tsconfig.json --noEmit"
 	},
 	"peerDependencies": {
 		"vite": "^2.7.6"
 	},
 	"devDependencies": {
-		"@types/node": "^17.0.4",
-		"tsup": "^5.11.9",
-		"typescript": "^4.5.4",
-		"sirv": "^1.0.19",
-		"vite": "^2.7.6"
+		"@cyco130/eslint-config": "^1.0.0",
+		"@types/node": "^17.0.10",
+		"eslint": "^8.7.0",
+		"sirv": "^2.0.2",
+		"tsup": "^5.11.11",
+		"typescript": "^4.5.5",
+		"vite": "^2.7.13"
 	}
 }

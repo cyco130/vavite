@@ -22,20 +22,20 @@
 	"scripts": {
 		"build": "tsup",
 		"dev": "tsup --watch",
-		"typecheck": "tsc -p tsconfig.json --noEmit",
-		"prepack": "rm -rf dist && pnpm build"
+		"prepack": "rm -rf dist && pnpm build",
+		"typecheck": "tsc -p tsconfig.json --noEmit"
 	},
 	"peerDependencies": {
 		"vavite": "workspace:*",
 		"vite": "^2.7.6"
 	},
 	"devDependencies": {
-		"tsup": "^5.11.9",
-		"typescript": "^4.5.4",
+		"tsup": "^5.11.11",
+		"typescript": "^4.5.5",
 		"vavite": "workspace:*",
-		"vite": "^2.7.6"
+		"vite": "^2.7.13"
 	},
 	"dependencies": {
-		"esbuild": "^0.14.8"
+		"esbuild": "^0.14.12"
 	}
 }

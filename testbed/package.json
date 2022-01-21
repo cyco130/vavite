@@ -6,8 +6,8 @@
 		"start": "node dist/server",
 		"dev": "vite dev",
 		"build": "vite build",
-		"typecheck": "tsc -p tsconfig.json --noEmit",
-		"prepack": "pnpm build"
+		"prepack": "pnpm build",
+		"typecheck": "tsc -p tsconfig.json --noEmit"
 	},
 	"files": [
 		"dist"
@@ -17,11 +17,11 @@
 		"@vavite/cloudflare-workers": "workspace:*",
 		"@vavite/netlify": "workspace:*",
 		"@vavite/vercel": "workspace:*",
-		"node-fetch": "^2.6.6",
-		"typescript": "^4.5.4",
+		"node-fetch": "^2.6.7",
+		"typescript": "^4.5.5",
 		"vavite": "workspace:*",
-		"vite": "^2.7.6",
-		"vitest": "^0.0.115"
+		"vite": "^2.7.13",
+		"vitest": "^0.1.27"
 	},
 	"dependencies": {
 		"@types/react": "^17.0.38",
