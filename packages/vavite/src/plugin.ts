@@ -249,7 +249,7 @@ export default function vavite({
 								} else if (body instanceof Uint8Array) {
 									html = Buffer.from(body).toString("utf8");
 								} else if (body && Symbol.asyncIterator in body) {
-									let chunks: string[] | Uint8Array[] = [];
+									const chunks: string[] | Uint8Array[] = [];
 									for await (const chunk of body) {
 										html += chunk;
 									}

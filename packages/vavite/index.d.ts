@@ -17,3 +17,9 @@ declare module "@vavite/html" {
 	const html: string;
 	export default html;
 }
+
+declare module "@vavite/handler" {
+	import { RequestHandler } from "./dist";
+	const handler: RequestHandler;
+	export default handler;
+}

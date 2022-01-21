@@ -23,7 +23,8 @@
 		"build": "tsup",
 		"dev": "tsup --watch",
 		"prepack": "rm -rf dist && pnpm build",
-		"typecheck": "tsc -p tsconfig.json --noEmit"
+		"typecheck": "tsc -p tsconfig.json --noEmit",
+		"lint:ts": "eslint . --max-warnings 0 --ignore-pattern dist"
 	},
 	"peerDependencies": {
 		"vavite": "workspace:*",
@@ -32,6 +33,8 @@
 	"devDependencies": {
 		"@cloudflare/kv-asset-handler": "^0.2.0",
 		"@cloudflare/workers-types": "^3.3.1",
+		"@cyco130/eslint-config": "^1.0.0",
+		"eslint": "^8.7.0",
 		"tsup": "^5.11.11",
 		"typescript": "^4.5.5",
 		"vavite": "workspace:*",

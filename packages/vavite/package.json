@@ -37,7 +37,8 @@
 		"build": "tsup",
 		"dev": "tsup --watch",
 		"prepack": "rm -rf dist && pnpm build",
-		"typecheck": "tsc -p tsconfig.json --noEmit"
+		"typecheck": "tsc -p tsconfig.json --noEmit",
+		"lint:ts": "eslint . --max-warnings 0 --ignore-pattern dist"
 	},
 	"peerDependencies": {
 		"vite": "^2.7.6"

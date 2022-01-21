@@ -18,5 +18,7 @@ const server = createServer((req, res) =>
 );
 
 server.listen(PORT, HOST, () => {
+	// TODO: Logging control
+	// eslint-disable-next-line no-console
 	console.log(`Server listening on http://${HOST}:${PORT}`);
 });

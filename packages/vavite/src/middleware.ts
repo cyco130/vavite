@@ -1,9 +1,6 @@
 import { IncomingMessage, ServerResponse } from "http";
-import sirv from "sirv";
 import { parseRequest } from "./node-helpers";
 import { OutgoingResponse, RawResponse } from ".";
-
-// @ts-ignore
 import handler from "@vavite/handler";
 
 export interface VaviteMiddlewareOptions {
@@ -20,13 +17,13 @@ export function createMiddleware({
 		res: ServerResponse,
 		next: () => void,
 	) {
-		try {
-			function fwd(name: string) {
-				return (String(req.headers["x-forwarded-" + name]) || "")
-					.split(",", 1)[0]
-					.trim();
-			}
+		function fwd(name: string) {
+			return (String(req.headers["x-forwarded-" + name]) || "")
+				.split(",", 1)[0]
+				.trim();
+		}
 
+		try {
 			const proto = trustProxy ? fwd("proto") : "http";
 			const host = trustProxy
 				? fwd("host")

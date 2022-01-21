@@ -17,7 +17,9 @@ importers:
     specifiers:
       "@cloudflare/kv-asset-handler": ^0.2.0
       "@cloudflare/workers-types": ^3.3.1
+      "@cyco130/eslint-config": ^1.0.0
       esbuild: ^0.14.12
+      eslint: ^8.7.0
       tsup: ^5.11.11
       typescript: ^4.5.5
       vavite: workspace:*
@@ -27,6 +29,8 @@ importers:
     devDependencies:
       "@cloudflare/kv-asset-handler": 0.2.0
       "@cloudflare/workers-types": 3.3.1
+      "@cyco130/eslint-config": 1.0.0_eslint@8.7.0+typescript@4.5.5
+      eslint: 8.7.0
       tsup: 5.11.11_typescript@4.5.5
       typescript: 4.5.5
       vavite: link:../vavite
@@ -34,7 +38,9 @@ importers:
 
   packages/netlify:
     specifiers:
+      "@cyco130/eslint-config": ^1.0.0
       esbuild: ^0.14.12
+      eslint: ^8.7.0
       netlify-lambda-types: ^1.0.0
       tsup: ^5.11.11
       typescript: ^4.5.5
@@ -43,6 +49,8 @@ importers:
     dependencies:
       esbuild: 0.14.12
     devDependencies:
+      "@cyco130/eslint-config": 1.0.0_eslint@8.7.0+typescript@4.5.5
+      eslint: 8.7.0
       netlify-lambda-types: 1.0.0
       tsup: 5.11.11_typescript@4.5.5
       typescript: 4.5.5
@@ -69,7 +77,9 @@ importers:
 
   packages/vercel:
     specifiers:
+      "@cyco130/eslint-config": ^1.0.0
       esbuild: ^0.14.12
+      eslint: ^8.7.0
       tsup: ^5.11.11
       typescript: ^4.5.5
       vavite: workspace:*
@@ -77,6 +87,8 @@ importers:
     dependencies:
       esbuild: 0.14.12
     devDependencies:
+      "@cyco130/eslint-config": 1.0.0_eslint@8.7.0+typescript@4.5.5
+      eslint: 8.7.0
       tsup: 5.11.11_typescript@4.5.5
       typescript: 4.5.5
       vavite: link:../vavite
@@ -84,12 +96,14 @@ importers:
 
   testbed:
     specifiers:
+      "@cyco130/eslint-config": ^1.0.0
       "@types/node-fetch": ^2.5.12
       "@types/react": ^17.0.38
       "@types/react-dom": ^17.0.11
       "@vavite/cloudflare-workers": workspace:*
       "@vavite/netlify": workspace:*
       "@vavite/vercel": workspace:*
+      eslint: ^8.7.0
       node-fetch: ^2.6.7
       react: ^17.0.2
       react-dom: ^17.0.2
@@ -103,10 +117,12 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     devDependencies:
+      "@cyco130/eslint-config": 1.0.0_eslint@8.7.0+typescript@4.5.5
       "@types/node-fetch": 2.5.12
       "@vavite/cloudflare-workers": link:../packages/cloudflare-workers
       "@vavite/netlify": link:../packages/netlify
       "@vavite/vercel": link:../packages/vercel
+      eslint: 8.7.0
       node-fetch: 2.6.7
       typescript: 4.5.5
       vavite: link:../packages/vavite
@@ -3151,7 +3167,7 @@ packages:
       }
     hasBin: true
     dependencies:
-      glob: 7.1.6
+      glob: 7.2.0
     dev: true
 
   /rollup/2.65.0:

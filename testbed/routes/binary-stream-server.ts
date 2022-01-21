@@ -7,7 +7,7 @@ export default function renderBinaryStream(req: IncomingRequest): RenderResult {
 }
 
 async function* raw(delay: number) {
-	let output = new TextEncoder().encode(
+	const output = new TextEncoder().encode(
 		"This is rendered as binary stream with non-ASCII chars 😊",
 	);
 

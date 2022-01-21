@@ -9,7 +9,7 @@ export function parseRequest(
 ): IncomingRequest {
 	const url = new URL(req.url || "/", origin);
 
-	let headers: Record<string, string> = {};
+	const headers: Record<string, string> = {};
 	for (const [key, value] of Object.entries(req.headers)) {
 		if (value === undefined) continue;
 		headers[key] = Array.isArray(value) ? value.join(", ") : value;

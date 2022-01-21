@@ -7,7 +7,7 @@ export default function renderStringStream(req: IncomingRequest): RenderResult {
 }
 
 async function* raw(delay: number) {
-	let output = "This is rendered as a string stream with non-ASCII chars 😊";
+	const output = "This is rendered as a string stream with non-ASCII chars 😊";
 
 	for (const char of output) {
 		if (delay) {

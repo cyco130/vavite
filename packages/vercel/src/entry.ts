@@ -7,13 +7,13 @@ export default async function vercelHandler(
 	req: IncomingMessage,
 	res: ServerResponse,
 ) {
-	try {
-		function fwd(name: string) {
-			return (String(req.headers["x-forwarded-" + name]) || "")
-				.split(",", 1)[0]
-				.trim();
-		}
+	function fwd(name: string) {
+		return (String(req.headers["x-forwarded-" + name]) || "")
+			.split(",", 1)[0]
+			.trim();
+	}
 
+	try {
 		const proto = fwd("proto");
 		const host = fwd("host");
 		const ip = fwd("for");
@@ -70,7 +70,7 @@ function parseRequest(
 ): IncomingRequest {
 	const url = new URL(req.url || "/", origin);
 
-	let headers: Record<string, string> = {};
+	const headers: Record<string, string> = {};
 	for (const [key, value] of Object.entries(req.headers)) {
 		if (value === undefined) continue;
 		headers[key] = Array.isArray(value) ? value.join(", ") : value;

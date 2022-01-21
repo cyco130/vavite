@@ -17,6 +17,23 @@ async function generateResponse(event: FetchEvent) {
 		}
 	}
 
+	const { readable, writable } = new TransformStream();
+
+	async function pump(body: AsyncIterable<Uint8Array> | AsyncIterable<string>) {
+		const writer = writable.getWriter();
+		const encoder = new TextEncoder();
+
+		for await (let chunk of body!) {
+			if (typeof chunk === "string") {
+				chunk = encoder.encode(chunk);
+			}
+
+			writer.write(chunk);
+		}
+
+		writer.close();
+	}
+
 	try {
 		const url = new URL(event.request.url);
 		const headers: Record<string, string> = Object.fromEntries(
@@ -84,24 +101,7 @@ async function generateResponse(event: FetchEvent) {
 			});
 		}
 
-		let { readable, writable } = new TransformStream();
-
-		async function pump() {
-			const writer = writable.getWriter();
-			const encoder = new TextEncoder();
-
-			for await (let chunk of body!) {
-				if (typeof chunk === "string") {
-					chunk = encoder.encode(chunk);
-				}
-
-				writer.write(chunk);
-			}
-
-			writer.close();
-		}
-
-		event.waitUntil(pump());
+		event.waitUntil(pump(body));
 
 		return new Response(readable, {
 			status: response.status,
