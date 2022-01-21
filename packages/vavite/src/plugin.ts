@@ -43,7 +43,8 @@ export default function vavite({
 					if (resolvedConfig.command === "serve") return id;
 
 					return this.resolve(
-						path.join(resolvedConfig.vavite.clientOutDir, "manifest.json"),
+						"./" +
+							path.join(resolvedConfig.vavite.clientOutDir, "manifest.json"),
 						importer,
 						options,
 					);
@@ -51,18 +52,23 @@ export default function vavite({
 					if (resolvedConfig.command === "serve") return id;
 
 					return this.resolve(
-						path.join(resolvedConfig.vavite.clientOutDir, "ssr-manifest.json"),
+						"./" +
+							path.join(
+								resolvedConfig.vavite.clientOutDir,
+								"ssr-manifest.json",
+							),
 						importer,
 						options,
 					);
 				} else if (id === "@vavite/html") {
 					return this.resolve(
-						path.join(
-							resolvedConfig.command === "serve"
-								? resolvedConfig.root
-								: "/" + resolvedConfig.vavite.clientOutDir,
-							"index.html?raw",
-						),
+						"./" +
+							path.join(
+								resolvedConfig.command === "serve"
+									? resolvedConfig.root
+									: "/" + resolvedConfig.vavite.clientOutDir,
+								"index.html?raw",
+							),
 						importer,
 						options,
 					);
