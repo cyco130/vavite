@@ -1,0 +1,18 @@
+{
+	"name": "@vavite/example-connect-external-server",
+	"private": true,
+	"scripts": {
+		"start": "node server",
+		"dev": "vite dev",
+		"build": "vite build --ssr"
+	},
+	"devDependencies": {
+		"@types/node": "^17.0.13",
+		"@vavite/connect": "*",
+		"typescript": "^4.5.5",
+		"vite": "^2.7.13"
+	},
+	"dependencies": {
+		"express": "^4.17.2"
+	}
+}

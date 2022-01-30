@@ -2,7 +2,7 @@
 	"name": "vavite-workspace-root",
 	"private": "true",
 	"scripts": {
-		"dev": "pnpm -r --parallel dev",
+		"dev": "pnpm -r --parallel dev --filter ./packages",
 		"build": "pnpm -r build",
 		"prepare": "husky install",
 		"precommit": "lint-staged"
