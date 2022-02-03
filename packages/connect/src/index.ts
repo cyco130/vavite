@@ -126,27 +126,9 @@ export default function vaviteConnect({
 					server.middlewares.use(async (req, res) => {
 						const module = await server.ssrLoadModule(handlerEntry);
 
-						async function renderError(
-							status: number,
-							message: string,
-							title = "SSR error",
-						) {
-							server.config.logger.error(message);
-
-							let html = `<!DOCTYPE html><html><head><title>${escapeHtml(
-								title,
-							)}</title></head><body><h1>${escapeHtml(
-								title,
-							)}</h1><pre>${escapeHtml(message)}</pre></body></html>`;
-
-							html = await server.transformIndexHtml(
-								req.originalUrl || "/",
-								html,
-							);
-
+						function renderError(status: number, message: string) {
 							res.statusCode = status;
-							res.setHeader("Content-Type", "text/html; charset=utf-8");
-							res.end(html);
+							res.end(message);
 						}
 
 						// Restore the original URL (SPA middleware may have changed it)
@@ -154,8 +136,7 @@ export default function vaviteConnect({
 
 						try {
 							await module.default(req, res, () => {
-								if (!res.writableEnded)
-									renderError(404, "Not found", "Not found");
+								if (!res.writableEnded) renderError(404, "Not found");
 							});
 						} catch (err) {
 							if (err instanceof Error) {
@@ -176,15 +157,6 @@ export default function vaviteConnect({
 			},
 		},
 	];
-}
-
-function escapeHtml(unsafe: string) {
-	return unsafe
-		.replace(/&/g, "&amp;")
-		.replace(/</g, "&lt;")
-		.replace(/>/g, "&gt;")
-		.replace(/"/g, "&quot;")
-		.replace(/'/g, "&#039;");
 }
 
 import type { Stats } from "fs";
