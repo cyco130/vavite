@@ -1,42 +1,44 @@
-import express, { RequestHandler } from "express";
+import Koa, { Middleware } from "koa";
+import Router from "@koa/router";
 import devServer from "@vavite/reloader/dev-server";
 import { fixStacktrace } from "@vavite/dev-server-methods";
 
-const app = express();
+const app = new Koa();
+const router = new Router();
 
-function lazy(
-	importer: () => Promise<{ default: RequestHandler }>,
-): RequestHandler {
-	return async (req, res, next) => {
+function lazy(importer: () => Promise<{ default: Middleware }>): Middleware {
+	return async (ctx, next) => {
 		try {
 			const routeHandler = (await importer()).default;
-			routeHandler(req, res, next);
+			return routeHandler(ctx, next);
 		} catch (err) {
 			if (err instanceof Error) fixStacktrace(err);
-			next(err);
+			throw err;
 		}
 	};
 }
 
 // When reloadOn option is set to "static-deps-change",
 // changes to the route handlers will not trigger a reload.
-app.get(
+router.get(
 	"/",
 	lazy(() => import("./routes/home")),
 );
 
-app.get(
+router.get(
 	"/foo",
 	lazy(() => import("./routes/foo")),
 );
 
-app.get(
+router.get(
 	"/bar",
 	lazy(() => import("./routes/bar")),
 );
 
+app.use(router.routes());
+
 if (devServer) {
-	devServer.on("request", app);
+	devServer.on("request", app.callback());
 } else {
 	console.log("Starting prod server");
 	app.listen(3000);

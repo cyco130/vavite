@@ -1,16 +1,14 @@
 {
 	"name": "@vavite/dev-server-methods",
 	"version": "1.0.0-beta.4",
-	"module": "./dist/index.js",
+	"module": "./dist/index.mjs",
 	"files": [
 		"dist",
 		"*.d.ts"
 	],
-	"main": "./dist/index.cjs",
 	"exports": {
 		".": {
-			"import": "./dist/index.mjs",
-			"require": "./dist/index.js"
+			"import": "./dist/index.mjs"
 		},
 		"./plugin": {
 			"import": "./dist/plugin.mjs",
