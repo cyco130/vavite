@@ -198,6 +198,11 @@ export default function vaviteReloaderPlugin({
 									return target[prop].apply(target, [event, ...rest] as any);
 								}
 							};
+						} else if (prop === "listen") {
+							return (...args: any[]) => {
+								const listener = args.find((arg) => typeof arg === "function");
+								if (listener) Promise.resolve().then(listener);
+							};
 						}
 
 						return (target as any)[prop];

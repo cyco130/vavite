@@ -1,0 +1,22 @@
+{
+	"name": "@vavite/example-dev-server-fastify",
+	"private": true,
+	"scripts": {
+		"start": "node dist/server",
+		"dev": "vite dev",
+		"build": "vite build --ssr server.ts"
+	},
+	"files": [
+		"dist"
+	],
+	"devDependencies": {
+		"@types/node": "^17.0.10",
+		"@vavite/dev-server-methods": "*",
+		"@vavite/reloader": "*",
+		"typescript": "^4.5.5",
+		"vite": "^2.7.13"
+	},
+	"dependencies": {
+		"fastify": "^3.27.1"
+	}
+}
