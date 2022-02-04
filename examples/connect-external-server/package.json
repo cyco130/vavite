@@ -3,7 +3,7 @@
 	"private": true,
 	"scripts": {
 		"start": "node server",
-		"dev": "vite dev",
+		"dev": "vite --open",
 		"build": "vite build --ssr"
 	},
 	"devDependencies": {
