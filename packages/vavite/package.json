@@ -1,6 +1,6 @@
 {
 	"name": "vavite",
-	"version": "1.0.0-beta.4",
+	"version": "1.0.0-beta.5",
 	"type": "module",
 	"module": "./dist/index.js",
 	"files": [
@@ -41,7 +41,7 @@
 		"lint:ts": "eslint . --max-warnings 0 --ignore-pattern dist"
 	},
 	"peerDependencies": {
-		"vite": "^2.7.6"
+		"vite": "^2.7.13"
 	},
 	"devDependencies": {
 		"@cyco130/eslint-config": "^1.0.0",

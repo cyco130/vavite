@@ -1,6 +1,6 @@
 {
 	"name": "@vavite/dev-server-methods",
-	"version": "1.0.0-beta.4",
+	"version": "1.0.0-beta.5",
 	"module": "./dist/index.mjs",
 	"files": [
 		"dist",
