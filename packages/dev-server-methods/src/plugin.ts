@@ -25,7 +25,7 @@ export default function vaviteDevServerMethodsPlugin(): Plugin {
 
 			const out: UserConfig & { ssr: SSROptions } = {
 				ssr: {
-					noExternal: ["@vavite/reloader"],
+					noExternal: ["@vavite/dev-server-methods"],
 				},
 			};
 
