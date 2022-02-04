@@ -1,5 +1,12 @@
 import { IncomingMessage, ServerResponse } from "http";
-import type { ConfigEnv, Logger, Plugin, ViteDevServer } from "vite";
+import type {
+	ConfigEnv,
+	Logger,
+	Plugin,
+	ViteDevServer,
+	UserConfig,
+	SSROptions,
+} from "vite";
 
 export interface VaviteReloaderOptions {
 	/**
@@ -136,12 +143,16 @@ export default function vaviteReloaderPlugin({
 			if (typeof config.build?.ssr === "string") {
 				entry = config.build.ssr;
 			} else if (config.build?.ssr) {
-				return {
-					build: {
-						ssr: entry,
-					},
-				};
+				config.build.ssr = entry;
 			}
+
+			const out: UserConfig & { ssr: SSROptions } = {
+				ssr: {
+					noExternal: ["@vavite/reloader"],
+				},
+			};
+
+			return out;
 		},
 
 		configResolved(config) {

@@ -1,4 +1,4 @@
-import type { Plugin } from "vite";
+import type { Plugin, SSROptions, UserConfig } from "vite";
 
 export default function vaviteDevServerMethodsPlugin(): Plugin {
 	let dev: boolean;
@@ -22,6 +22,14 @@ export default function vaviteDevServerMethodsPlugin(): Plugin {
 
 		config(_config, env) {
 			dev = env.command === "serve";
+
+			const out: UserConfig & { ssr: SSROptions } = {
+				ssr: {
+					noExternal: ["@vavite/reloader"],
+				},
+			};
+
+			return out;
 		},
 
 		configureServer(server) {

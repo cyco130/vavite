@@ -1,6 +1,6 @@
 {
 	"name": "@vavite/vercel",
-	"version": "1.0.0-beta.5",
+	"version": "1.0.0-beta.6",
 	"type": "module",
 	"module": "./dist/index.js",
 	"files": [
