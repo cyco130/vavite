@@ -4,6 +4,9 @@ import devServer from "@vavite/reloader/dev-server";
 import viteDevServer from "@vavite/dev-server/server";
 import { Server as TlsServer } from "tls";
 
+// This is an optional trick to load routes lazily so that
+// when reloadOn option is set to "static-deps-change",
+// changes to the route handlers will not trigger a reload.
 function lazy(
 	importer: () => Promise<{ default: Lifecycle.Method }>,
 ): Lifecycle.Method {

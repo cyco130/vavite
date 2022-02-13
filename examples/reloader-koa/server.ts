@@ -8,6 +8,9 @@ import viteDevServer from "@vavite/dev-server/server";
 const app = new Koa();
 const router = new Router();
 
+// This is an optional trick to load routes lazily so that
+// when reloadOn option is set to "static-deps-change",
+// changes to the route handlers will not trigger a reload.
 function lazy(importer: () => Promise<{ default: Middleware }>): Middleware {
 	return async (ctx, next) => {
 		try {
@@ -20,8 +23,6 @@ function lazy(importer: () => Promise<{ default: Middleware }>): Middleware {
 	};
 }
 
-// When reloadOn option is set to "static-deps-change",
-// changes to the route handlers will not trigger a reload.
 router.get(
 	"/",
 	lazy(() => import("./routes/home")),

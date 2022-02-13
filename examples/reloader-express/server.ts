@@ -6,6 +6,9 @@ import viteDevServer from "@vavite/dev-server/server";
 
 const app = express();
 
+// This is an optional trick to load routes lazily so that
+// when reloadOn option is set to "static-deps-change",
+// changes to the route handlers will not trigger a reload.
 function lazy(
 	importer: () => Promise<{ default: RequestHandler }>,
 ): RequestHandler {
@@ -20,8 +23,6 @@ function lazy(
 	};
 }
 
-// When reloadOn option is set to "static-deps-change",
-// changes to the route handlers will not trigger a reload.
 app.get(
 	"/",
 	lazy(() => import("./routes/home")),
