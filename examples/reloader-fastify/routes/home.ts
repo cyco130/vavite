@@ -1,12 +1,16 @@
 import { RouteHandlerMethod } from "fastify";
-import { transformIndexHtml } from "@vavite/dev-server-methods";
+import viteDevServer from "@vavite/dev-server/server";
 import nav from "./nav";
 
 const homeRoute: RouteHandlerMethod = async (req, res) => {
+	let html = "<h1>Hello from home page</h1>" + nav;
+
+	if (import.meta.env.DEV) {
+		html = await viteDevServer!.transformIndexHtml(req.url, html);
+	}
+
 	res.type("text/html");
-	res.send(
-		await transformIndexHtml(req.url, "<h1>Hello from home page</h1>" + nav),
-	);
+	res.send(html);
 };
 
 export default homeRoute;

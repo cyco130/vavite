@@ -1,12 +1,15 @@
 import { Middleware } from "koa";
-import { transformIndexHtml } from "@vavite/dev-server-methods";
+import viteDevServer from "@vavite/dev-server/server";
 import nav from "./nav";
 
 const homeRoute: Middleware = async (ctx, next) => {
-	ctx.body = await transformIndexHtml(
-		ctx.url,
-		"<h1>Hello from home page</h1>" + nav,
-	);
+	let html = "<h1>Hello from home page</h1>" + nav;
+
+	if (import.meta.env.DEV) {
+		html = await viteDevServer!.transformIndexHtml(ctx.url, html);
+	}
+
+	ctx.body = html;
 };
 
 export default homeRoute;

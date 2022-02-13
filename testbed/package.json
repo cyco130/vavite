@@ -1,7 +1,6 @@
 {
 	"name": "vavite-kitchen-sink",
 	"private": true,
-	"version": "0.0.0",
 	"scripts": {
 		"start": "node dist/server",
 		"dev": "vite dev",

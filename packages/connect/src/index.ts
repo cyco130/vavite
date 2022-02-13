@@ -43,57 +43,27 @@ export default function vaviteConnect({
 
 			enforce: "pre",
 
-			resolveId(id) {
-				if (
-					id === "@vavite/connect/handler" ||
-					id === "@vavite/connect/user-handler"
-				) {
-					return id;
-				} else if (id.endsWith("virtual:@vavite/connect/entry/index")) {
-					return "@vavite/connect/entry/index";
-				}
-			},
-
-			async load(id, options) {
+			resolveId(id, importer, options) {
 				if (id === "@vavite/connect/handler") {
-					const resolved = await this.resolve(
+					return this.resolve(
 						clientAssetsDir
 							? bundleSirv
 								? "@vavite/connect/entry-middleware-with-sirv"
 								: "@vavite/connect/entry-middleware-with-external-sirv"
 							: handlerEntry,
 						undefined,
-						{ ...options, skipSelf: true },
+						options,
 					);
-
-					if (resolved) {
-						const loaded = await this.load(resolved);
-						return loaded.code;
-					}
 				} else if (id === "@vavite/connect/user-handler") {
-					const resolved = await this.resolve(handlerEntry, undefined, {
+					return this.resolve(handlerEntry, undefined, {
 						...options,
 						skipSelf: true,
 					});
-
-					if (resolved) {
-						const loaded = await this.load(resolved);
-						return loaded.code;
-					}
-				} else if (id === "@vavite/connect/entry/index") {
-					const resolved = await this.resolve(
-						"@vavite/connect/entry-standalone",
-						undefined,
-						{
-							...options,
-							skipSelf: true,
-						},
-					);
-
-					if (resolved) {
-						const loaded = await this.load(resolved);
-						return loaded.code;
-					}
+				} else if (id.endsWith("virtual:@vavite/connect/entry/index")) {
+					return this.resolve("@vavite/connect/entry-standalone", undefined, {
+						...options,
+						skipSelf: true,
+					});
 				}
 			},
 		},

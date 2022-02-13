@@ -1,3 +1,5 @@
+/// <reference types="./vite" />
+
 declare module "vavite" {
 	export * from "./dist";
 	export { default } from "./dist";

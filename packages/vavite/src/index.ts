@@ -1,3 +1,5 @@
+import { UserConfig } from "vite";
+
 export { default } from "./plugin";
 export { parseRequest } from "./node-helpers";
 
@@ -53,7 +55,17 @@ export type ResponseBody =
 	| string
 	| Uint8Array
 	| AsyncGenerator<Uint8Array>
-	| AsyncGenerator<string>;
+	| AsyncGenerator<string>
+	| ((stream: ResponseBodyStream) => Promise<void>);
+
+export interface ResponseBodyStream {
+	/** Write a chunk of data */
+	write(chunk: Uint8Array | string): void;
+	/** Flush the stream */
+	flush(): Promise<void>;
+	/** Outbut buffer empty */
+	isReady: boolean;
+}
 
 export interface ViteManifest {
 	[key: string]: ViteChunk;
@@ -71,8 +83,11 @@ export interface ViteSsrManifest {
 	[key: string]: string[];
 }
 
-export interface VaviteConfig {
-	serverEntry: string;
-	clientOutDir: string;
-	serverOutDir: string;
+export interface VaviteOptions {
+	buildSteps?: BuildStep[];
+}
+
+export interface BuildStep {
+	name: string;
+	config?: UserConfig;
 }

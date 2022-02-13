@@ -1,5 +1,5 @@
 {
-	"name": "@vavite/example-dev-server-koa",
+	"name": "@vavite/example-reloader-koa",
 	"private": true,
 	"scripts": {
 		"start": "node dist/server",
@@ -12,9 +12,9 @@
 	"devDependencies": {
 		"@types/koa": "^2.13.4",
 		"@types/koa__router": "^8.0.11",
-		"@types/node": "^17.0.10",
-		"@vavite/dev-server-methods": "*",
-		"@vavite/reloader": "*",
+		"@types/node": "^17.0.15",
+		"@vavite/dev-server": "1.0.0-beta.8",
+		"@vavite/reloader": "1.0.0-beta.8",
 		"typescript": "^4.5.5",
 		"vite": "^2.7.13"
 	},

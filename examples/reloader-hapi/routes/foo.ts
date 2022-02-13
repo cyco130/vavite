@@ -1,9 +1,15 @@
 import { Lifecycle } from "@hapi/hapi";
-import { transformIndexHtml } from "@vavite/dev-server-methods";
+import viteDevServer from "@vavite/dev-server/server";
 import nav from "./nav";
 
 const fooRoute: Lifecycle.Method = async (req, h) => {
-	return transformIndexHtml(req.path, "<h1>Hello from page /foo</h1>" + nav);
+	let html = "<h1>Hello from page /foo</h1>" + nav;
+
+	if (import.meta.env.DEV) {
+		html = await viteDevServer!.transformIndexHtml(req.path, html);
+	}
+
+	return html;
 };
 
 export default fooRoute;

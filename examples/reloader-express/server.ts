@@ -1,6 +1,8 @@
+///<reference types="vite/client" />
+
 import express, { RequestHandler } from "express";
 import devServer from "@vavite/reloader/dev-server";
-import { fixStacktrace } from "@vavite/dev-server-methods";
+import viteDevServer from "@vavite/dev-server/server";
 
 const app = express();
 
@@ -12,7 +14,7 @@ function lazy(
 			const routeHandler = (await importer()).default;
 			routeHandler(req, res, next);
 		} catch (err) {
-			if (err instanceof Error) fixStacktrace(err);
+			if (err instanceof Error) viteDevServer?.ssrFixStacktrace(err);
 			next(err);
 		}
 	};

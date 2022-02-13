@@ -1,8 +1,100 @@
-import { Plugin, build, ResolvedConfig } from "vite";
+import { Plugin, build, ResolvedConfig, UserConfig } from "vite";
 import path from "path";
-import { OutgoingResponse, RawResponse, RequestHandler, VaviteConfig } from ".";
+import {
+	BuildStep,
+	OutgoingResponse,
+	RawResponse,
+	RequestHandler,
+	VaviteOptions,
+} from ".";
 import { parseRequest } from "./node-helpers";
 
+const VAVITE_CONFIG_KEY = "vaviteInfo";
+
+interface VaviteConfigInfo {
+	buildStepNo: number;
+	buildSteps: BuildStep[];
+}
+
+interface VaviteUserConfig extends UserConfig {
+	[VAVITE_CONFIG_KEY]: VaviteConfigInfo;
+}
+
+export default function vavite(options?: VaviteOptions): Plugin[] {
+	const steps: BuildStep[] = options?.buildSteps || [
+		{ name: "client" },
+		{
+			name: "server",
+			config: {
+				build: {
+					ssr: "server-entry",
+				},
+			},
+		},
+	];
+
+	let vaviteInfo: VaviteConfigInfo;
+	let currentStep: BuildStep;
+
+	return [
+		{
+			name: "vavite",
+
+			enforce: "pre",
+
+			config(config, env) {
+				if (env.command !== "build") return;
+
+				const vconfig = config as VaviteUserConfig;
+
+				if (vconfig[VAVITE_CONFIG_KEY]) {
+					vconfig[VAVITE_CONFIG_KEY].buildStepNo++;
+				} else {
+					vconfig[VAVITE_CONFIG_KEY] = {
+						buildStepNo: 0,
+						buildSteps: steps,
+					};
+				}
+
+				vaviteInfo = vconfig[VAVITE_CONFIG_KEY];
+				const { buildStepNo, buildSteps } = vaviteInfo;
+				currentStep = buildSteps[buildStepNo];
+				console.log("Running step", currentStep);
+
+				return currentStep.config;
+			},
+
+			vaviteBuildStepStarted(stepName) {
+				console.log("STEP", stepName);
+			},
+
+			async configResolved(config) {
+				config.logger.info("Build step: " + currentStep.name);
+
+				for (const plugin of config.plugins) {
+					await plugin.vaviteBuildStepStarted?.(currentStep.name);
+				}
+			},
+		},
+
+		{
+			name: "vavite:build-steps",
+
+			enforce: "post",
+
+			async closeBundle() {
+				if (vaviteInfo.buildStepNo < vaviteInfo.buildSteps.length - 1) {
+					console.log("Passing", vaviteInfo);
+					await build({
+						[VAVITE_CONFIG_KEY]: vaviteInfo,
+					} as any);
+				}
+			},
+		},
+	];
+}
+
+/*
 export interface VaviteOptions {
 	handlerEntry?: string;
 	serverEntry?: string;
@@ -297,6 +389,22 @@ export default function vavite({
 					});
 			},
 		},
+
+		{
+			name: "vavite:default-entries",
+
+			enforce: "post",
+
+			config(config) {
+				config.build = config.build || {};
+				config.build.rollupOptions = config.build.rollupOptions || {};
+				config.build.rollupOptions.input =
+					config.build.rollupOptions.input || [];
+				if (config.build.rollupOptions.input.length === 0) {
+					config.build.rollupOptions.input = "";
+				}
+			},
+		},
 	];
 }
 
@@ -319,3 +427,4 @@ const MANIFEST_STUB = `export default new Proxy(
 )`;
 
 const SSR_MANIFEST_STUB = `export default {}`;
+*/

@@ -1,21 +1,28 @@
 {
-	"name": "@vavite/vercel",
+	"name": "@vavite/multibuild",
 	"version": "1.0.0-beta.8",
-	"type": "module",
+	"main": "./dist/index.cjs",
 	"module": "./dist/index.js",
+	"exports": {
+		".": {
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.js"
+		},
+		"./entry-standalone": {
+			"import": "./dist/entry-standalone.mjs"
+		},
+		"./entry-middleware-with-sirv": {
+			"import": "./dist/entry-middleware-with-sirv.mjs"
+		},
+		"./entry-middleware-with-external-sirv": {
+			"import": "./dist/entry-middleware-with-external-sirv.mjs"
+		}
+	},
 	"files": [
 		"dist",
 		"*.d.ts"
 	],
-	"main": "./dist/index.cjs",
-	"exports": {
-		".": {
-			"import": "./dist/index.js",
-			"require": "./dist/index.cjs"
-		},
-		"./entry": "./dist/entry.js"
-	},
-	"description": "Vercel adapter for vavite",
+	"description": "Vite plugin for triggering multiple builds from a single vite build command",
 	"author": "Fatih Aygün <cyco130@gmail.com>",
 	"repository": "https://github.com/cyco130/vavite",
 	"license": "MIT",
@@ -27,7 +34,6 @@
 		"lint:ts": "eslint . --max-warnings 0 --ignore-pattern dist"
 	},
 	"peerDependencies": {
-		"vavite": "workspace:*",
 		"vite": "^2.7.13"
 	},
 	"devDependencies": {
@@ -35,10 +41,9 @@
 		"eslint": "^8.7.0",
 		"tsup": "^5.11.11",
 		"typescript": "^4.5.5",
-		"vavite": "workspace:*",
 		"vite": "^2.7.13"
 	},
 	"dependencies": {
-		"esbuild": "^0.14.12"
+		"@types/node": ">=14"
 	}
 }

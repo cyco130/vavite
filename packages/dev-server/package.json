@@ -1,6 +1,6 @@
 {
-	"name": "@vavite/dev-server-methods",
-	"version": "1.0.0-beta.7",
+	"name": "@vavite/dev-server",
+	"version": "1.0.0-beta.8",
 	"module": "./dist/index.mjs",
 	"files": [
 		"dist",
@@ -8,11 +8,11 @@
 	],
 	"exports": {
 		".": {
-			"import": "./dist/index.mjs"
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.js"
 		},
-		"./plugin": {
-			"import": "./dist/plugin.mjs",
-			"require": "./dist/plugin.js"
+		"./server": {
+			"import": "./dist/server.mjs"
 		}
 	},
 	"description": "Vite plugin for exposing some methods from the development server",

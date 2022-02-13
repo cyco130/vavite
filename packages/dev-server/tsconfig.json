@@ -6,8 +6,6 @@
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
 		"skipLibCheck": true,
-		"moduleResolution": "Node",
-		"jsx": "react",
-		"types": ["vite/client", "./ambient"]
+		"moduleResolution": "Node"
 	}
 }

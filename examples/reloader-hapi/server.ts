@@ -1,6 +1,7 @@
+/// <reference types="vite/client" />
 import Hapi, { Lifecycle } from "@hapi/hapi";
 import devServer from "@vavite/reloader/dev-server";
-import { fixStacktrace } from "@vavite/dev-server-methods";
+import viteDevServer from "@vavite/dev-server/server";
 import { Server as TlsServer } from "tls";
 
 function lazy(
@@ -11,7 +12,7 @@ function lazy(
 			const routeHandler = (await importer()).default;
 			return routeHandler(req, h);
 		} catch (err) {
-			if (err instanceof Error) fixStacktrace(err);
+			if (err instanceof Error) viteDevServer?.ssrFixStacktrace(err);
 			throw err;
 		}
 	};

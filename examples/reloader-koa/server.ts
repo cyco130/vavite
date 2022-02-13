@@ -1,7 +1,9 @@
+/// <reference types="vite/client" />
+
 import Koa, { Middleware } from "koa";
 import Router from "@koa/router";
 import devServer from "@vavite/reloader/dev-server";
-import { fixStacktrace } from "@vavite/dev-server-methods";
+import viteDevServer from "@vavite/dev-server/server";
 
 const app = new Koa();
 const router = new Router();
@@ -12,7 +14,7 @@ function lazy(importer: () => Promise<{ default: Middleware }>): Middleware {
 			const routeHandler = (await importer()).default;
 			return routeHandler(ctx, next);
 		} catch (err) {
-			if (err instanceof Error) fixStacktrace(err);
+			if (err instanceof Error) viteDevServer?.ssrFixStacktrace(err);
 			throw err;
 		}
 	};

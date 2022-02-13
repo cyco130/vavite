@@ -1,6 +1,8 @@
+/// <reference types="vite/client" />
+
 import Fastify, { RouteHandlerMethod } from "fastify";
 import devServer from "@vavite/reloader/dev-server";
-import { fixStacktrace } from "@vavite/dev-server-methods";
+import viteDevServer from "@vavite/dev-server/server";
 import { AddressInfo } from "net";
 
 const fastify = Fastify({
@@ -20,7 +22,7 @@ function lazy(
 			const routeHandler = (await importer()).default;
 			return routeHandler.bind(fastify)(req, res);
 		} catch (err) {
-			if (err instanceof Error) fixStacktrace(err);
+			if (err instanceof Error) viteDevServer?.ssrFixStacktrace(err);
 			throw err;
 		}
 	};

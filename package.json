@@ -3,7 +3,7 @@
 	"private": "true",
 	"scripts": {
 		"dev": "pnpm -r --parallel dev --filter ./packages",
-		"build": "pnpm -r build",
+		"build": "pnpm -r build --filter ./packages",
 		"prepare": "husky install",
 		"precommit": "lint-staged"
 	},
