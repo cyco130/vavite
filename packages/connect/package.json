@@ -34,7 +34,7 @@
 		"lint:ts": "eslint . --max-warnings 0 --ignore-pattern dist"
 	},
 	"peerDependencies": {
-		"vite": "^2.7.13"
+		"vite": "^2.8.1"
 	},
 	"devDependencies": {
 		"@cyco130/eslint-config": "^1.0.0",
@@ -42,7 +42,7 @@
 		"sirv": "^2.0.2",
 		"tsup": "^5.11.11",
 		"typescript": "^4.5.5",
-		"vite": "^2.7.13"
+		"vite": "^2.8.1"
 	},
 	"dependencies": {
 		"@types/node": ">=14"

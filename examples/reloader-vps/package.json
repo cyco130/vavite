@@ -1,0 +1,27 @@
+{
+	"name": "@vavite/example-reloader-vps",
+	"private": true,
+	"scripts": {
+		"dev": "vite --open",
+		"build": "vite build",
+		"start": "node dist/server"
+	},
+	"dependencies": {
+		"@types/express": "^4.17.13",
+		"@types/node": "^17.0.17",
+		"@types/react": "^17.0.39",
+		"@types/react-dom": "^17.0.11",
+		"@vavite/dev-server": "1.0.0-beta.8",
+		"@vavite/multibuild": "1.0.0-beta.8",
+		"@vavite/reloader": "1.0.0-beta.8",
+		"@vitejs/plugin-react": "^1.2.0",
+		"cross-env": "^7.0.3",
+		"express": "^4.17.2",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2",
+		"ts-node": "^10.5.0",
+		"typescript": "^4.5.5",
+		"vite": "^2.8.1",
+		"vite-plugin-ssr": "^0.3.53"
+	}
+}

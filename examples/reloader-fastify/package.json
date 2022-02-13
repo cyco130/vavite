@@ -14,7 +14,7 @@
 		"@vavite/dev-server": "1.0.0-beta.8",
 		"@vavite/reloader": "1.0.0-beta.8",
 		"typescript": "^4.5.5",
-		"vite": "^2.7.13"
+		"vite": "^2.8.1"
 	},
 	"dependencies": {
 		"fastify": "^3.27.1"
