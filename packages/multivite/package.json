@@ -45,6 +45,7 @@
 	},
 	"dependencies": {
 		"@types/node": ">=14",
-		"cac": "^6.7.12"
+		"cac": "^6.7.12",
+		"picocolors": "^1.0.0"
 	}
 }
