@@ -1,7 +1,7 @@
-///<reference types="vite/client" />
+/// <reference types="vite/client" />
 
 import express, { RequestHandler } from "express";
-import devServer from "@vavite/reloader/dev-server";
+import devServer from "@vavite/reloader/http-dev-server";
 import viteDevServer from "@vavite/dev-server/server";
 
 const app = express();

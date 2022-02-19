@@ -1,10 +1,6 @@
 # @vavite/reloader
 
-> ⚠️ EXPERIMENTAL ⚠️
->
-> If you need a custom server for production but not for development, check out the more stable [`@vavite/connect`](../connect) package.
-
-`@vavite/reloader` is a [Vite](https://vitejs.dev) plugin for developing and building  Node.js server applications with **hot reloading** support. It can be used with any Node.js server framework that allows you to provide your own `http.Server` instance, including but not limited to **Express**, **Koa**, **Fastify**, and **Hapi**.
+`@vavite/reloader` is a plugin for developing and building Node.js server applications with [Vite](https://vitejs.dev). It can be used with any Node.js server framework that allows you to provide your own `http.Server` instance, including but not limited to **Express**, **Koa**, **Fastify**, and **Hapi**.
 
 ## Installation and usage
 
@@ -15,44 +11,39 @@ import { defineConfig } from "vite";
 import vaviteReloader from "@vavite/reloader";
 
 export default defineConfig({
-  plugins: [
-    vaviteReloader({
-      // Options
-      // ...
-    }),
-  ],
+	plugins: [
+		vaviteReloader({
+			// Options, see below
+		}),
+	],
 });
 ```
 
-Then install your server framework (here we use Express) and create a `server.ts` file in the root of your project and create and configure your server framework to use the `http.Server` instance imported from `@vavite/reloader/dev-server`:
+Then install the server framework of your choice (e.g. Express) and create a `server.ts` file in the root of your project. Write your initialization code in such a way that when `import.meta.env.PROD` is true, it creates a normal server instance and when it's false, it uses the `http.Server` instance default imported from `vavite/http-dev-server`. How to do this depends on the framework, you can refer to the [examples](#examples). Here's an example for Express:
 
 ```ts
 import express from "express";
-import devServer from "@vavite/reloader/dev-server";
+import httpDevServer from "@vavite/reloader/http-dev-server";
 
 const app = express();
 
 // Configure your server here
 app.get("/", (req, res) => {
-  res.send("Hello, world!");
+	res.send("Hello, world!");
 });
 
-if (devServer) {
-  // devServer is only defined in development mode.
-  // Configure your app to use it as the server instance.
-
-  // An Express instance is actually
-  // a request listener function, this
-  // is all we need to do:
-  devServer.on("request", app);
-  // See the examples for other frameworks
-
+if (import.meta.env.PROD) {
+	// For production, start your server
+	// as you would normally do.
+	app.listen(3000, "localhost", () => {
+		console.log("Server started on http://localhost:3000");
+	});
 } else {
-  // For production, start your server
-  // as you would normally do.
-  app.listen(3000, "localhost", () => {
-    console.log("Server started on http://localhost:3000");
-  });
+	// For development, use httpDevServer.
+	// An Express app instance is actually
+	// a request listener function, this
+	// is all we need to do:
+	httpDevServer.on("request", app);
 }
 ```
 
@@ -62,7 +53,7 @@ You can safely ignore the Vite warning about the missing client entry point that
 
 > (!) Could not auto-determine entry point from rollupOptions or html files and there are no explicit optimizeDeps.include patterns. Skipping dependency pre-bundling.
 
-You can build your server application for production with `npx vite build --ssr server.ts` and start it with `node dist/server.js`.
+You can build your server application for production with `npx vite build --ssr` and start it with `node dist/server`.
 
 ## Lazy loading handlers
 
@@ -73,18 +64,18 @@ A typical Node.js server application lifecycle consists of two phases. The first
 `@vavite/reloader` can be used to lazy load request handlers to avoid re-executing the initialization code unnecessarily: If you set the configuration option `reloadOn` to `"static-deps-change"` (instead of the default `"any-change"`), `@vavite/reloader` will not reload the server entry when its dynamically imported dependencies change. For example, if you have an Express route listener like this:
 
 ```ts
-import routeHandler from "./route-handler"
+import routeHandler from "./route-handler";
 
 app.get("/my-route", routeHandler);
 ```
 
-You can avoid re-executing your initialization code if you can refactor your code like this:
+You can avoid re-executing your initialization code by refactoring it like this:
 
 ```ts
 app.get("/my-route", async (req, res, next) => {
-  // Omitting error handling for brevity and clarity
-  const routeHandler = (await import("./route-handler")).default;
-  routeHandler(req, res, next);
+	// Omitting error handling for clarity
+	const routeHandler = (await import("./route-handler")).default;
+	routeHandler(req, res, next);
 });
 ```
 
@@ -93,22 +84,33 @@ This way, changes to your route handlers will not force a server reload and your
 If this lazy loading pattern feels too wordy, you can refactor it into a function suitable for your server framework. One possible implementation for Express could be:
 
 ```ts
-function lazy(importer: () => Promise<{default: RequestHandler}>): RequestHandler {
-  return async (req, res, next) => {
-    try {
-      const routeHandler = (await importer()).default;
-      routeHandler(req, res, next);
-    } catch (err) {
-      next(err);
-    }
-  };
+function lazy(
+	importer: () => Promise<{ default: RequestHandler }>,
+): RequestHandler {
+	return async (req, res, next) => {
+		try {
+			const routeHandler = (await importer()).default;
+			routeHandler(req, res, next);
+		} catch (err) {
+			next(err);
+		}
+	};
 }
 
 // When reloadOn option is set to "static-deps-change",
 // changes to the route handlers will not trigger a reload.
-app.get("/foo", lazy(() => import("./routes/foo")));
-app.get("/bar", lazy(() => import("./routes/bar")));
-app.get("/baz", lazy(() => import("./routes/baz")));
+app.get(
+	"/foo",
+	lazy(() => import("./routes/foo")),
+);
+app.get(
+	"/bar",
+	lazy(() => import("./routes/bar")),
+);
+app.get(
+	"/baz",
+	lazy(() => import("./routes/baz")),
+);
 ```
 
 ## Options

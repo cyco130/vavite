@@ -12,9 +12,9 @@
 			"import": "./dist/index.mjs",
 			"require": "./dist/index.js"
 		},
-		"./dev-server": {
-			"import": "./dist/dev-server.mjs",
-			"require": "./dist/dev-server.js"
+		"./http-dev-server": {
+			"import": "./dist/http-dev-server.mjs",
+			"require": "./dist/http-dev-server.js"
 		}
 	},
 	"description": "Vite plugin for hot hot reloading server applications",

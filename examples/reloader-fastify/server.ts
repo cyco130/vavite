@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 import Fastify, { RouteHandlerMethod } from "fastify";
-import devServer from "@vavite/reloader/dev-server";
+import devServer from "@vavite/reloader/http-dev-server";
 import viteDevServer from "@vavite/dev-server/server";
 import { AddressInfo } from "net";
 

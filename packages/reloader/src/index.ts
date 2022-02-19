@@ -1,4 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
+import crypto from "crypto";
 import type {
 	ConfigEnv,
 	Logger,
@@ -36,6 +37,11 @@ export default function vaviteReloaderPlugin({
 }: VaviteReloaderOptions = {}): Plugin {
 	let resolvedEntry: string;
 	let entryDeps: Set<string>;
+	let globalSymbol: string;
+
+	function getModuleContents() {
+		return `export default global.${globalSymbol}`;
+	}
 
 	let logger: Logger;
 	let configEnv: ConfigEnv;
@@ -109,31 +115,32 @@ export default function vaviteReloaderPlugin({
 
 		enforce: "pre",
 
-		resolveId(source, _importer, options) {
-			if (
-				source === "@vavite/reloader/dev-server" &&
-				configEnv.command === "serve" &&
-				options.ssr
-			) {
-				return "virtual:@vavite/reloader/dev-server";
+		buildStart() {
+			globalSymbol =
+				"VAVITE_HTTP_DEV_SERVER_" + crypto.randomBytes(20).toString("hex");
+		},
+
+		closeBundle() {
+			delete (global as any)[globalSymbol];
+		},
+
+		resolveId(source) {
+			if (source === "@vavite/reloader/http-dev-server") {
+				return "virtual:vavite-http-dev-server";
 			}
 		},
 
 		load(id, options) {
-			if (
-				id === "virtual:@vavite/reloader/dev-server" &&
-				configEnv.command === "serve" &&
-				options?.ssr
-			) {
+			if (id === "virtual:vavite-http-dev-server") {
 				if (!options?.ssr) {
 					this.error(
-						"'@vavite/reloader/dev-server' is only available in SSR mode",
+						"'vavite/http-dev-server' module is only available in SSR mode",
 					);
 				}
 
-				return options?.ssr
-					? RUNTIME_MODULE_CONTENTS
-					: RUNTIME_MODULE_CLIENT_PLACEHOLDER;
+				return options?.ssr && configEnv.command === "serve"
+					? getModuleContents()
+					: RUNTIME_MODULE_STUB;
 			}
 		},
 
@@ -198,7 +205,7 @@ export default function vaviteReloaderPlugin({
 			}
 
 			viteServer.httpServer?.on("listening", () => {
-				(global as any).__VAVITE_DEV_SERVER = new Proxy(server.httpServer!, {
+				(global as any)[globalSymbol] = new Proxy(server.httpServer!, {
 					get(target, prop) {
 						if (prop === "addListener" || prop === "on") {
 							return (event: string, ...rest: any) => {
@@ -243,11 +250,4 @@ export default function vaviteReloaderPlugin({
 	};
 }
 
-const RUNTIME_MODULE_CONTENTS = `
-	const devServer = __VAVITE_DEV_SERVER;
-	export default devServer;
-`;
-
-const RUNTIME_MODULE_CLIENT_PLACEHOLDER = `
-	throw new Error("@vavite/reloader/dev-server is only available in SSR mode");
-`;
+const RUNTIME_MODULE_STUB = `export default undefined`;

@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 import Hapi, { Lifecycle } from "@hapi/hapi";
-import devServer from "@vavite/reloader/dev-server";
+import devServer from "@vavite/reloader/http-dev-server";
 import viteDevServer from "@vavite/dev-server/server";
 import { Server as TlsServer } from "tls";
 
