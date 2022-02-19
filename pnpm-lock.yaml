@@ -69,7 +69,7 @@ importers:
       "@types/node": 17.0.15
       "@vavite/connect": link:../../packages/connect
       "@vavite/dev-server": link:../../packages/dev-server
-      "@vavite/multibuild": link:../../packages/multivite
+      "@vavite/multibuild": link:../../packages/multibuild
       typescript: 4.5.5
       vite: 2.8.1
 
@@ -159,6 +159,7 @@ importers:
       "@types/react-dom": ^17.0.11
       "@vavite/dev-server": 1.0.0-beta.8
       "@vavite/multibuild": 1.0.0-beta.8
+      "@vavite/multivite": 1.0.0-beta.8
       "@vavite/reloader": 1.0.0-beta.8
       "@vitejs/plugin-react": ^1.2.0
       cross-env: ^7.0.3
@@ -175,7 +176,8 @@ importers:
       "@types/react": 17.0.39
       "@types/react-dom": 17.0.11
       "@vavite/dev-server": link:../../packages/dev-server
-      "@vavite/multibuild": link:../../packages/multivite
+      "@vavite/multibuild": link:../../packages/multibuild
+      "@vavite/multivite": link:../../packages/multivite
       "@vavite/reloader": link:../../packages/reloader
       "@vitejs/plugin-react": 1.2.0
       cross-env: 7.0.3

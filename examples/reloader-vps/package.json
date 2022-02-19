@@ -3,7 +3,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite --open",
-		"build": "vite build",
+		"build": "multivite",
 		"start": "node dist/server"
 	},
 	"dependencies": {
@@ -13,6 +13,7 @@
 		"@types/react-dom": "^17.0.11",
 		"@vavite/dev-server": "1.0.0-beta.8",
 		"@vavite/multibuild": "1.0.0-beta.8",
+		"@vavite/multivite": "1.0.0-beta.8",
 		"@vavite/reloader": "1.0.0-beta.8",
 		"@vitejs/plugin-react": "^1.2.0",
 		"cross-env": "^7.0.3",

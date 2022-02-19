@@ -1,6 +1,7 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig([
+	// Plugin
 	{
 		entry: ["./src/index.ts"],
 		format: ["esm", "cjs"],
@@ -8,27 +9,26 @@ export default defineConfig([
 		target: "node14",
 		dts: true,
 	},
-	{
-		entry: ["./src/entry-standalone.ts", "./src/entry-middleware-with-sirv.ts"],
-		format: ["esm"],
-		platform: "node",
-		target: "esnext",
-		shims: false,
-		external: ["@vavite/connect/handler", "@vavite/connect/user-handler"],
-	},
+	// Standalone entry
 	{
 		entry: {
-			"entry-middleware-with-external-sirv":
-				"./src/entry-middleware-with-sirv.ts",
+			"entry-standalone": "./src/entry-standalone.ts",
+			"entry-standalone-imported-sirv": "./src/entry-standalone-with-sirv.ts",
 		},
 		format: ["esm"],
 		platform: "node",
 		target: "esnext",
 		shims: false,
-		external: [
-			"@vavite/connect/handler",
-			"@vavite/connect/user-handler",
-			"sirv",
-		],
+		external: ["/virtual:vavite-connect-handler"],
+	},
+	{
+		entry: {
+			"entry-standalone-bundled-sirv": "./src/entry-standalone-with-sirv.ts",
+		},
+		format: ["esm"],
+		platform: "node",
+		target: "esnext",
+		shims: false,
+		external: ["sirv", "/virtual:vavite-connect-handler"],
 	},
 ]);

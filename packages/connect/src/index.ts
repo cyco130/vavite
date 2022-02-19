@@ -2,10 +2,13 @@ import type { Plugin } from "vite";
 
 export interface VaviteConnectOptions {
 	/** Entry module that default exports a middleware function.
-	 * @default "/index" (which resolves to index.js, index.ts etc.
+	 * @default "/handler" (which resolves to handler.js, handler.ts etc.
 	 * in your project root)
 	 */
 	handlerEntry?: string;
+
+	/** Cusotm server entry the production build. */
+	customServerEntry?: string;
 
 	/** Whether to serve client-side assets in development.
 	 * @default false
@@ -30,39 +33,49 @@ export interface VaviteConnectOptions {
 	bundleSirv?: boolean;
 }
 
-export default function vaviteConnect({
-	handlerEntry = "/index",
-	serveClientAssetsInDev = false,
-	standalone = true,
-	clientAssetsDir = null,
-	bundleSirv = true,
-}: VaviteConnectOptions = {}): Plugin[] {
+export default function vaviteConnect(
+	options: VaviteConnectOptions = {},
+): Plugin[] {
+	const {
+		handlerEntry = "/handler",
+		customServerEntry,
+		serveClientAssetsInDev = false,
+		standalone = true,
+		clientAssetsDir = null,
+		bundleSirv = true,
+	} = options;
+
+	let handlerEntryPath: string | null;
+	let serverEntryPath: string | null;
+
 	return [
 		{
 			name: "@vavite/connect:resolve",
 
 			enforce: "pre",
 
-			resolveId(id, importer, options) {
-				if (id === "@vavite/connect/handler") {
+			async resolveId(id, importer, options) {
+				if (id === "/virtual:vavite-connect-handler") {
+					return this.resolve(handlerEntry, importer, options).then((r) => {
+						handlerEntryPath = r && r.id;
+						return r;
+					});
+				} else if (id === "/virtual:vavite-connect-server") {
 					return this.resolve(
 						clientAssetsDir
 							? bundleSirv
-								? "@vavite/connect/entry-middleware-with-sirv"
-								: "@vavite/connect/entry-middleware-with-external-sirv"
-							: handlerEntry,
+								? "@vavite/connect/entry-standalone-bundled-sirv"
+								: "@vavite/connect/entry-standalone-imported-sirv"
+							: "@vavite/connect/entry-standalone",
+
 						undefined,
-						options,
-					);
-				} else if (id === "@vavite/connect/user-handler") {
-					return this.resolve(handlerEntry, undefined, {
-						...options,
-						skipSelf: true,
-					});
-				} else if (id.endsWith("virtual:@vavite/connect/entry/index")) {
-					return this.resolve("@vavite/connect/entry-standalone", undefined, {
-						...options,
-						skipSelf: true,
+						{
+							...options,
+							skipSelf: true,
+						},
+					).then((r) => {
+						serverEntryPath = r && r.id;
+						return r;
 					});
 				}
 			},
@@ -74,20 +87,35 @@ export default function vaviteConnect({
 
 			config(config, env) {
 				if (env.command === "build" && config.build?.ssr) {
-					if (config.build?.ssr === true) {
-						config.build.ssr = standalone
-							? "/virtual:@vavite/connect/entry/index"
-							: handlerEntry;
-					}
-
-					if (clientAssetsDir) {
-						return {
-							define: {
-								__VAVITE_CLIENT_BUILD_OUTPUT_DIR:
-									JSON.stringify(clientAssetsDir),
+					return {
+						build: {
+							rollupOptions: {
+								input: [
+									customServerEntry ||
+										(standalone
+											? "/virtual:vavite-connect-server"
+											: "/virtual:vavite-connect-handler"),
+								],
+								output: {
+									entryFileNames(chunk) {
+										if (chunk.facadeModuleId === serverEntryPath) {
+											return "server.js";
+										} else if (chunk.facadeModuleId === handlerEntryPath) {
+											return "handler.js";
+										} else {
+											return "[name].js";
+										}
+									},
+								},
 							},
-						};
-					}
+						},
+						define: clientAssetsDir
+							? {
+									__VAVITE_CLIENT_BUILD_OUTPUT_DIR:
+										JSON.stringify(clientAssetsDir),
+							  }
+							: {},
+					};
 				}
 			},
 

@@ -37,6 +37,17 @@ export async function multivite(config: InlineConfig = {}) {
 	for (const [i, step] of steps.entries()) {
 		let resolvedStepConfig: ResolvedConfig;
 
+		initialConfig.logger.info(
+			(i ? "\n" : "") +
+				colors.cyan("multivite: ") +
+				colors.white("running build step") +
+				" " +
+				colors.blue(step.name) +
+				" (" +
+				colors.green(i + 1 + "/" + steps.length) +
+				")",
+		);
+
 		await build({
 			...step.config,
 			currentBuildStep: step,

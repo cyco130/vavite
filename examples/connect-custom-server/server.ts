@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 import express from "express";
-import handler from "@vavite/connect/handler";
+import handler from "./handler";
 
 const app = express();
 

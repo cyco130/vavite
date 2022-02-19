@@ -1,13 +1,12 @@
 {
 	"name": "@vavite/netlify",
 	"version": "1.0.0-beta.8",
-	"type": "module",
-	"module": "./dist/index.js",
+	"module": "./dist/index.mjs",
 	"files": [
 		"dist",
 		"*.d.ts"
 	],
-	"main": "./dist/index.cjs",
+	"main": "./dist/index.js",
 	"exports": {
 		".": {
 			"import": "./dist/index.js",

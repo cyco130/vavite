@@ -4,7 +4,7 @@
 	"scripts": {
 		"start": "node dist/server",
 		"dev": "vite --open",
-		"build": "vite build --ssr server.ts"
+		"build": "vite build --ssr"
 	},
 	"devDependencies": {
 		"@types/express": "^4.17.13",

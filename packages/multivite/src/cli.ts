@@ -3,6 +3,7 @@
 import { BuildOptions, LogLevel } from "vite";
 import { cac } from "cac";
 import { multivite } from ".";
+import { version } from "../package.json";
 
 interface GlobalCLIOptions {
 	"--"?: string[];
@@ -97,3 +98,8 @@ cli
 			build: buildOptions,
 		});
 	});
+
+cli.help();
+cli.version(version);
+
+cli.parse();

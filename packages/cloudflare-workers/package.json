@@ -1,13 +1,12 @@
 {
 	"name": "@vavite/cloudflare-workers",
 	"version": "1.0.0-beta.8",
-	"type": "module",
 	"files": [
 		"dist",
 		"*.d.ts"
 	],
-	"module": "./dist/index.js",
-	"main": "./dist/index.cjs",
+	"module": "./dist/index.mjs",
+	"main": "./dist/index.js",
 	"exports": {
 		".": {
 			"import": "./dist/index.js",

@@ -1,5 +1,5 @@
 const express = require("express");
-const handler = require("./dist").default;
+const handler = require("./dist/handler").default;
 
 const app = express();
 

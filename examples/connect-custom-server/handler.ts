@@ -7,7 +7,7 @@ export default function handler(
 ) {
 	if (req.url === "/") {
 		res.setHeader("Content-Type", "text/html; charset=utf-8");
-		res.end("<h1>Hello from standalone!</h1>");
+		res.end("<h1>Hello from custom server!</h1>");
 	} else {
 		next();
 	}

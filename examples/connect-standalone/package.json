@@ -2,7 +2,7 @@
 	"name": "@vavite/example-connect-standalone",
 	"private": true,
 	"scripts": {
-		"start": "node dist",
+		"start": "node dist/server",
 		"dev": "vite --open",
 		"build": "vite build --ssr"
 	},

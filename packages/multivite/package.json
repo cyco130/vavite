@@ -1,25 +1,20 @@
 {
-	"name": "@vavite/multibuild",
+	"name": "@vavite/multivite",
 	"version": "1.0.0-beta.8",
-	"main": "./dist/index.cjs",
-	"module": "./dist/index.js",
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
 	"exports": {
 		".": {
 			"import": "./dist/index.mjs",
 			"require": "./dist/index.js"
-		},
-		"./entry-standalone": {
-			"import": "./dist/entry-standalone.mjs"
-		},
-		"./entry-middleware-with-sirv": {
-			"import": "./dist/entry-middleware-with-sirv.mjs"
-		},
-		"./entry-middleware-with-external-sirv": {
-			"import": "./dist/entry-middleware-with-external-sirv.mjs"
 		}
+	},
+	"bin": {
+		"multivite": "./cli.js"
 	},
 	"files": [
 		"dist",
+		"cli.js",
 		"*.d.ts"
 	],
 	"description": "Vite plugin for triggering multiple builds from a single vite build command",

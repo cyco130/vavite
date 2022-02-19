@@ -1,8 +1,8 @@
 {
 	"name": "@vavite/connect",
 	"version": "1.0.0-beta.8",
-	"main": "./dist/index.cjs",
-	"module": "./dist/index.js",
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
 	"exports": {
 		".": {
 			"import": "./dist/index.mjs",
@@ -11,11 +11,11 @@
 		"./entry-standalone": {
 			"import": "./dist/entry-standalone.mjs"
 		},
-		"./entry-middleware-with-sirv": {
-			"import": "./dist/entry-middleware-with-sirv.mjs"
+		"./entry-standalone-bundled-sirv": {
+			"import": "./dist/entry-standalone-bundled-sirv.mjs"
 		},
-		"./entry-middleware-with-external-sirv": {
-			"import": "./dist/entry-middleware-with-external-sirv.mjs"
+		"./entry-standalone-imported-sirv": {
+			"import": "./dist/entry-standalone-imported-sirv.mjs"
 		}
 	},
 	"files": [
