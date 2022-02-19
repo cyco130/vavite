@@ -1,5 +1,5 @@
 import { Middleware } from "koa";
-import viteDevServer from "@vavite/dev-server/server";
+import viteDevServer from "@vavite/expose-vite-dev-server/vite-dev-server";
 import nav from "./nav";
 
 const barRoute: Middleware = async (ctx, next) => {

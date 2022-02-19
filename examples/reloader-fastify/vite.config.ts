@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import vaviteReloader from "@vavite/reloader";
-import vaviteDevServer from "@vavite/dev-server";
+import exposeViteDevServer from "@vavite/expose-vite-dev-server";
 
 export default defineConfig({
 	plugins: [
@@ -8,6 +8,6 @@ export default defineConfig({
 			reloadOn: "static-deps-change",
 			serveClientAssetsInDev: true,
 		}),
-		vaviteDevServer(),
+		exposeViteDevServer(),
 	],
 });

@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react";
 import ssr from "vite-plugin-ssr/plugin";
 import { UserConfig } from "vite";
 import vaviteReloader from "@vavite/reloader";
-import vaviteDevServer from "@vavite/dev-server";
+import exposeViteDevServer from "@vavite/expose-vite-dev-server";
 // import vaviteMultiBuild from "@vavite/multibuild";
 
 const config: UserConfig = {
@@ -32,7 +32,7 @@ const config: UserConfig = {
 		}),
 		*/
 		vaviteReloader({ serveClientAssetsInDev: true }),
-		vaviteDevServer(),
+		exposeViteDevServer(),
 		react(),
 		ssr(),
 	],

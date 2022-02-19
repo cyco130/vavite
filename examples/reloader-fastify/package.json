@@ -11,7 +11,7 @@
 	],
 	"devDependencies": {
 		"@types/node": "^17.0.15",
-		"@vavite/dev-server": "1.0.0-beta.8",
+		"@vavite/expose-vite-dev-server": "1.0.0-beta.8",
 		"@vavite/reloader": "1.0.0-beta.8",
 		"typescript": "^4.5.5",
 		"vite": "^2.8.1"

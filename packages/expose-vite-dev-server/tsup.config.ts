@@ -9,7 +9,7 @@ export default defineConfig([
 		dts: true,
 	},
 	{
-		entry: ["./src/server.ts"],
+		entry: ["./src/vite-dev-server.ts"],
 		format: ["esm"],
 		platform: "node",
 		target: "node14",

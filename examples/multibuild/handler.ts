@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 import type { IncomingMessage, ServerResponse } from "http";
-import viteDevServer from "@vavite/dev-server/server";
+import viteDevServer from "@vavite/expose-vite-dev-server/vite-dev-server";
 
 // This is a simple hack to avoid loading the manifest in development (where it doesn't exist).
 let manifest: Promise<any>;

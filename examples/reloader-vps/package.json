@@ -11,7 +11,7 @@
 		"@types/node": "^17.0.17",
 		"@types/react": "^17.0.39",
 		"@types/react-dom": "^17.0.11",
-		"@vavite/dev-server": "1.0.0-beta.8",
+		"@vavite/expose-vite-dev-server": "1.0.0-beta.8",
 		"@vavite/multibuild": "1.0.0-beta.8",
 		"@vavite/multivite": "1.0.0-beta.8",
 		"@vavite/reloader": "1.0.0-beta.8",

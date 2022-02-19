@@ -2,7 +2,7 @@
 
 import express, { RequestHandler } from "express";
 import devServer from "@vavite/reloader/http-dev-server";
-import viteDevServer from "@vavite/dev-server/server";
+import viteDevServer from "@vavite/expose-vite-dev-server/vite-dev-server";
 
 const app = express();
 

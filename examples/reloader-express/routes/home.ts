@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import viteDevServer from "@vavite/dev-server/server";
+import viteDevServer from "@vavite/expose-vite-dev-server/vite-dev-server";
 import nav from "./nav";
 
 const homeRoute: RequestHandler = async (req, res, next) => {

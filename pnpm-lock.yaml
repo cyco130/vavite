@@ -61,14 +61,14 @@ importers:
     specifiers:
       "@types/node": ^17.0.15
       "@vavite/connect": 1.0.0-beta.8
-      "@vavite/dev-server": 1.0.0-beta.8
+      "@vavite/expose-vite-dev-server": 1.0.0-beta.8
       "@vavite/multibuild": 1.0.0-beta.8
       typescript: ^4.5.5
       vite: ^2.8.1
     devDependencies:
       "@types/node": 17.0.15
       "@vavite/connect": link:../../packages/connect
-      "@vavite/dev-server": link:../../packages/dev-server
+      "@vavite/expose-vite-dev-server": link:../../packages/expose-vite-dev-server
       "@vavite/multibuild": link:../../packages/multibuild
       typescript: 4.5.5
       vite: 2.8.1
@@ -77,7 +77,7 @@ importers:
     specifiers:
       "@types/express": ^4.17.13
       "@types/node": ^17.0.15
-      "@vavite/dev-server": 1.0.0-beta.8
+      "@vavite/expose-vite-dev-server": 1.0.0-beta.8
       "@vavite/reloader": 1.0.0-beta.8
       express: ^4.17.2
       typescript: ^4.5.5
@@ -87,7 +87,7 @@ importers:
     devDependencies:
       "@types/express": 4.17.13
       "@types/node": 17.0.15
-      "@vavite/dev-server": link:../../packages/dev-server
+      "@vavite/expose-vite-dev-server": link:../../packages/expose-vite-dev-server
       "@vavite/reloader": link:../../packages/reloader
       typescript: 4.5.5
       vite: 2.8.1
@@ -95,7 +95,7 @@ importers:
   examples/reloader-fastify:
     specifiers:
       "@types/node": ^17.0.15
-      "@vavite/dev-server": 1.0.0-beta.8
+      "@vavite/expose-vite-dev-server": 1.0.0-beta.8
       "@vavite/reloader": 1.0.0-beta.8
       fastify: ^3.27.1
       typescript: ^4.5.5
@@ -104,7 +104,7 @@ importers:
       fastify: 3.27.1
     devDependencies:
       "@types/node": 17.0.15
-      "@vavite/dev-server": link:../../packages/dev-server
+      "@vavite/expose-vite-dev-server": link:../../packages/expose-vite-dev-server
       "@vavite/reloader": link:../../packages/reloader
       typescript: 4.5.5
       vite: 2.8.1
@@ -114,7 +114,7 @@ importers:
       "@hapi/hapi": ^20.2.1
       "@types/hapi__hapi": ^20.0.10
       "@types/node": ^17.0.15
-      "@vavite/dev-server": 1.0.0-beta.8
+      "@vavite/expose-vite-dev-server": 1.0.0-beta.8
       "@vavite/reloader": 1.0.0-beta.8
       typescript: ^4.5.5
       vite: ^2.8.1
@@ -123,7 +123,7 @@ importers:
     devDependencies:
       "@types/hapi__hapi": 20.0.10
       "@types/node": 17.0.15
-      "@vavite/dev-server": link:../../packages/dev-server
+      "@vavite/expose-vite-dev-server": link:../../packages/expose-vite-dev-server
       "@vavite/reloader": link:../../packages/reloader
       typescript: 4.5.5
       vite: 2.8.1
@@ -134,7 +134,7 @@ importers:
       "@types/koa": ^2.13.4
       "@types/koa__router": ^8.0.11
       "@types/node": ^17.0.15
-      "@vavite/dev-server": 1.0.0-beta.8
+      "@vavite/expose-vite-dev-server": 1.0.0-beta.8
       "@vavite/reloader": 1.0.0-beta.8
       koa: ^2.13.4
       typescript: ^4.5.5
@@ -146,7 +146,7 @@ importers:
       "@types/koa": 2.13.4
       "@types/koa__router": 8.0.11
       "@types/node": 17.0.15
-      "@vavite/dev-server": link:../../packages/dev-server
+      "@vavite/expose-vite-dev-server": link:../../packages/expose-vite-dev-server
       "@vavite/reloader": link:../../packages/reloader
       typescript: 4.5.5
       vite: 2.8.1
@@ -157,7 +157,7 @@ importers:
       "@types/node": ^17.0.17
       "@types/react": ^17.0.39
       "@types/react-dom": ^17.0.11
-      "@vavite/dev-server": 1.0.0-beta.8
+      "@vavite/expose-vite-dev-server": 1.0.0-beta.8
       "@vavite/multibuild": 1.0.0-beta.8
       "@vavite/multivite": 1.0.0-beta.8
       "@vavite/reloader": 1.0.0-beta.8
@@ -175,7 +175,7 @@ importers:
       "@types/node": 17.0.17
       "@types/react": 17.0.39
       "@types/react-dom": 17.0.11
-      "@vavite/dev-server": link:../../packages/dev-server
+      "@vavite/expose-vite-dev-server": link:../../packages/expose-vite-dev-server
       "@vavite/multibuild": link:../../packages/multibuild
       "@vavite/multivite": link:../../packages/multivite
       "@vavite/reloader": link:../../packages/reloader
@@ -231,7 +231,7 @@ importers:
       typescript: 4.5.5
       vite: 2.8.1
 
-  packages/dev-server:
+  packages/expose-vite-dev-server:
     specifiers:
       "@cyco130/eslint-config": ^1.0.0
       "@types/node": ^17.0.10
@@ -241,7 +241,7 @@ importers:
       vite: ^2.8.1
     devDependencies:
       "@cyco130/eslint-config": 1.0.0_eslint@8.7.0+typescript@4.5.5
-      "@types/node": 17.0.15
+      "@types/node": 17.0.17
       eslint: 8.7.0
       tsup: 5.11.11_typescript@4.5.5
       typescript: 4.5.5

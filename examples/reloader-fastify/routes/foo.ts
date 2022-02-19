@@ -1,5 +1,5 @@
 import { RouteHandlerMethod } from "fastify";
-import viteDevServer from "@vavite/dev-server/server";
+import viteDevServer from "@vavite/expose-vite-dev-server/vite-dev-server";
 import nav from "./nav";
 
 const fooRoute: RouteHandlerMethod = async (req, res) => {

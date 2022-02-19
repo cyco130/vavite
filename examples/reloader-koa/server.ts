@@ -3,7 +3,7 @@
 import Koa, { Middleware } from "koa";
 import Router from "@koa/router";
 import devServer from "@vavite/reloader/http-dev-server";
-import viteDevServer from "@vavite/dev-server/server";
+import viteDevServer from "@vavite/expose-vite-dev-server/vite-dev-server";
 
 const app = new Koa();
 const router = new Router();

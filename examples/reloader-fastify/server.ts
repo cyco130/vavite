@@ -2,7 +2,7 @@
 
 import Fastify, { RouteHandlerMethod } from "fastify";
 import devServer from "@vavite/reloader/http-dev-server";
-import viteDevServer from "@vavite/dev-server/server";
+import viteDevServer from "@vavite/expose-vite-dev-server/vite-dev-server";
 import { AddressInfo } from "net";
 
 const fastify = Fastify({

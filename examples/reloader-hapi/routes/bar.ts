@@ -1,5 +1,5 @@
 import { Lifecycle } from "@hapi/hapi";
-import viteDevServer from "@vavite/dev-server/server";
+import viteDevServer from "@vavite/expose-vite-dev-server/vite-dev-server";
 import nav from "./nav";
 
 const barRoute: Lifecycle.Method = async (req, h) => {

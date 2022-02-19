@@ -3,7 +3,7 @@
 import express from "express";
 import { createPageRenderer } from "vite-plugin-ssr";
 import httpServer from "@vavite/reloader/http-dev-server";
-import viteDevServer from "@vavite/dev-server/server";
+import viteDevServer from "@vavite/expose-vite-dev-server/vite-dev-server";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 

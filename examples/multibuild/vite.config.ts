@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import vaviteConnect from "@vavite/connect";
-import vaviteDevServer from "@vavite/dev-server";
+import exposeViteDevServer from "@vavite/expose-vite-dev-server";
 import vaviteMultiBuild from "@vavite/multibuild";
 
 export default defineConfig({
@@ -38,6 +38,6 @@ export default defineConfig({
 			serveClientAssetsInDev: true,
 		}),
 
-		vaviteDevServer(),
+		exposeViteDevServer(),
 	],
 });
