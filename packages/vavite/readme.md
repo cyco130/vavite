@@ -1,126 +1,187 @@
 # Va vite!
 
-`vavite` is a Vite plugin that provides SSR functionality that is environment, cloud, framework, and meta-framework agnostic. It achieves this by means of “environment adapters” that convert the request representation of their specific environment into an environment-agnostic representation, calls your request handler, and converts the environment-agnostic response representation returned from your handler into whatever the specific environment expects. It also provides escape hatches for direct handling of the environment-specific request or the response.
+`vavite` is a set of tools for developing and building server-side applications with [Vite](https://vitejs.dev).
 
-Adapters for Vite's development server and Node.js are built in. [`@vavite/cloudflare-workers`](https://github.com/cyco130/vavite/blob/main/packages/cloudflare-workers), [`@vavite/netlify`](https://github.com/cyco130/vavite/blob/main/packages/netlify), and [`@vavite/vercel`](https://github.com/cyco130/vavite/blob/main/packages/vercel) packages provide adapters for Cloudflare Workers, Netlify Functions, and Vercel respectively.
+Vite, despite being a frontend tool, has support for transpiling server-side code. The feature is intended for building [server-side rendering (SSR)](https://vitejs.dev/guide/ssr.html) applications. But there's no reason why it can't be leveraged for building server-side applications that are not necessarily related to SSR.
 
-## Usage
+Vite's official SSR guide describes a workflow where Vite's development server is used as a middleware function in a server application made with a [Connect](https://github.com/senchalabs/connect) compatible Node.js framework (like [Express](https://expressjs.com)). If your server-side code needs transpilation (e.g. for TypeScript), this workflow requires you to use another set of tools (say [`ts-node`](https://typestrong.org/ts-node/) and [`nodemon`](https://nodemon.io/)) for development and building. `vavite` enables you to use Vite itself to transpile your server-side code.
 
-Install as a dev dependency and add it to your Vite config like this:
+## Examples
+
+- [simple-standalone](simple-standalone): Simple handlerEntry example
+- [ssr-react-express](ssr-react-express): React SSR with Express
+- [ssr-vue-express](ssr-vue-express): Vue SSR with Express
+- [vite-plugin-ssr](vite-plugin-ssr): vite-plugin-ssr with React and express
+- [express](express): Integrating with Express
+- [koa](koa): Integrating with Koa
+- [fastify](fastify): Integrating Fastify
+- [hapi](hapi): Integrating with Hapi
+
+## Installation and usage
+
+Install `vite` and `vavite` as development dependencies (`npm install --save-dev vite vavite`) and add `vavite` to your Vite config:
 
 ```ts
 import { defineConfig } from "vite";
 import vavite from "vavite";
 
 export default defineConfig({
-  plugins: [ vavite() ],
+	plugins: [
+		vavite({
+			// Options, see below
+		}),
+	],
 });
 ```
 
-Now, when you run `vite dev`, it will look for a `handler.js` (or `.ts`, or any other extension specified `resolve.extensions`) in your project root. You can change the default with `vavite({ handlerEntry: "my-handler.ts" })`. The handler file is supposed to default export a request handler that receives an `IncomingRequest` and return an `OutgoingResponse` (or a promise of one).
+## Using `serverEntry`
 
-When you build with `vite build`, it will first build a client bundle, then the server-side code. If you don't use any adapters, the build will create a `dist/server/index.js` which is a Node.js server. You can use `vavite({ serverEntry: "vavite/no-sirv" })` to omit bundling [`sirv`](https://github.com/lukeed/sirv) which is used for serving static files (because your reverse proxy already does it, for instance). You can also use `vavite/middleware` to build a connect-style middleware instead of a full application.
+By setting the `serverEntry` option without setting the `handlerEntry`, you can use `vavite` to develop and build Node.js application with Express, Koa, Fastify, Hapi, or any other Node.js framework that allows you to provide your own `http.Server` instance. To integrate with Vite's dev server during development, you `import httpDevServer from "vavite/http-dev-server"` and use it in place of a `http.Server` instance. How to do this depends on the framework:
 
-If you're using an adapter, the dev server works the same way while the build will create a bundle suitable for the target environment.
-
-## Accessing client build artifacts
-
-Your server-side code can access the manifests from the client build by importing them via `@vavite/manifest` and `@vavite/ssr-manifest`. In dev mode, the SSR manifest will be an empty object while the client manifest will be a special proxy object that maps each file to itself.
-
-You can also access the content of `index.html` (if it exists) in its processed form by importing `@vavite/html`. In dev, it will return the unprocessed `index.html`: vavite will call `transformIndexHtml` for you if your response's content type is `text/html`.
-
-When authoring an adapter or a custom entry, user's handler module is accessible via `@vavite/handler`.
-
-## Request and response formats
-
-The canonical request object passed to the handler function looks like this:
+Some frameworks expose their request listener: For example in Express, `app` is itself the request listener and in Koa you can access it with `app.callback()`:
 
 ```ts
-export interface IncomingRequest {
-  /** Environment specific request representation as an escape hatch */
-  raw: any;
-  /** IP address of the end user */
-  ip: string;
-  /** URL of the current request */
-  url: URL;
-  /** HTTP method */
-  method: string;
-  /** Request headers */
-  headers: Record<string, string | undefined>;
-  /** Request body */
-  body: RequestBody;
+import express from "express";
+import httpDevServer from "vavite/http-dev-server";
+
+const app = express();
+
+// Configure your server here
+app.get("/", (req, res) => {
+	res.send("Hello, world!");
+});
+
+if (import.meta.env.PROD) {
+	// For production, start your server
+	// as you would normally do.
+	app.listen(3000, "localhost", () => {
+		console.log("Server started on http://localhost:3000");
+	});
+} else {
+	// For development, use httpDevServer.
+	httpDevServer!.on("request", app);
 }
 ```
 
-The `RequestBody` supports streaming reads where available and looks like this:
+Other frameworks don't expose their request listener but instead allow you to provide a server instance. See the examples for [Express](../../examples/reloader-express), [Koa](../../examples/reloader-koa), [Fastify](../../examples/reloader-fastify), and [Hapi](../../examples/reloader-hapi) to see specific implementations.
+
+In SSR application, you can enable the serving of client assets by setting `serveClientAssetsInDev` option to true. For production, you will have to serve the assets yourself, e.g. by using [`express.static`](https://expressjs.com/en/starter/static-files.html).
+
+### Lazy loading route handlers
+
+One of the most important advantages of Vite is its on-demand nature: Modules are only transpiled when they are actually used. By default, `vavite` reloads your server entry every time one of its dependencies changes. Since the server entry is the the root of the dependency tree, this means _any_ change in your server-side code will trigger a full reload. Although it works, it doesn't tap into the full potential of Vite.
+
+A typical Node.js server application lifecycle consists of two phases. The first is the initialization phase where you create and configure your server instance and the second is the request listening phase where the application services incoming requests as they come in. Typically, the initialization code changes less often and request listeners change more often and more granularly.
+
+`vavite` can be used to lazy load request handlers to avoid re-executing the initialization code unnecessarily: If you set the configuration option `reloadOn` to `"static-deps-change"` (instead of the default `"any-change"`), `vavite` will not reload the server entry when its dynamically imported dependencies change. For example, if you have an Express route listener like this:
 
 ```ts
-export interface RequestBody {
-  /** Read all as a UTF-8 encoded string */
-  text(): Promise<string>;
-  /** Read all as a an array of bytes */
-  binary(): Promise<Uint8Array>;
-  /** A stream of bytes */
-  stream(): AsyncGenerator<Uint8Array>;
+import routeHandler from "./route-handler";
+
+app.get("/my-route", routeHandler);
+```
+
+You can avoid re-executing your initialization code by refactoring it like this:
+
+```ts
+app.get("/my-route", async (req, res, next) => {
+	// Omitting error handling for clarity
+	const routeHandler = (await import("./route-handler")).default;
+	routeHandler(req, res, next);
+});
+```
+
+This way, changes to your route handlers will not force a server reload and your route handler will only be transpiled and loaded when a request to the path `"/my-route"` comes in, greatly improving development-time performance.
+
+If this lazy loading pattern feels too wordy, you can refactor it into a function suitable for your server framework. One possible implementation for Express could be:
+
+```ts
+function lazy(
+  importer: () => Promise<{ default: RequestHandler }>,
+): RequestHandler {
+  return async (req, res, next) => {
+    try {
+      const routeHandler = (await importer()).default;
+      routeHandler(req, res, next);
+    } catch (err) {
+      next(err);
+    }
+  };
 }
+
+// When reloadOn option is set to "static-deps-change",
+// changes to the route handlers will not trigger a reload.
+app.get"/foo", lazy(() => import("./routes/foo")));
+
+app.get("/bar", lazy(() => import("./routes/bar")));
+
+app.get("/baz", lazy(() => import("./routes/baz")));
+
 ```
 
-The response object looks like this:
+## Using `handlerEntry`
+
+This option provides a simpler workflow if you don't need to control the server setup during development.
+
+If you provide the `handlerEntry` option instead of a `serverEntry`, `vavite` will expect you to default export a request handler (with the `(req, res, next)` signature) from the `handlerEntry` file. During development, it will be used as a middleware function in the Vite development server, allowing you to handle requests. For production, `vavite` will build a standalone server application if `standalone` option is set to `true`. You can set it to `false` if you intend to import and use your handler function in a separate server application.
+
+If you're building a standalone SSR application, you can set `clientAssetsDir` to the directory that will contain your client-side assets abd the [`sirv`](https://github.com/lukeed/sirv) package will be used to serve them during production. If `serveClientAssetsInDev` to `true` (the default), they will be served during development too. You can set `bundleSirv` to `false` to import `sirv` in runtime instead of bundling it. In that case you will have to install it as a dependency. In either case, you can export `sirvOptions` from the handler entry file to customize the behavior of `sirv`.
+
+If you set `serverEntry` in addition to `handlerEntry`, it will be used as the entry point in production **but it will not be used in development**. In that case, `sirv` will not be used and you will have to handle the serving of client assets in production yourself if needed.
+
+`vavite/http-dev-server` is not available (or necessary) when using the handler mode.
+
+## Accessing Vite's dev server
+
+You can `import viteDevServer from "vavite/vite-dev-server"` to access the Vite development server instance. It will allow you to access methods such as `ssrFixStacktrace` and `transformIndexHtml` in your application.
+
+## Multiple builds
+
+Developing applications that perform server-side rendering (SSR) with Vite requires two separate build steps: one for the client and one for the server. This package comes with a CLI program named `vavite` for orchestrating multiple Vite builds.
+
+`vavite` extends the Vite configuration with a `buildSteps` property, which is an array of build step definitions. A build step definition is an object with a `name` property (which is simply a string naming the build step), and an optional `config` property which will be merged into the Vite configuration for the build step. For example, a client build followed by a server build can be defined like this:
 
 ```ts
-export interface OutgoingResponse {
-  /** HTTP status code */
-  status?: number;
-  /** Response headers */
-  headers?: Record<string, undefined | string | string[]>;
-  /** Response body */
-  body?: ResponseBody;
-}
+import { defineConfig } from "vite";
+import vavite from "vavite";
+
+export default defineConfig({
+	plugins: [
+		vavite({
+			// Options
+		}),
+	],
+	buildSteps: [
+		{
+			name: "client",
+			config: {
+				build: {
+					outDir: "dist/client",
+					rollupOptions: {
+						// Client entry
+						input: "/client",
+					},
+				},
+			},
+		},
+		{
+			name: "server",
+			config: {
+				build: {
+					// Server entry
+					ssr: "/server",
+					outDir: "dist/server",
+				},
+			},
+		},
+	],
+});
 ```
 
-The response body also supports streaming where available and can be any of the following:
+If you include the `vavite` plugin and a `buildSteps` option in your Vite config, the plugin will error out if you try to build with `vite build`. You're expected to use the `vavite` command as a drop-in replacement for `vite build` instead. This will first call `resolveConfig` with the `mode` parameter set to `"multibuild"` to extract the build steps. Setting `buildSteps` in subsequent steps has no effect.Then the build steps will be executed in the order they are defined.
 
-```ts
-export type ResponseBody =
-  // Empty body
-  | undefined
-  | null
-  // UTF-8 encoded string
-  | string
-  // Array of bytes
-  | Uint8Array
-  // A stream of bytes
-  | AsyncGenerator<Uint8Array>
-  // A stream of UTF-8 encoded strings
-  | AsyncGenerator<string>;
-```
+### Sharing information between builds
 
-The response can also be in the form of `{ raw: ... }`. If it is, it will be passed as a raw response to the environment adapter.
+`vavite` will call the `buildStepStart` hook on each plugin when a build step starts and pass it the information about the current step and data forwarded from the previous step. The `buildStepEnd` hook will be called when the build step ends and its return value will be forwarded to the next step. If a promise is returned, it will be awaited first.
 
-Your handler can also return `undefined` or a promise that resolves to `undefined` to signal that it didn't handle the request. If you're using a middleware adapter, it will pass the request to the next middleware; otherwise a generic 404 response will be returned.
-
-## Raw request and response for built-in adapters
-
-The built-in adapters pass `{ req: http.IncomingRequest, res: ServerResponse }` in `IncognitoRequest.raw`. The raw response value will not be used but if you return `{ raw: any }` as the response, vavite will assume that you already handled the response using `request.raw.res.end()`.
-
-## Package exports
-
-| Entry                  | Description                                          |
-| ---------------------- | ---------------------------------------------------- |
-| `vavite`               | Vite plugin and types                                |
-| `vavite/entry`         | Entry point for Node HTTP server with `sirv` bundled |
-| `vavite/no-sirv`       | Entry point for Node HTTP server without `sirv`      |
-| `vavite/middleware`    | Entry point for connect-like middleware (no `sirv`)  |
-| `@vavite/handler`      | Resolves to the user's handler entry                 |
-| `@vavite/manifest`     | Vite manifest                                        |
-| `@vavite/ssr-manifest` | Vite SSR manifest                                    |
-| `@vavite/html`         | Contents of `index.html`                             |
-
-## Adapter authoring check-list
-
-You can use the testbed project in the repo. Run `CI=1 TEST_HOST="<YOUR HOST>" pnpx vitest` to run the end-to-end tests in the `e2e.test.ts` file.
-
-1. Make sure it doesn't break the dev command when your adapter plugin is active by running `pnpm dev` and testing with `CI=1 TEST_HOST="localhost:3000" pnpx vitest` on a different terminal.
-2. Deploy to your adapter's target environment and run the end-to-end tests again on the deployed URL.
-3. Manually check the pages `/` and `/react` that the button is purple and is incrementing the counter (TODO: Write an automatic test for this).
-4. If your target environment supports streaming responses, run `curl -ND - '<YOUR HOST>/bin-stream?delay=50'` and observe the typewriter effect.
+If no build steps are defined, `buildStepStart` and `buildStepEnd` will not be called.

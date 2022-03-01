@@ -1,0 +1,24 @@
+{
+	"name": "@vavite/example-koa",
+	"private": true,
+	"scripts": {
+		"start": "node dist",
+		"dev": "vite --open",
+		"build": "vite build --ssr"
+	},
+	"files": [
+		"dist"
+	],
+	"devDependencies": {
+		"@types/koa": "^2.13.4",
+		"@types/koa__router": "^8.0.11",
+		"@types/node": "^17.0.15",
+		"typescript": "^4.5.5",
+		"vavite": "1.1.0-beta.1",
+		"vite": "^2.8.1"
+	},
+	"dependencies": {
+		"@koa/router": "^10.1.1",
+		"koa": "^2.13.4"
+	}
+}

@@ -1,4 +1,5 @@
 import type { Plugin } from "vite";
+import path from "path";
 
 export interface VaviteConnectOptions {
 	/** Entry module that default exports a middleware function.
@@ -45,9 +46,6 @@ export default function vaviteConnect(
 		bundleSirv = true,
 	} = options;
 
-	let handlerEntryPath: string | null;
-	let serverEntryPath: string | null;
-
 	return [
 		{
 			name: "@vavite/connect:resolve",
@@ -56,27 +54,16 @@ export default function vaviteConnect(
 
 			async resolveId(id, importer, options) {
 				if (id === "/virtual:vavite-connect-handler") {
-					return this.resolve(handlerEntry, importer, options).then((r) => {
-						handlerEntryPath = r && r.id;
-						return r;
-					});
+					return this.resolve(handlerEntry, importer, options);
 				} else if (id === "/virtual:vavite-connect-server") {
-					return this.resolve(
+					return path.resolve(
+						__dirname,
 						clientAssetsDir
 							? bundleSirv
-								? "@vavite/connect/entry-standalone-bundled-sirv"
-								: "@vavite/connect/entry-standalone-imported-sirv"
-							: "@vavite/connect/entry-standalone",
-
-						undefined,
-						{
-							...options,
-							skipSelf: true,
-						},
-					).then((r) => {
-						serverEntryPath = r && r.id;
-						return r;
-					});
+								? "entry-standalone-bundled-sirv.mjs"
+								: "entry-standalone-imported-sirv.mjs"
+							: "entry-standalone.mjs",
+					);
 				}
 			},
 		},
@@ -90,22 +77,12 @@ export default function vaviteConnect(
 					return {
 						build: {
 							rollupOptions: {
-								input: [
-									customServerEntry ||
+								input: {
+									index:
+										customServerEntry ||
 										(standalone
 											? "/virtual:vavite-connect-server"
 											: "/virtual:vavite-connect-handler"),
-								],
-								output: {
-									entryFileNames(chunk) {
-										if (chunk.facadeModuleId === serverEntryPath) {
-											return "server.js";
-										} else if (chunk.facadeModuleId === handlerEntryPath) {
-											return "handler.js";
-										} else {
-											return "[name].js";
-										}
-									},
 								},
 							},
 						},

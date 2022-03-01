@@ -1,93 +1,114 @@
-import { UserConfig } from "vite";
+/// <reference types="@vavite/multibuild-cli" />
 
-export { default } from "./plugin";
-export { parseRequest } from "./node-helpers";
-
-export type RequestHandler = (
-	request: IncomingRequest,
-) =>
-	| undefined
-	| OutgoingResponse
-	| RawResponse
-	| Promise<undefined | OutgoingResponse | RawResponse>;
-
-/** Environment agnostic representation of an HTTP request */
-export interface IncomingRequest {
-	/** Environment specific request representation */
-	raw: any;
-	/** IP address of the end user */
-	ip: string;
-	/** URL of the current request */
-	url: URL;
-	/** HTTP method */
-	method: string;
-	/** Request headers */
-	headers: Record<string, string | undefined>;
-	/** Request body */
-	body: RequestBody;
-}
-
-/** Request body with streaming support */
-export interface RequestBody {
-	/** Read all as a UTF-8 encoded string */
-	text(): Promise<string>;
-	/** Read all as a an array of bytes */
-	binary(): Promise<Uint8Array>;
-	/** Read as a stream of bytes */
-	stream(): AsyncGenerator<Uint8Array>;
-}
-
-export interface OutgoingResponse {
-	/** HTTP status code */
-	status?: number;
-	/** Response headers */
-	headers?: Record<string, undefined | string | string[]>;
-	/** Response body */
-	body?: ResponseBody;
-}
-
-export interface RawResponse {
-	raw: any;
-}
-
-export type ResponseBody =
-	| null
-	| string
-	| Uint8Array
-	| AsyncGenerator<Uint8Array>
-	| AsyncGenerator<string>
-	| ((stream: ResponseBodyStream) => Promise<void>);
-
-export interface ResponseBodyStream {
-	/** Write a chunk of data */
-	write(chunk: Uint8Array | string): void;
-	/** Flush the stream */
-	flush(): Promise<void>;
-	/** Outbut buffer empty */
-	isReady: boolean;
-}
-
-export interface ViteManifest {
-	[key: string]: ViteChunk;
-}
-
-export interface ViteChunk {
-	file: string;
-	imports?: string[];
-	dynamicImports?: string[];
-	css?: string[];
-	assets?: string[];
-}
-
-export interface ViteSsrManifest {
-	[key: string]: string[];
-}
+import { Plugin } from "vite";
+import vaviteConnect from "@vavite/connect";
+import vaviteReloader from "@vavite/reloader";
+import vaviteExposeViteDevServer from "@vavite/expose-vite-dev-server";
 
 export interface VaviteOptions {
-	buildSteps?: BuildStep[];
+	/** Entry module that default exports a middleware function.
+	 * You have to provide either a handler entry or a server entry.
+	 * If you provide both, the server entry will only be used in the
+	 * production build.
+	 */
+	handlerEntry?: string;
+	/** Server entry point. You have to provide either a handler entry
+	 * or a server entry. If you provide both, the server entry will only
+	 * be used in the production build.
+	 */
+	serverEntry?: string;
+	/** Whether to serve client-side assets in development.
+	 * @default false
+	 */
+	serveClientAssetsInDev?: boolean;
+	/** If you only provide a handler entry, this option controls whether
+	 * to build a standalone server application or a middleware function.
+	 * @default true
+	 */
+	standalone?: boolean;
+	/** Directory where the client-side assets are located. Set to null to disable
+	 * static file serving in production.
+	 * @default null
+	 */
+	clientAssetsDir?: string | null;
+	/** Whether to bundle the sirv package or to import it when building in standalone
+	 * mode. You have to install it as a production dependency if this is set to false.
+	 * @default true
+	 */
+	bundleSirv?: boolean;
+	/**
+	 * When to reload the server. "any-change" reloads every time any of the dependencies of the
+	 * server entry changes. "static-deps-change" only reloads when statically imported dependencies
+	 * change, dynamically imported dependencies are not tracked.
+	 * @default "any-change"
+	 */
+	reloadOn?: "any-change" | "static-deps-change";
 }
 
-export interface BuildStep {
-	name: string;
-	config?: UserConfig;
+export default function vavite(options: VaviteOptions): Plugin[] {
+	const {
+		serverEntry,
+		handlerEntry,
+		serveClientAssetsInDev,
+		standalone,
+		clientAssetsDir,
+		bundleSirv,
+		reloadOn,
+	} = options;
+
+	if (!serverEntry && !handlerEntry) {
+		throw new Error(
+			"vavite: either serverEntry or handlerEntry must be specified",
+		);
+	}
+
+	let buildStepStartCalled = false;
+
+	const plugins: Plugin[] = [
+		{
+			name: "vavite:check-multibuild",
+
+			buildStepStart() {
+				buildStepStartCalled = true;
+			},
+
+			configResolved(config) {
+				if (
+					config.buildSteps &&
+					config.command === "build" &&
+					config.mode !== "multibuild" &&
+					!buildStepStartCalled
+				) {
+					throw new Error(
+						"vavite: You have buildSteps in your config but you're not using vavite CLI or @vavite/multibuild.",
+					);
+				}
+			},
+		},
+	];
+
+	if (handlerEntry) {
+		plugins.push(
+			...vaviteConnect({
+				handlerEntry,
+				customServerEntry: serverEntry,
+				serveClientAssetsInDev,
+				standalone,
+				clientAssetsDir,
+				bundleSirv,
+			}),
+		);
+	} else {
+		plugins.push(
+			vaviteReloader({
+				entry: serverEntry,
+				serveClientAssetsInDev,
+				reloadOn,
+			}),
+		);
+	}
+
+	plugins.push(vaviteExposeViteDevServer());
+
+	return plugins;
 }

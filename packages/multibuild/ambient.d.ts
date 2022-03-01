@@ -1,18 +1,19 @@
 import "vite";
-import { VaviteMultiBuildInfo } from ".";
-
-declare global {
-	let VAVITE_MULTIBUILD_CURRENT_STEP_INDEX: number;
-}
+import { BuildStep, VaviteMultiBuildInfo } from ".";
 
 declare module "vite" {
+	interface UserConfig {
+		buildSteps?: BuildStep[];
+		currentBuildStep?: BuildStep;
+	}
+
 	interface Plugin {
 		/**
 		 * Called before a build step starts.
 		 * @param info      Info about the build step (and build steps in general).
 		 * @param forwarded Data forwarded from the previous build step.
 		 */
-		vaviteBuildStepStart?(
+		buildStepStart?(
 			info: VaviteMultiBuildInfo,
 			forwarded: any,
 		): void | Promise<void>;
@@ -21,6 +22,6 @@ declare module "vite" {
 		 * Called after a build step has finished. The return value will be forwarded
 		 * to the next build step as a way of sharing information between steps.
 		 */
-		vaviteBuildStepEnd?(): any | Promise<any>;
+		buildStepEnd?(): any | Promise<any>;
 	}
 }

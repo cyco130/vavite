@@ -125,7 +125,10 @@ export default function vaviteReloaderPlugin({
 		},
 
 		resolveId(source) {
-			if (source === "@vavite/reloader/http-dev-server") {
+			if (
+				source === "@vavite/reloader/http-dev-server" ||
+				source === "vavite/http-dev-server"
+			) {
 				return "virtual:vavite-http-dev-server";
 			}
 		},
@@ -147,17 +150,22 @@ export default function vaviteReloaderPlugin({
 		config(config, env) {
 			configEnv = env;
 
-			if (typeof config.build?.ssr === "string") {
-				entry = config.build.ssr;
-			} else if (config.build?.ssr) {
-				config.build.ssr = entry;
-			}
-
 			const out: UserConfig & { ssr: SSROptions } = {
 				ssr: {
-					noExternal: ["@vavite/reloader"],
+					noExternal: ["@vavite/reloader", "vavite"],
 				},
 			};
+
+			if (config.build?.ssr && env.command === "build") {
+				return {
+					...out,
+					build: {
+						rollupOptions: {
+							input: { index: entry },
+						},
+					},
+				};
+			}
 
 			return out;
 		},
@@ -187,7 +195,7 @@ export default function vaviteReloaderPlugin({
 					if (listener) {
 						req.url = req.originalUrl;
 						try {
-							listener(req, res, () => {
+							await listener(req, res, () => {
 								if (!res.writableEnded) renderError(404, "Not found");
 							});
 						} catch (err) {

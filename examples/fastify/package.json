@@ -1,0 +1,21 @@
+{
+	"name": "@vavite/example-reloader-fastify",
+	"private": true,
+	"scripts": {
+		"start": "node dist",
+		"dev": "vite --open",
+		"build": "vite build --ssr"
+	},
+	"files": [
+		"dist"
+	],
+	"devDependencies": {
+		"@types/node": "^17.0.15",
+		"typescript": "^4.5.5",
+		"vavite": "1.1.0-beta.1",
+		"vite": "^2.8.1"
+	},
+	"dependencies": {
+		"fastify": "^3.27.1"
+	}
+}

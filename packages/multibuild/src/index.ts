@@ -1,12 +1,12 @@
-/// <reference types="../ambient" />
-
-import { build, Plugin, ResolvedConfig, UserConfig } from "vite";
-
-VAVITE_MULTIBUILD_CURRENT_STEP_INDEX = 0;
-
-export interface VaviteMultiBuildOptions {
-	buildSteps: BuildStep[];
-}
+import {
+	InlineConfig,
+	resolveConfig,
+	build,
+	ResolvedConfig,
+	Plugin,
+	UserConfig,
+} from "vite";
+import colors from "picocolors";
 
 export interface BuildStep {
 	name: string;
@@ -19,96 +19,86 @@ export interface VaviteMultiBuildInfo {
 	currentStep: BuildStep;
 }
 
-export default function vaviteMultiBuild(
-	options: VaviteMultiBuildOptions,
-): Plugin[] {
-	const { buildSteps } = options;
-	let resolvedConfig: ResolvedConfig;
+export default async function multibuild(config: InlineConfig = {}) {
+	const initialConfig = await resolveConfig(
+		{ ...config, mode: "multibuild" },
+		"build",
+	).catch((error) => {
+		console.error(colors.red(`error resolving config:\n${error.stack}`), {
+			error,
+		});
+		process.exit(1);
+	});
 
-	if (buildSteps.length === 0) return [];
+	const steps = initialConfig.buildSteps || [{ name: "default" }];
 
-	return [
-		{
-			name: "@vavite/multibuild:pre",
+	const forwarded: Record<string, any> = {};
 
-			enforce: "pre",
+	for (const [i, step] of steps.entries()) {
+		let resolvedStepConfig: ResolvedConfig;
 
-			apply: "build",
+		initialConfig.logger.info(
+			(i ? "\n" : "") +
+				colors.cyan("vavite: ") +
+				colors.white("running build step") +
+				" " +
+				colors.blue(step.name) +
+				" (" +
+				colors.green(i + 1 + "/" + steps.length) +
+				")",
+		);
 
-			async config(config) {
-				if (!buildSteps[VAVITE_MULTIBUILD_CURRENT_STEP_INDEX]) return;
+		await build({
+			...step.config,
+			currentBuildStep: step,
+			plugins: [
+				{
+					name: "@vavite/multibuild",
 
-				let out: UserConfig = {};
+					enforce: "pre",
 
-				if (
-					VAVITE_MULTIBUILD_CURRENT_STEP_INDEX === 0 &&
-					buildSteps[VAVITE_MULTIBUILD_CURRENT_STEP_INDEX].config
-				) {
-					out = buildSteps[VAVITE_MULTIBUILD_CURRENT_STEP_INDEX].config!;
-				}
+					async config(config) {
+						function enforceToNumber(enforce?: "pre" | "post") {
+							return enforce ? (enforce === "pre" ? -1 : 1) : 0;
+						}
 
-				const info: VaviteMultiBuildInfo = {
-					buildSteps,
-					currentStepIndex: VAVITE_MULTIBUILD_CURRENT_STEP_INDEX,
-					currentStep: buildSteps[VAVITE_MULTIBUILD_CURRENT_STEP_INDEX],
-				};
+						const plugins = (
+							(config.plugins || []).flat().filter(Boolean) as Plugin[]
+						).sort(
+							(a, b) => enforceToNumber(a.enforce) - enforceToNumber(b.enforce),
+						);
 
-				function enforceToNumber(enforce?: "pre" | "post") {
-					return enforce ? (enforce === "pre" ? -1 : 1) : 0;
-				}
+						const info = {
+							buildSteps: steps,
+							currentStepIndex: i,
+							currentStep: step,
+						};
 
-				const plugins = (
-					(config.plugins || []).flat().filter(Boolean) as Plugin[]
-				).sort(
-					(a, b) => enforceToNumber(a.enforce) - enforceToNumber(b.enforce),
-				);
+						for (const plugin of plugins) {
+							await plugin.buildStepStart?.(info, forwarded[plugin.name]);
+						}
+					},
 
-				const forwardedStore = (config as any).vaviteMultiBuildInfo || {};
+					configResolved(resolvedConfig) {
+						resolvedStepConfig = resolvedConfig;
+					},
+				},
 
-				for (const plugin of plugins) {
-					await plugin.vaviteBuildStepStart?.(
-						info,
-						forwardedStore[plugin.name],
-					);
-				}
+				...(step.config?.plugins || []),
+			],
+		}).catch((error) => {
+			initialConfig.logger.error(
+				colors.red(`error during build:\n${error.stack}`),
+				{ error },
+			);
+			process.exit(1);
+		});
 
-				return out;
-			},
-
-			configResolved(config) {
-				config.logger.info(
-					`Starting build step '${
-						buildSteps[VAVITE_MULTIBUILD_CURRENT_STEP_INDEX].name
-					}' (${VAVITE_MULTIBUILD_CURRENT_STEP_INDEX + 1}/${
-						buildSteps.length
-					})`,
-				);
-
-				resolvedConfig = config;
-			},
-		},
-		{
-			name: "@vavite/multibuild:post",
-
-			enforce: "post",
-
-			apply: "build",
-
-			async closeBundle() {
-				VAVITE_MULTIBUILD_CURRENT_STEP_INDEX++;
-
-				const store: Record<string, any> = {};
-				for (const plugin of resolvedConfig.plugins) {
-					store[plugin.name] = await plugin.vaviteBuildStepEnd?.();
-				}
-
-				if (VAVITE_MULTIBUILD_CURRENT_STEP_INDEX >= buildSteps.length) return;
-
-				await build({
-					...buildSteps[VAVITE_MULTIBUILD_CURRENT_STEP_INDEX].config,
-					vaviteMultiBuildInfo: store,
-				} as any);
-			},
-		},
-	];
+		for (const plugin of resolvedStepConfig!.plugins || []) {
+			const data = await plugin.buildStepEnd?.();
+			if (data !== undefined) {
+				forwarded[plugin.name] = data;
+			}
+		}
+	}
 }

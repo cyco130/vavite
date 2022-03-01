@@ -1,0 +1,15 @@
+{
+	"name": "@vavite/example-simple-standalone",
+	"private": true,
+	"scripts": {
+		"start": "node dist",
+		"dev": "vite --open",
+		"build": "vite build --ssr"
+	},
+	"devDependencies": {
+		"@types/node": "^17.0.15",
+		"typescript": "^4.5.5",
+		"vavite": "1.1.0-beta.1",
+		"vite": "^2.8.1"
+	}
+}

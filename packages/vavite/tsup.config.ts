@@ -9,11 +9,7 @@ export default defineConfig([
 		dts: true,
 	},
 	{
-		entry: ["./src/entry.ts", "/src/middleware.ts", "./src/no-sirv.ts"],
+		entry: ["./src/vite-dev-server.ts", "./src/http-server.ts"],
 		format: ["esm"],
-		platform: "node",
-		target: "node14",
-		external: ["@vavite/handler"],
-		shims: false,
 	},
 ]);

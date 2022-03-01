@@ -1,4 +1,4 @@
 import { Server } from "http";
 
-const httpDevServer: Server | undefined;
+declare const httpDevServer: Server | undefined;
 export default httpDevServer;
