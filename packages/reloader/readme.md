@@ -132,10 +132,3 @@ Whether to serve client assets in development mode. Enable when developing full-
 ## Other considerations
 
 Unlike solutions like `nodemon` which restarts the whole server process on file changes, `@vavite/reloader` only re-executes the server entry in the same process which may cause global state to leak from old to new server instances. Since this is a novel approach, we don't know whether it will cause adverse effects on the internal operations of server frameworks.
-
-## Examples
-
-- [Express](../../examples/reloader-express)
-- [Koa](../../examples/reloader-koa)
-- [Fastify](../../examples/reloader-fastify)
-- [Hapi](../../examples/reloader-hapi)

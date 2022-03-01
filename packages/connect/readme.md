@@ -90,9 +90,3 @@ You can provide a custom server for production with or without processing it wit
 For a custom server entry processed with Vite, build your application with `npx vite build --ssr server.js` where `server.js` is your custom server entry. The `standalone` option has no effect when using a custom server entry like this and `sirv` middleware will not be injected, you will have to handle serving client assets yourself.
 
 If you don't want to process your custom server with Vite -maybe because you have an existing application with separate tooling- you should set `standalone` to `false` and import the handler from `./dist/handler.js` (or whatever your build output path is).
-
-## Examples
-
-- [Standalone](../../examples/connect-standalone)
-- [Custom production server, processed with Vite](../../examples/connect-custom-server)
-- [Custom production server, not processed with Vite](../../examples/connect-external-server)
