@@ -1,6 +1,6 @@
 {
 	"name": "@vavite/connect",
-	"version": "1.1.0-beta.1",
+	"version": "1.1.0",
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",
 	"exports": {
@@ -38,13 +38,13 @@
 	},
 	"devDependencies": {
 		"@cyco130/eslint-config": "^1.0.0",
-		"eslint": "^8.7.0",
+		"eslint": "^8.10.0",
 		"sirv": "^2.0.2",
-		"tsup": "^5.11.11",
-		"typescript": "^4.5.5",
-		"vite": "^2.8.1"
+		"tsup": "^5.11.13",
+		"typescript": "^4.6.2",
+		"vite": "^2.8.5"
 	},
 	"dependencies": {
-		"@types/node": ">=14"
+		"@types/node": "^17.0.21"
 	}
 }
