@@ -19,7 +19,7 @@ export default defineConfig([
 		platform: "node",
 		target: "esnext",
 		shims: false,
-		external: ["/virtual:vavite-connect-handler"],
+		external: ["sirv", "/virtual:vavite-connect-handler"],
 	},
 	{
 		entry: {
@@ -29,6 +29,7 @@ export default defineConfig([
 		platform: "node",
 		target: "esnext",
 		shims: false,
-		external: ["sirv", "/virtual:vavite-connect-handler"],
+		external: ["/virtual:vavite-connect-handler"],
+		noExternal: ["sirv"],
 	},
 ]);
