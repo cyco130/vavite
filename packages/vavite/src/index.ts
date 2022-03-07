@@ -1,6 +1,6 @@
 /// <reference types="@vavite/multibuild-cli" />
 
-import { Plugin } from "vite";
+import { Plugin, UserConfig } from "vite";
 import vaviteConnect from "@vavite/connect";
 import vaviteReloader from "@vavite/reloader";
 import vaviteExposeViteDevServer from "@vavite/expose-vite-dev-server";
@@ -72,6 +72,12 @@ export default function vavite(options: VaviteOptions): Plugin[] {
 				buildStepStartCalled = true;
 			},
 
+			config() {
+				return {
+					ssr: { noExternal: ["vavite"] },
+				} as UserConfig;
+			},
+
 			configResolved(config) {
 				if (
 					config.buildSteps &&
@@ -80,7 +86,7 @@ export default function vavite(options: VaviteOptions): Plugin[] {
 					!buildStepStartCalled
 				) {
 					throw new Error(
-						"vavite: You have buildSteps in your config but you're not using vavite CLI or @vavite/multibuild.",
+						"vavite: You have multiple build steps defined in your Vite config, please use the 'vavite' command instead of 'vite build' to build.",
 					);
 				}
 			},
