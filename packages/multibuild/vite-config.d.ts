@@ -1,5 +1,5 @@
 import "vite";
-import { BuildStep, VaviteMultiBuildInfo } from ".";
+import { BuildStep, VaviteMultiBuildInfo } from "./dist";
 
 declare module "vite" {
 	interface UserConfig {

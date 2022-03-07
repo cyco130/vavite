@@ -1,1 +1,1 @@
-/// <reference types="@vavite/multibuild/ambient" />
+/// <reference types="@vavite/multibuild/vite-config" />
