@@ -21,7 +21,10 @@ export interface VaviteMultiBuildInfo {
 
 export default async function multibuild(config: InlineConfig = {}) {
 	const initialConfig = await resolveConfig(
-		{ ...config, mode: "multibuild" },
+		{
+			...config,
+			mode: "multibuild",
+		},
 		"build",
 	).catch((error) => {
 		console.error(colors.red(`error resolving config:\n${error.stack}`), {
@@ -49,6 +52,7 @@ export default async function multibuild(config: InlineConfig = {}) {
 		);
 
 		await build({
+			...config,
 			...step.config,
 			currentBuildStep: step,
 			plugins: [
