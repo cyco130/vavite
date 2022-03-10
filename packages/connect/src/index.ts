@@ -52,9 +52,9 @@ export default function vaviteConnect(
 
 			enforce: "pre",
 
-			async resolveId(id, importer, options) {
+			async resolveId(id) {
 				if (id === "/virtual:vavite-connect-handler") {
-					return this.resolve(handlerEntry, importer, options);
+					return this.resolve(handlerEntry);
 				} else if (id === "/virtual:vavite-connect-server") {
 					return path.resolve(
 						__dirname,
