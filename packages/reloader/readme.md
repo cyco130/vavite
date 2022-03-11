@@ -11,11 +11,11 @@ import { defineConfig } from "vite";
 import vaviteReloader from "@vavite/reloader";
 
 export default defineConfig({
-	plugins: [
-		vaviteReloader({
-			// Options, see below
-		}),
-	],
+  plugins: [
+    vaviteReloader({
+      // Options, see below
+    }),
+  ],
 });
 ```
 
@@ -29,21 +29,21 @@ const app = express();
 
 // Configure your server here
 app.get("/", (req, res) => {
-	res.send("Hello, world!");
+  res.send("Hello, world!");
 });
 
 if (import.meta.env.PROD) {
-	// For production, start your server
-	// as you would normally do.
-	app.listen(3000, "localhost", () => {
-		console.log("Server started on http://localhost:3000");
-	});
+  // For production, start your server
+  // as you would normally do.
+  app.listen(3000, "localhost", () => {
+    console.log("Server started on http://localhost:3000");
+  });
 } else {
-	// For development, use httpDevServer.
-	// An Express app instance is actually
-	// a request listener function, this
-	// is all we need to do:
-	httpDevServer.on("request", app);
+  // For development, use httpDevServer.
+  // An Express app instance is actually
+  // a request listener function, this
+  // is all we need to do:
+  httpDevServer.on("request", app);
 }
 ```
 
@@ -73,9 +73,9 @@ You can avoid re-executing your initialization code by refactoring it like this:
 
 ```ts
 app.get("/my-route", async (req, res, next) => {
-	// Omitting error handling for clarity
-	const routeHandler = (await import("./route-handler")).default;
-	routeHandler(req, res, next);
+  // Omitting error handling for clarity
+  const routeHandler = (await import("./route-handler")).default;
+  routeHandler(req, res, next);
 });
 ```
 
@@ -85,31 +85,31 @@ If this lazy loading pattern feels too wordy, you can refactor it into a functio
 
 ```ts
 function lazy(
-	importer: () => Promise<{ default: RequestHandler }>,
+  importer: () => Promise<{ default: RequestHandler }>,
 ): RequestHandler {
-	return async (req, res, next) => {
-		try {
-			const routeHandler = (await importer()).default;
-			routeHandler(req, res, next);
-		} catch (err) {
-			next(err);
-		}
-	};
+  return async (req, res, next) => {
+    try {
+      const routeHandler = (await importer()).default;
+      routeHandler(req, res, next);
+    } catch (err) {
+      next(err);
+    }
+  };
 }
 
 // When reloadOn option is set to "static-deps-change",
 // changes to the route handlers will not trigger a reload.
 app.get(
-	"/foo",
-	lazy(() => import("./routes/foo")),
+  "/foo",
+  lazy(() => import("./routes/foo")),
 );
 app.get(
-	"/bar",
-	lazy(() => import("./routes/bar")),
+  "/bar",
+  lazy(() => import("./routes/bar")),
 );
 app.get(
-	"/baz",
-	lazy(() => import("./routes/baz")),
+  "/baz",
+  lazy(() => import("./routes/baz")),
 );
 ```
 

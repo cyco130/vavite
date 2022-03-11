@@ -26,11 +26,11 @@ import { defineConfig } from "vite";
 import vavite from "vavite";
 
 export default defineConfig({
-	plugins: [
-		vavite({
-			// Options, see below
-		}),
-	],
+  plugins: [
+    vavite({
+      // Options, see below
+    }),
+  ],
 });
 ```
 
@@ -48,18 +48,18 @@ const app = express();
 
 // Configure your server here
 app.get("/", (req, res) => {
-	res.send("Hello, world!");
+  res.send("Hello, world!");
 });
 
 if (import.meta.env.PROD) {
-	// For production, start your server
-	// as you would normally do.
-	app.listen(3000, "localhost", () => {
-		console.log("Server started on http://localhost:3000");
-	});
+  // For production, start your server
+  // as you would normally do.
+  app.listen(3000, "localhost", () => {
+    console.log("Server started on http://localhost:3000");
+  });
 } else {
-	// For development, use httpDevServer.
-	httpDevServer!.on("request", app);
+  // For development, use httpDevServer.
+  httpDevServer!.on("request", app);
 }
 ```
 
@@ -85,9 +85,9 @@ You can avoid re-executing your initialization code by refactoring it like this:
 
 ```ts
 app.get("/my-route", async (req, res, next) => {
-	// Omitting error handling for clarity
-	const routeHandler = (await import("./route-handler")).default;
-	routeHandler(req, res, next);
+  // Omitting error handling for clarity
+  const routeHandler = (await import("./route-handler")).default;
+  routeHandler(req, res, next);
 });
 ```
 
@@ -146,35 +146,35 @@ import { defineConfig } from "vite";
 import vavite from "vavite";
 
 export default defineConfig({
-	plugins: [
-		vavite({
-			// Options
-		}),
-	],
-	buildSteps: [
-		{
-			name: "client",
-			config: {
-				build: {
-					outDir: "dist/client",
-					rollupOptions: {
-						// Client entry
-						input: "/client",
-					},
-				},
-			},
-		},
-		{
-			name: "server",
-			config: {
-				build: {
-					// Server entry
-					ssr: "/server",
-					outDir: "dist/server",
-				},
-			},
-		},
-	],
+  plugins: [
+    vavite({
+      // Options
+    }),
+  ],
+  buildSteps: [
+    {
+      name: "client",
+      config: {
+        build: {
+          outDir: "dist/client",
+          rollupOptions: {
+            // Client entry
+            input: "/client",
+          },
+        },
+      },
+    },
+    {
+      name: "server",
+      config: {
+        build: {
+          // Server entry
+          ssr: "/server",
+          outDir: "dist/server",
+        },
+      },
+    },
+  ],
 });
 ```
 

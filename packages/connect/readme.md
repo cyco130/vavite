@@ -13,11 +13,11 @@ import { defineConfig } from "vite";
 import vaviteConnect from "@vavite/connect";
 
 export default defineConfig({
-	plugins: [
-		vaviteConnect({
-			// Options, see below
-		}),
-	],
+  plugins: [
+    vaviteConnect({
+      // Options, see below
+    }),
+  ],
 });
 ```
 
@@ -28,22 +28,22 @@ import type { IncomingMessage, ServerResponse } from "http";
 import type { SirvOptions } from "@vavite/connect";
 
 export default function handler(
-	req: IncomingMessage,
-	res: ServerResponse,
-	next: () => void,
+  req: IncomingMessage,
+  res: ServerResponse,
+  next: () => void,
 ) {
-	if (req.url === "/") {
-		res.setHeader("Content-Type", "text/html; charset=utf-8");
-		// This is plain http.Server, not Express, so  res.send() is
-		// not available, use res.write() and res.end()
-		res.end("<h1>Hello, world!</h1>");
-	} else {
-		next();
-	}
+  if (req.url === "/") {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    // This is plain http.Server, not Express, so  res.send() is
+    // not available, use res.write() and res.end()
+    res.end("<h1>Hello, world!</h1>");
+  } else {
+    next();
+  }
 }
 
 export const sirvOptions: SirvOptions = {
-	// sirv options, optional, see below.
+  // sirv options, optional, see below.
 };
 ```
 

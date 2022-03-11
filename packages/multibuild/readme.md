@@ -14,30 +14,30 @@ We're hoping that, eventually, [this feature will be implemented in Vite itself]
 import { defineConfig } from "vite";
 
 export default defineConfig({
-	buildSteps: [
-		{
-			name: "client",
-			config: {
-				build: {
-					outDir: "dist/client",
-					rollupOptions: {
-						// Client entry
-						input: "/client",
-					},
-				},
-			},
-		},
-		{
-			name: "server",
-			config: {
-				build: {
-					// Server entry
-					ssr: "/server",
-					outDir: "dist/server",
-				},
-			},
-		},
-	],
+  buildSteps: [
+    {
+      name: "client",
+      config: {
+        build: {
+          outDir: "dist/client",
+          rollupOptions: {
+            // Client entry
+            input: "/client",
+          },
+        },
+      },
+    },
+    {
+      name: "server",
+      config: {
+        build: {
+          // Server entry
+          ssr: "/server",
+          outDir: "dist/server",
+        },
+      },
+    },
+  ],
 });
 ```
 

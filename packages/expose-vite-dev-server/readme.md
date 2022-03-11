@@ -11,7 +11,7 @@ import { defineConfig } from "vite";
 import exposeViteDevServer from "@vavite/expose-vite-dev-server";
 
 export default defineConfig({
-	plugins: [exposeViteDevServer()],
+  plugins: [exposeViteDevServer()],
 });
 ```
 
