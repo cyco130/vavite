@@ -37,13 +37,13 @@
 		"vite": "^2.8.1"
 	},
 	"devDependencies": {
-		"@cyco130/eslint-config": "^1.0.0",
-		"@types/node": "^17.0.21",
-		"eslint": "^8.10.0",
+		"@cyco130/eslint-config": "^1.1.0",
+		"@types/node": "^17.0.33",
+		"eslint": "^8.15.0",
 		"sirv": "^2.0.2",
-		"tsup": "^5.12.0",
-		"typescript": "^4.6.2",
-		"vite": "^2.8.6"
+		"tsup": "^5.12.7",
+		"typescript": "^4.6.4",
+		"vite": "^2.9.9"
 	},
 	"dependencies": {
 		"@vavite/connect": "workspace:*",
