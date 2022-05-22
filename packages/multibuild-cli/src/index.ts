@@ -1,7 +1,8 @@
-import { BuildOptions, LogLevel } from "vite";
+import { BuildOptions, LogLevel, ResolvedConfig } from "vite";
 import { cac } from "cac";
 import multibuild from "@vavite/multibuild";
 import { version } from "../package.json";
+import colors from "picocolors";
 
 interface GlobalCLIOptions {
 	"--"?: string[];
@@ -86,15 +87,39 @@ cli
 	.action(async (root: string, options: BuildOptions & GlobalCLIOptions) => {
 		const buildOptions: BuildOptions = cleanOptions(options);
 
-		await multibuild({
-			root,
-			base: options.base,
-			mode: options.mode,
-			configFile: options.config,
-			logLevel: options.logLevel,
-			clearScreen: options.clearScreen,
-			build: buildOptions,
-		});
+		let initialConfig: ResolvedConfig;
+
+		await multibuild(
+			{
+				root,
+				base: options.base,
+				mode: options.mode,
+				configFile: options.config,
+				logLevel: options.logLevel,
+				clearScreen: options.clearScreen,
+				build: buildOptions,
+			},
+			{
+				onInitialConfigResolved(config) {
+					initialConfig = config;
+				},
+
+				onStartBuildStep(info) {
+					initialConfig.logger.info(
+						(info.currentStepIndex ? "\n" : "") +
+							colors.cyan("vavite: ") +
+							colors.white("running build step") +
+							" " +
+							colors.blue(info.currentStep.name) +
+							" (" +
+							colors.green(
+								info.currentStepIndex + 1 + "/" + info.buildSteps.length,
+							) +
+							")",
+					);
+				},
+			},
+		);
 	});
 
 cli.help();

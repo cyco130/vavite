@@ -19,8 +19,23 @@ export interface VaviteMultiBuildInfo {
 	currentStep: BuildStep;
 }
 
-export default async function multibuild(config: InlineConfig = {}) {
-	const initialConfig = await resolveConfig(
+export interface MultibuildOptions {
+	onMissingConfigFile?(
+		resolvedConfig: ResolvedConfig,
+	): InlineConfig | undefined | Promise<InlineConfig | undefined>;
+
+	onInitialConfigResolved?(
+		resolvedConfig: ResolvedConfig,
+	): void | Promise<void>;
+
+	onStartBuildStep?(info: VaviteMultiBuildInfo): void | Promise<void>;
+}
+
+export default async function multibuild(
+	config: InlineConfig = {},
+	options: MultibuildOptions = {},
+) {
+	let initialConfig = await resolveConfig(
 		{
 			...config,
 			mode: "multibuild",
@@ -33,6 +48,26 @@ export default async function multibuild(config: InlineConfig = {}) {
 		process.exit(1);
 	});
 
+	if (!initialConfig.configFile && options.onMissingConfigFile) {
+		const maybeInlineConfig = await options.onMissingConfigFile(initialConfig);
+		if (maybeInlineConfig) {
+			initialConfig = await resolveConfig(
+				{
+					...maybeInlineConfig,
+					mode: "multibuild",
+				},
+				"build",
+			).catch((error) => {
+				console.error(colors.red(`error resolving config:\n${error.stack}`), {
+					error,
+				});
+				process.exit(1);
+			});
+		}
+	}
+
+	await options?.onInitialConfigResolved?.(initialConfig);
+
 	const steps = initialConfig.buildSteps || [{ name: "default" }];
 
 	const forwarded: Record<string, any> = {};
@@ -40,16 +75,13 @@ export default async function multibuild(config: InlineConfig = {}) {
 	for (const [i, step] of steps.entries()) {
 		let resolvedStepConfig: ResolvedConfig;
 
-		initialConfig.logger.info(
-			(i ? "\n" : "") +
-				colors.cyan("vavite: ") +
-				colors.white("running build step") +
-				" " +
-				colors.blue(step.name) +
-				" (" +
-				colors.green(i + 1 + "/" + steps.length) +
-				")",
-		);
+		const info = {
+			buildSteps: steps,
+			currentStepIndex: i,
+			currentStep: step,
+		};
+
+		await options.onStartBuildStep?.(info);
 
 		await build({
 			...config,
@@ -71,12 +103,6 @@ export default async function multibuild(config: InlineConfig = {}) {
 						).sort(
 							(a, b) => enforceToNumber(a.enforce) - enforceToNumber(b.enforce),
 						);
-
-						const info = {
-							buildSteps: steps,
-							currentStepIndex: i,
-							currentStep: step,
-						};
 
 						for (const plugin of plugins) {
 							await plugin.buildStepStart?.(info, forwarded[plugin.name]);
