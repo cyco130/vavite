@@ -1,5 +1,11 @@
 import type { Plugin, UserConfig } from "vite";
 import path from "path";
+import url from "url";
+
+const dirname =
+	typeof __dirname === "undefined"
+		? url.fileURLToPath(new URL(".", import.meta.url))
+		: __dirname;
 
 export interface VaviteConnectOptions {
 	/** Entry module that default exports a middleware function.
@@ -57,7 +63,7 @@ export default function vaviteConnect(
 					return this.resolve(handlerEntry);
 				} else if (id === "/virtual:vavite-connect-server") {
 					return path.resolve(
-						__dirname,
+						dirname,
 						clientAssetsDir
 							? bundleSirv
 								? "entry-standalone-bundled-sirv.mjs"
