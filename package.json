@@ -5,12 +5,15 @@
 		"dev": "pnpm -r --filter './packages/*' --parallel dev",
 		"build": "pnpm -r --filter './packages/*' build",
 		"prepare": "husky install",
-		"precommit": "lint-staged"
+		"precommit": "lint-staged",
+		"test": "pnpm run test:prettier && pnpm run test:packages",
+		"test:packages": "pnpm -r --stream run test",
+		"test:prettier": "prettier --check --ignore-path .gitignore --ignore-unknown . '!pnpm-lock.yaml'",
+		"format": "prettier --ignore-path .gitignore --ignore-unknown . '!pnpm-lock.yaml' --write"
 	},
 	"devDependencies": {
 		"husky": "^8.0.1",
-		"lint-staged": "^12.4.1",
-		"prettier": "^2.6.2",
-		"vitest": "^0.12.9"
+		"lint-staged": "^13.0.0",
+		"prettier": "^2.6.2"
 	}
 }
