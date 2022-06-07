@@ -1,0 +1,17 @@
+{
+	"name": "ci-react-vite-plugin-mdx",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"ci": "vitest run"
+	},
+	"dependencies": {
+		"@types/node": "^17.0.40",
+		"kill-port": "^2.0.0",
+		"node-fetch": "^3.2.5",
+		"puppeteer": "^14.2.1",
+		"typescript": "^4.6.4",
+		"vitest": "^0.14.0"
+	}
+}

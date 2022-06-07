@@ -6,7 +6,8 @@
 		"build": "pnpm -r --filter './packages/*' build",
 		"prepare": "husky install",
 		"precommit": "lint-staged",
-		"test": "pnpm run test:prettier && pnpm run test:packages",
+		"test": "pnpm run test:prettier && pnpm run test:packages && pnpm run ci",
+		"ci": "cd ci && pnpm run ci",
 		"test:packages": "pnpm -r --stream run test",
 		"test:prettier": "prettier --check --ignore-path .gitignore --ignore-unknown . '!pnpm-lock.yaml'",
 		"format": "prettier --ignore-path .gitignore --ignore-unknown . '!pnpm-lock.yaml' --write"
