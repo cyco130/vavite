@@ -49,10 +49,6 @@ export const sirvOptions: SirvOptions = {
 
 Now you can start the development server with `npx vite` and visit `http://localhost:3000/` to see the result.
 
-You can safely ignore the Vite warning about the missing client entry point that looks like this:
-
-> (!) Could not auto-determine entry point from rollupOptions or html files and there are no explicit optimizeDeps.include patterns. Skipping dependency pre-bundling.
-
 You can build a standalone application with the entry point in `dist/server.js` with `npx vite build --ssr`. The application will listen to the host and port specified in the `HOST` and `PORT` environment variables, or `0.0.0.0:3000` by default.
 
 ## Options

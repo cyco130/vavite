@@ -49,10 +49,6 @@ if (import.meta.env.PROD) {
 
 Now you can start the development server with `npx vite` and visit `http://localhost:3000/` to see the result. Your server will be reloaded when you make any changes to the code.
 
-You can safely ignore the Vite warning about the missing client entry point that looks like this:
-
-> (!) Could not auto-determine entry point from rollupOptions or html files and there are no explicit optimizeDeps.include patterns. Skipping dependency pre-bundling.
-
 You can build your server application for production with `npx vite build --ssr` and start it with `node dist/server`.
 
 ## Lazy loading handlers

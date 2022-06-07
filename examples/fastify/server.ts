@@ -14,9 +14,10 @@ const fastify = Fastify({
 		: undefined,
 });
 
-// This is an optional trick to load routes lazily so that
+// This is an optional optimization to load routes lazily so that
 // when reloadOn option is set to "static-deps-change",
 // changes to the route handlers will not trigger a reload.
+// Feel free to remove this and import routes directly.
 function lazy(
 	importer: () => Promise<{ default: RouteHandlerMethod }>,
 ): RouteHandlerMethod {

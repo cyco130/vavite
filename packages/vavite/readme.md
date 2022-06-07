@@ -14,7 +14,7 @@ Vite's official SSR guide describes a workflow where Vite's development server i
 - [vite-plugin-ssr](../../examples/vite-plugin-ssr): vite-plugin-ssr with React and express
 - [express](../../examples/express): Integrating with Express
 - [koa](../../examples/koa): Integrating with Koa
-- [fastify](../../examples/fastify): Integrating Fastify
+- [fastify](../../examples/fastify): Integrating with Fastify
 - [hapi](../../examples/hapi): Integrating with Hapi
 
 ## Installation and usage
