@@ -1,4 +1,4 @@
-import type { Plugin } from "vite";
+import type { Plugin, UserConfig } from "vite";
 import path from "path";
 
 export interface VaviteConnectOptions {
@@ -73,8 +73,16 @@ export default function vaviteConnect(
 			enforce: "post",
 
 			config(config, env) {
+				const common: UserConfig = {
+					optimizeDeps: {
+						// This silences the "could not auto-determine entry point" warning
+						include: [],
+					},
+				};
+
 				if (env.command === "build" && config.build?.ssr) {
 					return {
+						...common,
 						build: {
 							rollupOptions: {
 								input: {
@@ -94,6 +102,8 @@ export default function vaviteConnect(
 							: {},
 					};
 				}
+
+				return common;
 			},
 
 			configureServer(server) {

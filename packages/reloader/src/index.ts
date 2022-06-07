@@ -154,6 +154,10 @@ export default function vaviteReloaderPlugin({
 				ssr: {
 					noExternal: ["@vavite/reloader", "vavite"],
 				},
+				optimizeDeps: {
+					// This silences the "could not auto-determine entry point" warning
+					include: [],
+				},
 			};
 
 			if (config.build?.ssr && env.command === "build") {
