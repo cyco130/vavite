@@ -25,9 +25,10 @@
 		"build": "tsup",
 		"dev": "tsup --watch",
 		"prepack": "rm -rf dist && pnpm build",
-		"test": "pnpm run test:typecheck && pnpm run test:lint",
+		"test": "pnpm run test:typecheck && pnpm run test:lint && pnpm run test:package",
 		"test:typecheck": "tsc -p tsconfig.json --noEmit",
-		"test:lint": "eslint . --max-warnings 0 --ignore-pattern dist"
+		"test:lint": "eslint . --max-warnings 0 --ignore-pattern dist",
+		"test:package": "publint"
 	},
 	"peerDependencies": {
 		"vite": "^2.8.1"
