@@ -85,10 +85,7 @@ describe.each(cases)("$framework - $env", ({ framework, env }) => {
 			const oldContent = await fs.promises.readFile(filePath, "utf8");
 			const newContent = oldContent.replace("Hello from", "Hot reloadin'");
 
-			if (process.platform === "win32") {
-				await new Promise((resolve) => setTimeout(resolve, 500));
-			}
-
+			await new Promise((resolve) => setTimeout(resolve, 500));
 			await fs.promises.writeFile(filePath, newContent);
 
 			await page.goto(TEST_HOST);
