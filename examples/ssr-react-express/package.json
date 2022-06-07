@@ -13,7 +13,7 @@
 		"@types/react-dom": "^18.0.5",
 		"@vitejs/plugin-react": "^1.3.2",
 		"typescript": "^4.7.3",
-		"vavite": "1.3.0",
+		"vavite": "1.3.1",
 		"vite": "^2.9.10"
 	},
 	"dependencies": {
