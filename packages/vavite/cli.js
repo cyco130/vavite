@@ -1,2 +1,2 @@
 #!/bin/env node
-require("@vavite/multibuild-cli/dist");
+require("@vavite/multibuild-cli");
