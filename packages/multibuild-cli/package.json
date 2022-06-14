@@ -4,6 +4,7 @@
 	"bin": {
 		"vavite": "./cli.js"
 	},
+	"main": "./cli.js",
 	"files": [
 		"dist",
 		"cli.js",
