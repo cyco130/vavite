@@ -139,8 +139,8 @@ describe.each(cases)("$framework - $env", ({ framework, env, file }) => {
 			const oldContent = await fs.promises.readFile(filePath, "utf8");
 			const newContent = oldContent.replace("Hello from", "Hot reloadin'");
 
-			await new Promise((resolve) => setTimeout(resolve, 1000));
 			await fs.promises.writeFile(filePath, newContent);
+			await new Promise((resolve) => setTimeout(resolve, 1000));
 
 			await page.goto(TEST_HOST);
 
