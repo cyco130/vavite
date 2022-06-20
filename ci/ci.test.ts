@@ -4,6 +4,7 @@ import path from "path";
 import fs from "fs";
 import { spawn, ChildProcess } from "child_process";
 import fetch from "node-fetch";
+// @ts-expect-error: No typings for this module
 import kill from "kill-port";
 
 const TEST_HOST = "http://localhost:3000";
@@ -139,10 +140,13 @@ describe.each(cases)("$framework - $env", ({ framework, env, file }) => {
 			const oldContent = await fs.promises.readFile(filePath, "utf8");
 			const newContent = oldContent.replace("Hello from", "Hot reloadin'");
 
+			await new Promise((resolve) => setTimeout(resolve, 500));
 			await fs.promises.writeFile(filePath, newContent);
-			await new Promise((resolve) => setTimeout(resolve, 1000));
+			await new Promise((resolve) => setTimeout(resolve, 500));
 
-			await page.goto(TEST_HOST);
+			if (!ssr) {
+				await page.goto(TEST_HOST);
+			}
 
 			try {
 				await page.waitForFunction(
