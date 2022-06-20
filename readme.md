@@ -16,6 +16,7 @@ Vite's official SSR guide describes a workflow where Vite's development server i
 - [ssr-react-express](examples/ssr-react-express): React SSR with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/ssr-react-express))
 - [ssr-vue-express](examples/ssr-vue-express): Vue SSR with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/ssr-vue-express))
 - [vite-plugin-ssr](examples/vite-plugin-ssr): vite-plugin-ssr with React and Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/vite-plugin-ssr))
+- [socket-io](examples/socket-io): [socket.io](https://socket.io/) with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/socket-io))
 
 ## Packages
 
