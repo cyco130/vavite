@@ -19,6 +19,7 @@ const pages = await browser.pages();
 const page = pages[0];
 
 const cases = [
+	/*
 	{
 		framework: "simple-standalone",
 		env: "development",
@@ -59,6 +60,7 @@ const cases = [
 		env: "production",
 		file: "pages/Home.vue",
 	},
+	*/
 
 	{
 		framework: "vite-plugin-ssr",

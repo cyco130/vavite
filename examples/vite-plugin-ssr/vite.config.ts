@@ -31,16 +31,5 @@ export default defineConfig({
 		}),
 		react(),
 		ssr({ disableAutoFullBuild: true }),
-
-		// The following hack is necessary because vite-plugin-import-build
-		// (which is used by vite-plugin-ssr) has some deduplication logic
-		// that doesn't play well with vavite's multiple builds.
-		{
-			name: "vite-plugin-import-build-hack",
-			enforce: "post",
-			closeBundle() {
-				delete (global as any)["__vite-plugin-import-build:config"];
-			},
-		},
 	],
 });
