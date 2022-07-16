@@ -140,21 +140,19 @@ describe.each(cases)("$framework - $env", ({ framework, env, file }) => {
 
 	if (ssr) {
 		test("renders interactive page", async () => {
-			await page.goto(TEST_HOST + "/");
-
-			// Reload to allow for deps optimizations (< Vite 3>)
 			await new Promise((resolve) => setTimeout(resolve, 1000));
 			await page.goto(TEST_HOST + "/");
-
-			// Wait to allow for hydration
 			await new Promise((resolve) => setTimeout(resolve, 1000));
-			const button = await page.waitForSelector("button");
-			expect(button).toBeTruthy();
-			await button!.click();
-			await page.waitForFunction(() =>
-				document.querySelector("button")!.innerText.includes("1"),
+
+			await page.waitForFunction(
+				() => {
+					const button = document.querySelector("button")!;
+					button.click();
+					return button.innerText.includes("1");
+				},
+				{ timeout: 10_000 },
 			);
-		});
+		}, 15_000);
 	}
 
 	if (env === "development") {
