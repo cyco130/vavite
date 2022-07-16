@@ -74,7 +74,14 @@ export default function vavite(options: VaviteOptions): Plugin[] {
 
 			config() {
 				return {
-					ssr: { noExternal: ["vavite"] },
+					ssr: {
+						optimizeDeps: {
+							exclude: ["vavite"],
+						},
+					},
+					optimizeDeps: {
+						exclude: ["vavite"],
+					},
 				} as UserConfig;
 			},
 

@@ -152,11 +152,25 @@ export default function vaviteReloaderPlugin({
 
 			const out: UserConfig & { ssr: SSROptions } = {
 				ssr: {
-					noExternal: ["@vavite/reloader", "vavite"],
+					noExternal: ["vavite/http-dev-server"],
+					optimizeDeps: {
+						exclude: [
+							"@vavite/reloader",
+							"vavite",
+							"virtual:vavite-http-dev-server",
+							"vavite/http-dev-server",
+						],
+					},
 				},
 				optimizeDeps: {
 					// This silences the "could not auto-determine entry point" warning
 					include: [],
+					exclude: [
+						"@vavite/reloader",
+						"vavite",
+						"vavite/http-dev-server",
+						"virtual:vavite-http-dev-server",
+					],
 				},
 			};
 

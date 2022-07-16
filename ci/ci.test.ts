@@ -19,12 +19,12 @@ const pages = await browser.pages();
 const page = pages[0];
 
 const cases = [
-	/*
 	{
 		framework: "simple-standalone",
 		env: "development",
 		file: "handler.ts",
 	},
+
 	{ framework: "simple-standalone", env: "production", file: "handler.ts" },
 
 	{ framework: "express", env: "development", file: "routes/home.ts" },
@@ -49,7 +49,6 @@ const cases = [
 		env: "production",
 		file: "pages/Home.tsx",
 	},
-
 	{
 		framework: "ssr-vue-express",
 		env: "development",
@@ -60,8 +59,6 @@ const cases = [
 		env: "production",
 		file: "pages/Home.vue",
 	},
-	*/
-
 	{
 		framework: "vite-plugin-ssr",
 		env: "development",
@@ -136,9 +133,10 @@ describe.each(cases)("$framework - $env", ({ framework, env, file }) => {
 	});
 
 	test("renders home page", async () => {
-		await page.goto(TEST_HOST + "/");
-		await page.waitForFunction(() => document.body.innerText.includes("Hello"));
-	});
+		const text = await fetch(TEST_HOST).then((r) => r.text());
+		if (!text.includes("Hello")) console.log(text);
+		expect(text).toContain("Hello");
+	}, 10_000);
 
 	if (ssr) {
 		test("renders interactive page", async () => {
