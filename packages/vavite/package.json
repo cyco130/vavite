@@ -1,6 +1,6 @@
 {
 	"name": "vavite",
-	"version": "1.4.0-next.1",
+	"version": "1.4.0",
 	"description": "A Vite plugin for develoing server-side applications",
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",

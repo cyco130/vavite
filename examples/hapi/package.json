@@ -14,7 +14,7 @@
 		"@types/hapi__hapi": "^20.0.12",
 		"@types/node": "^18.0.5",
 		"typescript": "^4.7.4",
-		"vavite": "1.4.0-next.1",
+		"vavite": "1.4.0",
 		"vite": "^3.0.0"
 	},
 	"dependencies": {
