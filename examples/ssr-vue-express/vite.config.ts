@@ -1,4 +1,4 @@
-/// <reference types="vavite" />
+/// <reference types="vavite/vite-config" />
 
 import { defineConfig } from "vite";
 import vavite from "vavite";

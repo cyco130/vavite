@@ -50,13 +50,16 @@ fastify.get(
 if (httpDevServer) {
 	// Fastify insists on calling listen itself.
 	// devServer ignores listen calls but calls the callback.
-	fastify.listen((httpDevServer.address() as AddressInfo).port, (err) => {
-		if (err) throw err;
-	});
+	fastify
+		.listen({ port: (httpDevServer.address() as AddressInfo).port })
+		.catch((err) => {
+			console.error(err);
+			process.exit(1);
+		});
 } else {
 	console.log("Starting prod server");
-
-	fastify.listen(3000, (err) => {
-		if (err) throw err;
+	fastify.listen({ port: 3000 }).catch((err) => {
+		console.error(err);
+		process.exit(1);
 	});
 }

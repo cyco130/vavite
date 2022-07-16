@@ -141,9 +141,13 @@ describe.each(cases)("$framework - $env", ({ framework, env, file }) => {
 	if (ssr) {
 		test("renders interactive page", async () => {
 			await page.goto(TEST_HOST + "/");
-			// Reload to allow for deps optimizations
+
+			// Reload to allow for deps optimizations (< Vite 3>)
 			await new Promise((resolve) => setTimeout(resolve, 1000));
 			await page.goto(TEST_HOST + "/");
+
+			// Wait to allow for hydration
+			await new Promise((resolve) => setTimeout(resolve, 1000));
 			const button = await page.waitForSelector("button");
 			expect(button).toBeTruthy();
 			await button!.click();

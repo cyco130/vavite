@@ -1,4 +1,4 @@
-/// <reference types="vavite" />
+/// <reference types="vavite/vite-config" />
 
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
@@ -30,7 +30,7 @@ export default defineConfig({
 			serveClientAssetsInDev: true,
 		}),
 		react(),
-		ssr(),
+		ssr({ disableAutoFullBuild: true }),
 
 		// The following hack is necessary because vite-plugin-import-build
 		// (which is used by vite-plugin-ssr) has some deduplication logic
