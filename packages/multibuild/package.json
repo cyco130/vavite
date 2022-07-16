@@ -27,7 +27,7 @@
 		"test:package": "publint"
 	},
 	"peerDependencies": {
-		"vite": "^2.8.1"
+		"vite": ">=2.8.1"
 	},
 	"devDependencies": {
 		"@cyco130/eslint-config": "^1.1.0",

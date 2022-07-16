@@ -4,8 +4,9 @@ import path from "path";
 import fs from "fs";
 import { spawn, ChildProcess } from "child_process";
 import fetch from "node-fetch";
-// @ts-expect-error: No typings for this module
-import kill from "kill-port";
+import { promisify } from "util";
+import psTree from "ps-tree";
+import { kill } from "process";
 
 const TEST_HOST = "http://localhost:3000";
 
@@ -75,13 +76,9 @@ describe.each(cases)("$framework - $env", ({ framework, env, file }) => {
 	const ssr = framework.includes("ssr");
 	const dir = path.resolve(__dirname, "..", "examples", framework);
 
-	let cp: ChildProcess;
+	let cp: ChildProcess | undefined;
 
 	beforeAll(async () => {
-		await kill(3000, "tcp").catch(() => {
-			// Do nothing
-		});
-
 		const command =
 			env === "development"
 				? "pnpm exec vite serve --strictPort --port 3000"
@@ -95,7 +92,14 @@ describe.each(cases)("$framework - $env", ({ framework, env, file }) => {
 
 		// Wait until server is ready
 		await new Promise<void>((resolve, reject) => {
-			cp.on("error", reject);
+			cp!.on("error", reject);
+
+			cp!.on("exit", (code) => {
+				if (code !== 0) {
+					cp = undefined;
+					reject(new Error(`Process exited with code ${code}`));
+				}
+			});
 
 			const interval = setInterval(() => {
 				fetch(TEST_HOST)
@@ -111,6 +115,23 @@ describe.each(cases)("$framework - $env", ({ framework, env, file }) => {
 			}, 250);
 		});
 	}, 60_000);
+
+	afterAll(async () => {
+		if (!cp || cp.exitCode || !cp.pid) {
+			return;
+		}
+
+		const tree = await promisify(psTree)(cp.pid);
+		const pids = [cp.pid, ...tree.map((p) => +p.PID)];
+
+		for (const pid of pids) {
+			kill(+pid, "SIGINT");
+		}
+
+		await new Promise((resolve) => {
+			cp!.on("exit", resolve);
+		});
+	});
 
 	test("renders home page", async () => {
 		await page.goto(TEST_HOST + "/");
@@ -158,12 +179,6 @@ describe.each(cases)("$framework - $env", ({ framework, env, file }) => {
 			}
 		}, 60_000);
 	}
-
-	afterAll(async () => {
-		await kill(3000, "tcp").catch(() => {
-			// Do nothing
-		});
-	});
 });
 
 afterAll(async () => {
