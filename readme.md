@@ -6,7 +6,17 @@ Vite, despite being a frontend tool, has support for transpiling server-side cod
 
 Vite's official SSR guide describes a workflow where Vite's development server is used as a middleware function in a server application made with a [Connect](https://github.com/senchalabs/connect) compatible Node.js framework (like [Express](https://expressjs.com)). If your server-side code needs transpilation (e.g. for TypeScript), you're required to use another set of tools (say [`ts-node`](https://typestrong.org/ts-node/) and [`nodemon`](https://nodemon.io/)) for development and building. `vavite` enables you to use Vite itself to transpile your server-side code.
 
+## System requirements
+
+- [Node.js](https://nodejs.org/en/) 14.20 or higher
+- [Vite](https://vitejs.dev) 2.8.0 or higher
+
 ## Examples
+
+> All examples have `"type": "module"` in their `package.json`.
+>
+> - For Vite v2, remove it to use CommonJS (CJS).
+> - If you want to use CommonJS with Vite v3, add `legacy.buildSsrCjsExternalHeuristics: true` to your Vite config.
 
 - [simple-standalone](examples/simple-standalone): Simple standalone example ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/simple-standalone))
 - [express](examples/express): Integrating with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/express))
