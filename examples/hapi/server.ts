@@ -55,6 +55,7 @@ async function init() {
 		path: "/bar",
 		handler: lazy(() => import("./routes/bar")),
 	});
+
 	if (!devServer) {
 		console.log("Starting prod server");
 	}

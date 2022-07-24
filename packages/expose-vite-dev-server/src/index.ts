@@ -47,7 +47,7 @@ export default function vaviteDevServerPlugin(): Plugin {
 
 			const out: UserConfig & { ssr: SSROptions } = {
 				ssr: {
-					noExternal: ["vavite/vite-dev-server"],
+					noExternal: ["vavite"],
 					optimizeDeps: {
 						exclude: [
 							"@vavite/expose-vite-dev-server",

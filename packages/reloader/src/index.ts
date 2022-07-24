@@ -152,7 +152,7 @@ export default function vaviteReloaderPlugin({
 
 			const out: UserConfig & { ssr: SSROptions } = {
 				ssr: {
-					noExternal: ["vavite/http-dev-server"],
+					noExternal: ["vavite"],
 					optimizeDeps: {
 						exclude: [
 							"@vavite/reloader",
