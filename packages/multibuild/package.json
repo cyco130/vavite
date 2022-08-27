@@ -1,6 +1,6 @@
 {
 	"name": "@vavite/multibuild",
-	"version": "1.4.2-next.4",
+	"version": "1.4.2",
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",
 	"exports": {
