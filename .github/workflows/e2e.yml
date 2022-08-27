@@ -1,0 +1,34 @@
+name: End-to-end tests
+
+on:
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: .
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest]
+        node_version: [16]
+      fail-fast: false
+    name: "End-to-end tests on node-${{ matrix.node_version }}, ${{ matrix.os }}"
+    steps:
+      - name: Set node version to ${{ matrix.node_version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node_version }}
+
+      - name: Clone
+        run: npx -y degit cyco130/vavite/examples/ssr-react-express ssr-react-express
+
+      - name: Install
+        run: npm install
+        working-directory: ssr-react-express
+
+      - name: Build
+        run: npm run build
+        working-directory: ssr-react-express
