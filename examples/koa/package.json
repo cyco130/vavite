@@ -15,7 +15,7 @@
 		"@types/koa__router": "^8.0.11",
 		"@types/node": "^18.0.6",
 		"typescript": "^4.7.4",
-		"vavite": "1.4.1",
+		"vavite": "1.4.2-next.4",
 		"vite": "^3.0.2"
 	},
 	"dependencies": {
