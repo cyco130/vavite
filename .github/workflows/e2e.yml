@@ -22,13 +22,17 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
 
+      - name: Get branch name
+        id: branch-name
+        uses: tj-actions/branch-names@v5.5
+
       - name: Clone
-        run: npx -y degit cyco130/vavite/examples/ssr-react-express ssr-react-express
+        run: npx -y degit cyco130/vavite/examples/ssr-react-express#${{ steps.branch-name.outputs.current_branch }} ssr-react-express
 
       - name: Install
-        run: npm install
         working-directory: ssr-react-express
+        run: npm install
 
       - name: Build
-        run: npm run build
         working-directory: ssr-react-express
+        run: npm run build
