@@ -8,5 +8,6 @@
 		"skipLibCheck": true,
 		"moduleResolution": "Node",
 		"experimentalDecorators": true
-	}
+	},
+	"include": ["./global.d.ts"]
 }
