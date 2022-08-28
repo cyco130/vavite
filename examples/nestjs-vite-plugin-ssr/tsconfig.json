@@ -11,7 +11,7 @@
 		"moduleResolution": "Node",
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
-		"jsx": "react-jsx"
-	},
-	"include": ["./global.d.ts"]
+		"jsx": "react-jsx",
+		"types": ["vite/client"]
+	}
 }

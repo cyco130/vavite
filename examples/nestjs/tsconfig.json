@@ -7,7 +7,7 @@
 		"strict": true,
 		"skipLibCheck": true,
 		"moduleResolution": "Node",
-		"experimentalDecorators": true
-	},
-	"include": ["./global.d.ts"]
+		"experimentalDecorators": true,
+		"types": ["vite/client"]
+	}
 }
