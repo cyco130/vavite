@@ -12,29 +12,28 @@ export { render };
 export const passToClient = ["pageProps"];
 
 async function render(pageContext: PageContextBuiltIn & PageContext) {
+	const { documentProps } = pageContext;
+	const title = (documentProps && documentProps.title) || "App";
+	let stream;
 
-  const { documentProps } = pageContext;
-  const title = (documentProps && documentProps.title) || "App";
-  let stream;
-
-  if (pageContext.Page) {
-    const { Page, pageProps } = pageContext;
-    stream = await reactStreaming.renderToStream(
-      <PageWrapper pageContext={pageContext}>
-        <Page {...pageProps} />
-      </PageWrapper>,
-      {
-        disable: false,
-        webStream: false,
-        renderToPipeableStream,
-      }
-    );
-  } else {
-    stream = "";
-  }
-  // See https://vite-plugin-ssr.com/head
-  return {
-    documentHtml: escapeInject`<!DOCTYPE html>
+	if (pageContext.Page) {
+		const { Page, pageProps } = pageContext;
+		stream = await reactStreaming.renderToStream(
+			<PageWrapper pageContext={pageContext}>
+				<Page {...pageProps} />
+			</PageWrapper>,
+			{
+				disable: false,
+				webStream: false,
+				renderToPipeableStream,
+			},
+		);
+	} else {
+		stream = "";
+	}
+	// See https://vite-plugin-ssr.com/head
+	return {
+		documentHtml: escapeInject`<!DOCTYPE html>
     <html lang="en">
       <head>
         <meta name="color-scheme" content="dark light" />
@@ -48,6 +47,6 @@ async function render(pageContext: PageContextBuiltIn & PageContext) {
         <div id="page-view" style="height: 100%; overflow: hidden;">${stream}</div>
       </body>
     </html>`,
-    pageContext: {},
-  };
+		pageContext: {},
+	};
 }

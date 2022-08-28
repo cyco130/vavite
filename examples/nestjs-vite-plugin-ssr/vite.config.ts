@@ -2,7 +2,7 @@
 
 import { defineConfig } from "vite";
 import vavite from "vavite";
-import { swc } from 'rollup-plugin-swc3';
+import { swc } from "rollup-plugin-swc3";
 import react from "@vitejs/plugin-react";
 import ssr from "vite-plugin-ssr/plugin";
 import tsconfigPaths from "vite-tsconfig-paths";
@@ -10,7 +10,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
 	buildSteps: [
 		{
-			name: "client"
+			name: "client",
 		},
 		{
 			name: "server",
@@ -35,8 +35,8 @@ export default defineConfig({
 					decoratorMetadata: true,
 					legacyDecorator: true,
 				},
-				target: "es2017"
-			}
+				target: "es2017",
+			},
 		}),
 		vavite({
 			serverEntry: "/server/main.ts",

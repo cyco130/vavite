@@ -4,11 +4,7 @@
 		"target": "es2017",
 		"module": "ESNext",
 		"esModuleInterop": true,
-		"lib": [
-			"DOM",
-			"DOM.Iterable",
-			"ESNext"
-		],
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
 		"skipLibCheck": true,
