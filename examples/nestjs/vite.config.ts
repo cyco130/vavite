@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import vavite from "vavite";
-import { swc } from 'rollup-plugin-swc3';
+import { swc } from "rollup-plugin-swc3";
 
 export default defineConfig({
 	esbuild: false,
@@ -11,8 +11,8 @@ export default defineConfig({
 					decoratorMetadata: true,
 					legacyDecorator: true,
 				},
-				target: "es2017"
-			}
+				target: "es2017",
+			},
 		}),
 		vavite({
 			serverEntry: "/src/main.ts",

@@ -10,22 +10,22 @@ export const clientRouting = true;
 let root: Root | null = null;
 
 async function render(pageContext: PageContextBuiltInClient & PageContext) {
-  const { Page, pageProps } = pageContext;
-  const page = (
-    <ReactStreaming>
-      <PageWrapper pageContext={pageContext}>
-        <Page {...pageProps} />
-      </PageWrapper>
-    </ReactStreaming>
-  );
-  const container = document.getElementById("page-view")!;
-  if (container.innerHTML === "" || !pageContext.isHydration) {
-    if (!root) {
-      root = createRoot(container);
-    }
-    root.render(page);
-    // SSR
-  } else {
-    root = hydrateRoot(container, page);
-  }
+	const { Page, pageProps } = pageContext;
+	const page = (
+		<ReactStreaming>
+			<PageWrapper pageContext={pageContext}>
+				<Page {...pageProps} />
+			</PageWrapper>
+		</ReactStreaming>
+	);
+	const container = document.getElementById("page-view")!;
+	if (container.innerHTML === "" || !pageContext.isHydration) {
+		if (!root) {
+			root = createRoot(container);
+		}
+		root.render(page);
+		// SSR
+	} else {
+		root = hydrateRoot(container, page);
+	}
 }
