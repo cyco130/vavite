@@ -15,7 +15,7 @@
 		"moduleResolution": "Node",
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
-		"jsx": "react-jsx",
-		"types": ["global.d.ts"]
-	}
+		"jsx": "react-jsx"
+	},
+	"include": ["./global.d.ts"]
 }
