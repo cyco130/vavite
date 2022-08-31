@@ -1,11 +1,12 @@
 import { DynamicModule, Inject, Module, OnModuleInit } from "@nestjs/common";
 import { HttpAdapterHost } from "@nestjs/core";
-import express, { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import path, { join } from "path";
 import { fileURLToPath } from "url";
 import { renderPage } from "vite-plugin-ssr";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OPTIONS = Symbol.for("vite-plugin-ssr.options");
+import { ServeStaticModule } from "@nestjs/serve-static";
 
 interface ViteSsrOptions {
 	root?: string;
@@ -23,8 +24,18 @@ export class VpsModule implements OnModuleInit {
 		options ??= {
 			root: join(__dirname, "..", "client"),
 		};
+		const imports: DynamicModule[] = [];
+		if (import.meta.env.PROD) {
+			imports.push(
+				ServeStaticModule.forRoot({
+					rootPath: options.root,
+					serveRoot: "/",
+				}),
+			);
+		}
 		return {
 			module: VpsModule,
+			imports,
 			providers: [{ provide: OPTIONS, useValue: options }],
 		};
 	}
@@ -40,10 +51,6 @@ export class VpsModule implements OnModuleInit {
 			return;
 		}
 		const app = httpAdapter.getInstance();
-
-		if (import.meta.env.PROD) {
-			app.use(express.static(this.viteSsrOptions.root!));
-		}
 
 		app.get("*", async (req: Request, res: Response, _next: NextFunction) => {
 			const urlOriginal = req.originalUrl;
