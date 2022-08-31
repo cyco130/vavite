@@ -3,6 +3,9 @@ import vavite from "vavite";
 import { swc } from "rollup-plugin-swc3";
 
 export default defineConfig({
+	ssr: {
+		external: ["reflect-metadata"],
+	},
 	esbuild: false,
 	plugins: [
 		swc({
@@ -11,7 +14,7 @@ export default defineConfig({
 					decoratorMetadata: true,
 					legacyDecorator: true,
 				},
-				target: "es2017",
+				target: "es2021",
 			},
 		}),
 		vavite({

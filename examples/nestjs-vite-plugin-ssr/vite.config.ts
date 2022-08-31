@@ -27,6 +27,9 @@ export default defineConfig({
 			},
 		},
 	],
+	ssr: {
+		external: ["reflect-metadata"],
+	},
 	esbuild: false,
 	plugins: [
 		swc({
