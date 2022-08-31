@@ -195,10 +195,7 @@ export default function vaviteReloaderPlugin({
 
 		configureServer(server) {
 			let timedOut = false;
-			const initPeriodTimeout = setTimeout(() => {
-				timedOut = true;
-				handlePendingReqs();
-			}, 5000);
+			let initPeriodTimeout: NodeJS.Timeout | undefined;
 
 			viteServer = server;
 
@@ -268,7 +265,7 @@ export default function vaviteReloaderPlugin({
 				server.middlewares.use(handleReq);
 			}
 
-			viteServer.httpServer?.on("listening", () => {
+			viteServer.httpServer?.on("listening", async () => {
 				(global as any)[globalSymbol] = new Proxy(server.httpServer!, {
 					get(target, prop) {
 						if (prop === "addListener" || prop === "on") {
@@ -295,7 +292,12 @@ export default function vaviteReloaderPlugin({
 					},
 				});
 
-				loadEntry();
+				await loadEntry();
+
+				initPeriodTimeout = setTimeout(() => {
+					timedOut = true;
+					handlePendingReqs();
+				}, 5000);
 			});
 
 			if (serveClientAssetsInDev) {
