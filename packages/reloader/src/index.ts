@@ -7,6 +7,7 @@ import type {
 	ViteDevServer,
 	UserConfig,
 	SSROptions,
+	Connect,
 } from "vite";
 
 export interface VaviteReloaderOptions {
@@ -193,6 +194,12 @@ export default function vaviteReloaderPlugin({
 		},
 
 		configureServer(server) {
+			let timedOut = false;
+			const initPeriodTimeout = setTimeout(() => {
+				timedOut = true;
+				handlePendingReqs();
+			}, 5000);
+
 			viteServer = server;
 
 			let listener:
@@ -203,31 +210,62 @@ export default function vaviteReloaderPlugin({
 				  ) => void)
 				| undefined;
 
-			function addMiddleware() {
-				server.middlewares.use(async (req, res, next) => {
-					function renderError(status: number, message: string) {
-						res.statusCode = status;
-						res.end(message);
-					}
+			const pendingReqs: [
+				IncomingMessage,
+				ServerResponse,
+				Connect.NextFunction,
+			][] = [];
 
-					if (listener) {
-						req.url = req.originalUrl;
-						try {
-							await listener(req, res, () => {
-								if (!res.writableEnded) renderError(404, "Not found");
-							});
-						} catch (err) {
-							if (err instanceof Error) {
-								server.ssrFixStacktrace(err);
-								return renderError(500, err.stack || err.message);
-							} else {
-								return renderError(500, "Unknown error");
-							}
+			const pendingListener = (
+				req: IncomingMessage,
+				res: ServerResponse,
+				next: Connect.NextFunction,
+			) => {
+				pendingReqs.push([req, res, next]);
+			};
+
+			const handlePendingReqs = () => {
+				clearTimeout(initPeriodTimeout);
+				while (pendingReqs.length) {
+					const [req, res, next] = pendingReqs.shift()!;
+					handleReq(req, res, next);
+				}
+			};
+
+			async function handleReq(
+				req: Connect.IncomingMessage,
+				res: ServerResponse,
+				next: Connect.NextFunction,
+			) {
+				function renderError(status: number, message: string) {
+					res.statusCode = status;
+					res.end(message);
+				}
+
+				if (listener) {
+					req.url = req.originalUrl;
+					try {
+						await listener(req, res, () => {
+							if (!res.writableEnded) renderError(404, "Not found");
+						});
+					} catch (err) {
+						if (err instanceof Error) {
+							server.ssrFixStacktrace(err);
+							return renderError(500, err.stack || err.message);
+						} else {
+							return renderError(500, "Unknown error");
 						}
-					} else {
-						next();
 					}
-				});
+				} else if (!timedOut) {
+					req.url = req.originalUrl;
+					pendingListener(req, res, next);
+				} else {
+					next();
+				}
+			}
+
+			function addMiddleware() {
+				server.middlewares.use(handleReq);
 			}
 
 			viteServer.httpServer?.on("listening", () => {
@@ -237,6 +275,7 @@ export default function vaviteReloaderPlugin({
 							return (event: string, ...rest: any) => {
 								if (event === "request") {
 									listener = rest[0];
+									handlePendingReqs();
 								} else {
 									// eslint-disable-next-line prefer-spread
 									return target[prop].apply(target, [event, ...rest] as any);
@@ -245,7 +284,10 @@ export default function vaviteReloaderPlugin({
 						} else if (prop === "listen") {
 							return (...args: any[]) => {
 								const listener = args.find((arg) => typeof arg === "function");
-								if (listener) Promise.resolve().then(listener);
+								if (listener) {
+									Promise.resolve().then(listener);
+									handlePendingReqs();
+								}
 							};
 						}
 
