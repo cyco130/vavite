@@ -213,14 +213,6 @@ export default function vaviteReloaderPlugin({
 				Connect.NextFunction,
 			][] = [];
 
-			const pendingListener = (
-				req: IncomingMessage,
-				res: ServerResponse,
-				next: Connect.NextFunction,
-			) => {
-				pendingReqs.push([req, res, next]);
-			};
-
 			const handlePendingReqs = () => {
 				clearTimeout(initPeriodTimeout);
 				while (pendingReqs.length) {
@@ -255,7 +247,7 @@ export default function vaviteReloaderPlugin({
 					}
 				} else if (!timedOut) {
 					req.url = req.originalUrl;
-					pendingListener(req, res, next);
+					pendingReqs.push([req, res, next]);
 				} else {
 					next();
 				}
