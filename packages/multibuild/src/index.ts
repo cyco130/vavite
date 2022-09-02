@@ -5,6 +5,7 @@ import {
 	ResolvedConfig,
 	Plugin,
 	UserConfig,
+	mergeConfig,
 } from "vite";
 import colors from "picocolors";
 
@@ -83,40 +84,37 @@ export default async function multibuild(
 
 		await options.onStartBuildStep?.(info);
 
-		await build({
-			...config,
-			...step.config,
-			currentBuildStep: step,
-			plugins: [
-				{
-					name: "@vavite/multibuild",
+		const multibuildPlugin: Plugin = {
+			name: "@vavite/multibuild",
 
-					enforce: "pre",
+			enforce: "pre",
 
-					async config(config) {
-						function enforceToNumber(enforce?: "pre" | "post") {
-							return enforce ? (enforce === "pre" ? -1 : 1) : 0;
-						}
+			async config(config) {
+				function enforceToNumber(enforce?: "pre" | "post") {
+					return enforce ? (enforce === "pre" ? -1 : 1) : 0;
+				}
 
-						const plugins = (
-							(config.plugins || []).flat().filter(Boolean) as Plugin[]
-						).sort(
-							(a, b) => enforceToNumber(a.enforce) - enforceToNumber(b.enforce),
-						);
+				const plugins = (
+					(config.plugins || []).flat().filter(Boolean) as Plugin[]
+				).sort(
+					(a, b) => enforceToNumber(a.enforce) - enforceToNumber(b.enforce),
+				);
 
-						for (const plugin of plugins) {
-							await plugin.buildStepStart?.(info, forwarded[plugin.name]);
-						}
-					},
+				for (const plugin of plugins) {
+					await plugin.buildStepStart?.(info, forwarded[plugin.name]);
+				}
+			},
 
-					configResolved(resolvedConfig) {
-						resolvedStepConfig = resolvedConfig;
-					},
-				},
+			configResolved(resolvedConfig) {
+				resolvedStepConfig = resolvedConfig;
+			},
+		};
 
-				...(step.config?.plugins || []),
-			],
-		}).catch((error) => {
+		const mergedConfig = mergeConfig(mergeConfig(config, step.config ?? {}), {
+			plugins: [multibuildPlugin],
+		});
+
+		await build(mergedConfig).catch((error) => {
 			initialConfig.logger.error(
 				colors.red(`error during build:\n${error.stack}`),
 				{ error },
