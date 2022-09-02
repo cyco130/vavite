@@ -1,6 +1,6 @@
 {
 	"name": "@vavite/reloader",
-	"version": "1.4.2",
+	"version": "1.4.3",
 	"module": "./dist/index.mjs",
 	"files": [
 		"dist",
