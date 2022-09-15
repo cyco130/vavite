@@ -12,11 +12,11 @@
 	],
 	"devDependencies": {
 		"@types/koa": "^2.13.5",
-		"@types/koa__router": "^8.0.11",
-		"@types/node": "^18.7.13",
-		"typescript": "^4.8.2",
+		"@types/koa__router": "^12.0.0",
+		"@types/node": "^18.7.18",
+		"typescript": "^4.8.3",
 		"vavite": "1.4.3",
-		"vite": "^3.0.9"
+		"vite": "^3.1.1"
 	},
 	"dependencies": {
 		"@koa/router": "^12.0.0",

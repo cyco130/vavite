@@ -31,14 +31,14 @@
 	},
 	"devDependencies": {
 		"@cyco130/eslint-config": "^2.1.1",
-		"eslint": "^8.23.0",
+		"eslint": "^8.23.1",
 		"tsup": "^6.2.3",
-		"typescript": "^4.8.2",
-		"vite": "^3.0.9"
+		"typescript": "^4.8.3",
+		"vite": "^3.1.1"
 	},
 	"dependencies": {
-		"@types/node": "^18.7.13",
-		"cac": "^6.7.12",
+		"@types/node": "^18.7.18",
+		"cac": "^6.7.14",
 		"picocolors": "^1.0.0"
 	}
 }
