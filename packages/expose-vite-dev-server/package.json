@@ -1,6 +1,6 @@
 {
 	"name": "@vavite/expose-vite-dev-server",
-	"version": "1.4.3",
+	"version": "1.5.0",
 	"module": "./dist/index.mjs",
 	"files": [
 		"dist",
