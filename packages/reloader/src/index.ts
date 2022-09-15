@@ -47,6 +47,11 @@ export default function vaviteReloaderPlugin({
 	let configEnv: ConfigEnv;
 	let viteServer: ViteDevServer;
 
+	let resolveListenerPromise: () => void;
+	const listenerPromise = new Promise<void>(
+		(resolve) => (resolveListenerPromise = resolve),
+	);
+
 	async function loadEntry() {
 		logger.info("@vavite/reloader: Loading server entry");
 
@@ -204,28 +209,26 @@ export default function vaviteReloaderPlugin({
 				| undefined;
 
 			function addMiddleware() {
-				server.middlewares.use(async (req, res, next) => {
+				server.middlewares.use(async (req, res) => {
 					function renderError(status: number, message: string) {
 						res.statusCode = status;
 						res.end(message);
 					}
 
-					if (listener) {
-						req.url = req.originalUrl;
-						try {
-							await listener(req, res, () => {
-								if (!res.writableEnded) renderError(404, "Not found");
-							});
-						} catch (err) {
-							if (err instanceof Error) {
-								server.ssrFixStacktrace(err);
-								return renderError(500, err.stack || err.message);
-							} else {
-								return renderError(500, "Unknown error");
-							}
+					await listenerPromise;
+
+					req.url = req.originalUrl;
+					try {
+						await listener!(req, res, () => {
+							if (!res.writableEnded) renderError(404, "Not found");
+						});
+					} catch (err) {
+						if (err instanceof Error) {
+							server.ssrFixStacktrace(err);
+							return renderError(500, err.stack || err.message);
+						} else {
+							return renderError(500, "Unknown error");
 						}
-					} else {
-						next();
 					}
 				});
 			}
@@ -237,6 +240,7 @@ export default function vaviteReloaderPlugin({
 							return (event: string, ...rest: any) => {
 								if (event === "request") {
 									listener = rest[0];
+									resolveListenerPromise();
 								} else {
 									// eslint-disable-next-line prefer-spread
 									return target[prop].apply(target, [event, ...rest] as any);
@@ -246,6 +250,7 @@ export default function vaviteReloaderPlugin({
 							return (...args: any[]) => {
 								const listener = args.find((arg) => typeof arg === "function");
 								if (listener) Promise.resolve().then(listener);
+								resolveListenerPromise();
 							};
 						}
 
