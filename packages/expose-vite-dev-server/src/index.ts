@@ -7,7 +7,7 @@ export default function vaviteDevServerPlugin(): Plugin {
 	let globalSymbol: string;
 
 	function getModuleContents() {
-		return `export default global.${globalSymbol}`;
+		return `export default ${globalSymbol}`;
 	}
 
 	return {

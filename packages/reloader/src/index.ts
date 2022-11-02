@@ -40,7 +40,7 @@ export default function vaviteReloaderPlugin({
 	let globalSymbol: string;
 
 	function getModuleContents() {
-		return `export default global.${globalSymbol}`;
+		return `export default ${globalSymbol}`;
 	}
 
 	let logger: Logger;
