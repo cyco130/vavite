@@ -1,28 +1,28 @@
 {
-	"name": "vavite-workspace-root",
-	"private": "true",
-	"pnpm": {
-		"peerDependencyRules": {
-			"ignoreMissing": [
-				"rollup"
-			]
-		}
-	},
-	"scripts": {
-		"dev": "pnpm -r --parallel --filter \"./packages/*\" run dev",
-		"build": "pnpm -r --filter \"./packages/*\" run build",
-		"prepare": "husky install",
-		"precommit": "lint-staged",
-		"test": "pnpm run test:prettier && pnpm run test:packages && pnpm run ci",
-		"ci": "cd ci && pnpm run ci",
-		"test:packages": "pnpm -r --stream run test",
-		"test:prettier": "prettier --check --ignore-path .gitignore --ignore-unknown . '!pnpm-lock.yaml'",
-		"format": "prettier --ignore-path .gitignore --ignore-unknown . '!pnpm-lock.yaml' --write"
-	},
-	"devDependencies": {
-		"husky": "^8.0.1",
-		"lint-staged": "^13.0.3",
-		"prettier": "^2.7.1",
-		"publint": "^0.1.1"
-	}
+  "name": "vavite-workspace-root",
+  "private": "true",
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "rollup"
+      ]
+    }
+  },
+  "scripts": {
+    "dev": "pnpm -r --parallel --filter \"./packages/*\" run dev",
+    "build": "pnpm -r --filter \"./packages/*\" run build",
+    "prepare": "husky install",
+    "precommit": "lint-staged",
+    "test": "pnpm run test:prettier && pnpm run test:packages && pnpm run ci",
+    "ci": "cd ci && pnpm run ci",
+    "test:packages": "pnpm -r --stream run test",
+    "test:prettier": "prettier --check --ignore-path .gitignore --ignore-unknown . '!pnpm-lock.yaml'",
+    "format": "prettier --ignore-path .gitignore --ignore-unknown . '!pnpm-lock.yaml' --write"
+  },
+  "devDependencies": {
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "publint": "^0.1.1"
+  }
 }

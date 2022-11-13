@@ -1,24 +1,24 @@
 {
-	"name": "@vavite/example-socket-io",
-	"type": "module",
-	"private": true,
-	"scripts": {
-		"start": "node dist",
-		"dev": "vite --open",
-		"build": "vite build --ssr"
-	},
-	"files": [
-		"dist"
-	],
-	"devDependencies": {
-		"@types/express": "^4.17.14",
-		"@types/node": "^18.7.18",
-		"typescript": "^4.8.3",
-		"vavite": "1.5.1",
-		"vite": "^3.1.1"
-	},
-	"dependencies": {
-		"express": "^4.18.1",
-		"socket.io": "^4.5.2"
-	}
+  "name": "@vavite/example-socket-io",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node dist",
+    "dev": "vite --open",
+    "build": "vite build --ssr"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@types/express": "^4.17.14",
+    "@types/node": "^18.7.18",
+    "typescript": "^4.8.3",
+    "vavite": "1.5.1",
+    "vite": "^3.1.1"
+  },
+  "dependencies": {
+    "express": "^4.18.1",
+    "socket.io": "^4.5.2"
+  }
 }

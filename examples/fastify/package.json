@@ -1,22 +1,22 @@
 {
-	"name": "@vavite/example-reloader-fastify",
-	"type": "module",
-	"private": true,
-	"scripts": {
-		"start": "node dist",
-		"dev": "vite --open",
-		"build": "vite build --ssr"
-	},
-	"files": [
-		"dist"
-	],
-	"devDependencies": {
-		"@types/node": "^18.7.18",
-		"typescript": "^4.8.3",
-		"vavite": "1.5.1",
-		"vite": "^3.1.1"
-	},
-	"dependencies": {
-		"fastify": "^4.6.0"
-	}
+  "name": "@vavite/example-reloader-fastify",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node dist",
+    "dev": "vite --open",
+    "build": "vite build --ssr"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@types/node": "^18.7.18",
+    "typescript": "^4.8.3",
+    "vavite": "1.5.1",
+    "vite": "^3.1.1"
+  },
+  "dependencies": {
+    "fastify": "^4.6.0"
+  }
 }
