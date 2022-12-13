@@ -41,7 +41,7 @@ importers:
       '@types/node': ^18.11.14
       express: ^4.18.2
       typescript: ^4.9.4
-      vavite: 1.5.1
+      vavite: 1.5.2
       vite: ^4.0.1
     dependencies:
       express: 4.18.2
@@ -57,7 +57,7 @@ importers:
       '@types/node': ^18.11.14
       fastify: ^4.10.2
       typescript: ^4.9.4
-      vavite: 1.5.1
+      vavite: 1.5.2
       vite: ^4.0.1
     dependencies:
       fastify: 4.10.2
@@ -73,7 +73,7 @@ importers:
       '@types/hapi__hapi': ^20.0.13
       '@types/node': ^18.11.14
       typescript: ^4.9.4
-      vavite: 1.5.1
+      vavite: 1.5.2
       vite: ^4.0.1
     dependencies:
       '@hapi/hapi': 21.1.0
@@ -92,7 +92,7 @@ importers:
       '@types/node': ^18.11.14
       koa: ^2.14.1
       typescript: ^4.9.4
-      vavite: 1.5.1
+      vavite: 1.5.2
       vite: ^4.0.1
     dependencies:
       '@koa/router': 12.0.0
@@ -117,7 +117,7 @@ importers:
       rollup-plugin-swc3: ^0.8.0
       rxjs: ^7.6.0
       typescript: ^4.9.4
-      vavite: 1.5.1
+      vavite: 1.5.2
       vite: ^4.0.1
     dependencies:
       '@nestjs/common': 9.2.1_whg6pvy6vwu66ypq7idiq2suxq
@@ -153,7 +153,7 @@ importers:
       rollup-plugin-swc3: ^0.8.0
       rxjs: ^7.6.0
       typescript: ^4.9.4
-      vavite: 1.5.1
+      vavite: 1.5.2
       vite: ^4.0.1
       vite-plugin-ssr: ^0.4.57
       vite-tsconfig-paths: ^4.0.2
@@ -185,7 +185,7 @@ importers:
     specifiers:
       '@types/node': ^18.11.14
       typescript: ^4.9.4
-      vavite: 1.5.1
+      vavite: 1.5.2
       vite: ^4.0.1
     devDependencies:
       '@types/node': 18.11.14
@@ -200,7 +200,7 @@ importers:
       express: ^4.18.2
       socket.io: ^4.5.4
       typescript: ^4.9.4
-      vavite: 1.5.1
+      vavite: 1.5.2
       vite: ^4.0.1
     dependencies:
       express: 4.18.2
@@ -223,7 +223,7 @@ importers:
       react: ^18.2.0
       react-dom: ^18.2.0
       typescript: ^4.9.4
-      vavite: 1.5.1
+      vavite: 1.5.2
       vite: ^4.0.1
     dependencies:
       express: 4.18.2
@@ -246,7 +246,7 @@ importers:
       '@vitejs/plugin-vue': ^4.0.0
       express: ^4.18.2
       typescript: ^4.9.4
-      vavite: 1.5.1
+      vavite: 1.5.2
       vite: ^4.0.1
       vue: ^3.2.45
     dependencies:
@@ -273,7 +273,7 @@ importers:
       react-dom: ^18.2.0
       ts-node: ^10.9.1
       typescript: ^4.9.4
-      vavite: 1.5.1
+      vavite: 1.5.2
       vite: ^4.0.1
       vite-plugin-ssr: ^0.4.57
     dependencies:
