@@ -32,11 +32,11 @@
     "vite": ">=2.8.1"
   },
   "devDependencies": {
-    "@cyco130/eslint-config": "^2.1.1",
-    "@types/node": "^18.7.18",
-    "eslint": "^8.23.1",
-    "tsup": "^6.2.3",
-    "typescript": "^4.8.3",
-    "vite": "^3.1.1"
+    "@cyco130/eslint-config": "^2.1.2",
+    "@types/node": "^18.11.14",
+    "eslint": "^8.29.0",
+    "tsup": "^6.5.0",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.1"
   }
 }

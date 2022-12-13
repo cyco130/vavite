@@ -80,7 +80,7 @@ describe.each(cases)("$framework - $env", ({ framework, env, file }) => {
 	beforeAll(async () => {
 		const command =
 			env === "development"
-				? "pnpm exec vite serve --strictPort --port 3000"
+				? "pnpm exec vite serve --strictPort --port 3000 --logLevel silent"
 				: "pnpm run build && pnpm start";
 
 		cp = spawn(command, {

@@ -5,8 +5,8 @@ import nav from "./nav";
 const homeRoute: Lifecycle.Method = async (req, h) => {
 	let html = "<h1>Hello from home page</h1>" + nav;
 
-	if (import.meta.env.DEV) {
-		html = await viteDevServer!.transformIndexHtml(req.path, html);
+	if (viteDevServer) {
+		html = await viteDevServer.transformIndexHtml(req.path, html);
 	}
 
 	return html;

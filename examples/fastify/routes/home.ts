@@ -5,8 +5,8 @@ import nav from "./nav";
 const homeRoute: RouteHandlerMethod = async (req, res) => {
 	let html = "<h1>Hello from home page</h1>" + nav;
 
-	if (import.meta.env.DEV) {
-		html = await viteDevServer!.transformIndexHtml(req.url, html);
+	if (viteDevServer) {
+		html = await viteDevServer.transformIndexHtml(req.url, html);
 	}
 
 	res.type("text/html");

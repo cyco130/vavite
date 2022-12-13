@@ -14,7 +14,7 @@ app.get("/", async (req, res) => {
 
 if (httpDevServer) {
 	httpDevServer.on("request", app);
-	io.attach(viteDevServer!.httpServer!);
+	io.attach(viteDevServer.httpServer!);
 } else {
 	console.log("Starting prod server");
 	const server = app.listen(3000);

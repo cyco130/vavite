@@ -5,8 +5,8 @@ import nav from "./nav";
 const homeRoute: Middleware = async (ctx, next) => {
 	let html = "<h1>Hello from home page</h1>" + nav;
 
-	if (import.meta.env.DEV) {
-		html = await viteDevServer!.transformIndexHtml(ctx.url, html);
+	if (viteDevServer) {
+		html = await viteDevServer.transformIndexHtml(ctx.url, html);
 	}
 
 	ctx.body = html;

@@ -3,24 +3,24 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "vite --open",
+    "dev": "vite",
     "build": "vavite",
     "start": "node dist/server"
   },
   "dependencies": {
     "@types/express": "^4.17.14",
-    "@types/node": "^18.7.18",
-    "@types/react": "^18.0.20",
-    "@types/react-dom": "^18.0.6",
-    "@vitejs/plugin-react": "^2.1.0",
+    "@types/node": "^18.11.14",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.9",
+    "@vitejs/plugin-react": "^3.0.0",
     "cross-env": "^7.0.3",
-    "express": "^4.18.1",
+    "express": "^4.18.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "ts-node": "^10.9.1",
-    "typescript": "^4.8.3",
+    "typescript": "^4.9.4",
     "vavite": "1.5.1",
-    "vite": "^3.1.1",
-    "vite-plugin-ssr": "^0.4.34"
+    "vite": "^4.0.1",
+    "vite-plugin-ssr": "^0.4.57"
   }
 }

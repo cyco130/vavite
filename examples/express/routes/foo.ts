@@ -5,8 +5,8 @@ import nav from "./nav";
 const fooRoute: RequestHandler = async (req, res, next) => {
 	let html = "<h1>Hello from page /foo</h1>" + nav;
 
-	if (import.meta.env.DEV) {
-		html = await viteDevServer!.transformIndexHtml(req.url, html);
+	if (viteDevServer) {
+		html = await viteDevServer.transformIndexHtml(req.url, html);
 	}
 
 	res.send(html);

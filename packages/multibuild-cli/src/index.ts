@@ -89,6 +89,8 @@ cli
 
 		let initialConfig: ResolvedConfig;
 
+		process.env.NODE_ENV = options.mode || "production";
+
 		await multibuild(
 			{
 				root,

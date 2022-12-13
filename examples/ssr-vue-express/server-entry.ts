@@ -29,7 +29,7 @@ async function render(req: Request, res: Response, importer: PageImporter) {
 	const Page = (await importer()).default;
 
 	let clientEntryPath: string;
-	if (import.meta.env.DEV) {
+	if (viteDevServer) {
 		// In development, we can simply refer to the source file name
 		clientEntryPath = "/client-entry.ts";
 	} else {
@@ -69,15 +69,15 @@ async function render(req: Request, res: Response, importer: PageImporter) {
 		</body>
 	</html>`;
 
-	if (import.meta.env.DEV) {
+	if (viteDevServer) {
 		// This will inject the Vite client and React fast refresh in development
-		html = await viteDevServer!.transformIndexHtml(req.url, html);
+		html = await viteDevServer.transformIndexHtml(req.url, html);
 	}
 
 	res.send(html);
 }
 
-if (import.meta.env.DEV) {
+if (viteDevServer) {
 	httpDevServer!.on("request", app);
 } else {
 	console.log("Starting production server");
