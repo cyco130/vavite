@@ -115,8 +115,6 @@ export default function vaviteConnect(
 			configureServer(server) {
 				function addMiddleware() {
 					server.middlewares.use(async (req, res) => {
-						const module = await server.ssrLoadModule(handlerEntry);
-
 						function renderError(status: number, message: string) {
 							res.statusCode = status;
 							res.end(message);
@@ -126,6 +124,8 @@ export default function vaviteConnect(
 						req.url = req.originalUrl || req.url;
 
 						try {
+							const module = await server.ssrLoadModule(handlerEntry);
+
 							await module.default(req, res, () => {
 								if (!res.writableEnded) renderError(404, "Not found");
 							});
