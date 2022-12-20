@@ -31,5 +31,12 @@ export default defineConfig({
 		}),
 		react(),
 		ssr({ disableAutoFullBuild: true }),
+		{
+			name: "test",
+
+			configResolved(config) {
+				console.log(config.experimental);
+			},
+		},
 	],
 });

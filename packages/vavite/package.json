@@ -6,7 +6,9 @@
   "module": "./dist/index.mjs",
   "files": [
     "dist",
-    "*.d.ts"
+    "*.d.ts",
+    "node-loader.mjs",
+    "suppress-loader-warnings.js"
   ],
   "exports": {
     ".": {
@@ -18,7 +20,9 @@
     },
     "./http-dev-server": {
       "import": "./dist/http-dev-server.mjs"
-    }
+    },
+    "./node-loader": "./node-loader.mjs",
+    "./suppress-loader-warnings": "./suppress-loader-warnings.js"
   },
   "author": "Fatih Aygün <cyco130@gmail.com>",
   "repository": "https://github.com/cyco130/vavite",
@@ -40,17 +44,18 @@
   },
   "devDependencies": {
     "@cyco130/eslint-config": "^3.0.1",
-    "@types/node": "^18.11.18",
-    "eslint": "^8.31.0",
+    "@types/node": "^18.14.1",
+    "eslint": "^8.34.0",
     "sirv": "^2.0.2",
-    "tsup": "^6.5.0",
-    "typescript": "^4.9.4",
-    "vite": "^4.0.4"
+    "tsup": "^6.6.3",
+    "typescript": "^4.9.5",
+    "vite": "^4.1.4"
   },
   "dependencies": {
     "@vavite/connect": "workspace:*",
     "@vavite/expose-vite-dev-server": "workspace:*",
     "@vavite/multibuild-cli": "workspace:*",
+    "@vavite/node-loader": "workspace:*",
     "@vavite/reloader": "workspace:*"
   }
 }
