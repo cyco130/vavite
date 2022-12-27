@@ -15,4 +15,5 @@
 - [ssr-react-express](ssr-react-express): React SSR with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/ssr-react-express))
 - [ssr-vue-express](ssr-vue-express): Vue SSR with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/ssr-vue-express))
 - [vite-plugin-ssr](vite-plugin-ssr): vite-plugin-ssr with React and Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/vite-plugin-ssr))
+- [fastify-vite-plugin-ssr](fastify-vite-plugin-ssr): vite-plugin-ssr with React and Fastify ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/fastify-vite-plugin-ssr))
 - [socket-io](socket-io): [socket.io](https://socket.io/) with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/socket-io))
