@@ -39,9 +39,4 @@ app.get(
 	lazy(() => import("./routes/bar")),
 );
 
-if (httpDevServer) {
-	httpDevServer.on("request", app);
-} else {
-	console.log("Starting prod server");
-	app.listen(3000);
-}
+export default app;
