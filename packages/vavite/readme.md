@@ -34,9 +34,27 @@ export default defineConfig({
 });
 ```
 
+## Using `handlerEntry`
+
+This option provides a simpler workflow if you don't need to control the server setup during development.
+
+If you provide the `handlerEntry` option instead of a `serverEntry`, `vavite` will expect you to default export a request handler (with the `(req, res, next)` signature) from the `handlerEntry` file. During development, it will be used as a middleware function in the Vite development server, allowing you to handle requests. For production, `vavite` will build a standalone server application if `standalone` option is set to `true`. You can set it to `false` if you intend to import and use your handler function in a separate server application.
+
+If you're building a standalone SSR application, you can set `clientAssetsDir` to the directory that will contain your client-side assets abd the [`sirv`](https://github.com/lukeed/sirv) package will be used to serve them during production. If `serveClientAssetsInDev` to `true` (the default), they will be served during development too. You can set `bundleSirv` to `false` to import `sirv` in runtime instead of bundling it. In that case you will have to install it as a dependency. In either case, you can export `sirvOptions` from the handler entry file to customize the behavior of `sirv`.
+
+If you set `serverEntry` in addition to `handlerEntry`, it will be used as the entry point in production **but it will not be used in development**. In that case, `sirv` will not be used and you will have to handle the serving of client assets in production yourself if needed.
+
+`vavite/http-dev-server` is not available (or necessary) when using the handler mode.
+
+## Accessing Vite's dev server
+
+You can `import viteDevServer from "vavite/vite-dev-server"` to access the Vite development server instance. It will allow you to access methods such as `ssrFixStacktrace` and `transformIndexHtml` in your application.
+
 ## Using `serverEntry`
 
-By setting the `serverEntry` option without setting the `handlerEntry`, you can use `vavite` to develop and build Node.js application with Express, Koa, Fastify, Hapi, or any other Node.js framework that allows you to provide your own `http.Server` instance. To integrate with Vite's dev server during development, you `import httpDevServer from "vavite/http-dev-server"` and use it in place of a `http.Server` instance. How to do this depends on the framework:
+> **Note that setting `serverEntry` without `handlerEntry` is a less reliable method and some things don't work on some operating systems.**
+
+By setting the `serverEntry` option without setting the `handlerEntry`, you can use `vavite` to develop and build Node.js application with any Node.js framework that allows you to provide your own `http.Server` instance. To integrate with Vite's dev server during development, you `import httpDevServer from "vavite/http-dev-server"` and use it in place of a `http.Server` instance. How to do this depends on the framework:
 
 Some frameworks expose their request listener: For example in Express, `app` is itself the request listener and in Koa you can access it with `app.callback()`:
 
@@ -118,22 +136,6 @@ app.get("/bar", lazy(() => import("./routes/bar")));
 app.get("/baz", lazy(() => import("./routes/baz")));
 
 ```
-
-## Using `handlerEntry`
-
-This option provides a simpler workflow if you don't need to control the server setup during development.
-
-If you provide the `handlerEntry` option instead of a `serverEntry`, `vavite` will expect you to default export a request handler (with the `(req, res, next)` signature) from the `handlerEntry` file. During development, it will be used as a middleware function in the Vite development server, allowing you to handle requests. For production, `vavite` will build a standalone server application if `standalone` option is set to `true`. You can set it to `false` if you intend to import and use your handler function in a separate server application.
-
-If you're building a standalone SSR application, you can set `clientAssetsDir` to the directory that will contain your client-side assets abd the [`sirv`](https://github.com/lukeed/sirv) package will be used to serve them during production. If `serveClientAssetsInDev` to `true` (the default), they will be served during development too. You can set `bundleSirv` to `false` to import `sirv` in runtime instead of bundling it. In that case you will have to install it as a dependency. In either case, you can export `sirvOptions` from the handler entry file to customize the behavior of `sirv`.
-
-If you set `serverEntry` in addition to `handlerEntry`, it will be used as the entry point in production **but it will not be used in development**. In that case, `sirv` will not be used and you will have to handle the serving of client assets in production yourself if needed.
-
-`vavite/http-dev-server` is not available (or necessary) when using the handler mode.
-
-## Accessing Vite's dev server
-
-You can `import viteDevServer from "vavite/vite-dev-server"` to access the Vite development server instance. It will allow you to access methods such as `ssrFixStacktrace` and `transformIndexHtml` in your application.
 
 ## Multiple builds
 

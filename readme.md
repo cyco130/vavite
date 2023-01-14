@@ -27,6 +27,8 @@ Vite's official SSR guide describes a workflow where Vite's development server i
 - [ssr-vue-express](examples/ssr-vue-express): Vue SSR with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/ssr-vue-express))
 - [vite-plugin-ssr](examples/vite-plugin-ssr): vite-plugin-ssr with React and Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/vite-plugin-ssr))
 - [socket-io](examples/socket-io): [socket.io](https://socket.io/) with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/socket-io))
+- [Nest.js](examples/nestjs): [Nest.js](https://nestjs.com/) with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/nestjs))
+- [Nest.js with vite-plugin-ssr](examples/nestjs-vite-plugin-ssr): [Nest.js](https://nestjs.com/) with vite-plugin-ssr ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/nestjs-vite-plugin-ssr))
 
 ## Packages
 
@@ -34,7 +36,7 @@ Vite's official SSR guide describes a workflow where Vite's development server i
 
 - [`@vavite/connect`](packages/connect) is a Vite plugin that turns the official SSR workflow around: Instead of mounting Vite's dev server into your application as a middleware function, you write your application in the form of a middleware function (with the `(req, res, next)` signature) and mount it into Vite's dev server. For production, you can provide a custom server entry or it can build a standalone Node.js server application for you. This workflow is best if you're only interested in handling requests and you don't need control over the server entry during development.
 
-- If you do need control over your server entry, [`@vavite/reloader`](packages/reloader) is a Vite plugin that provides live reloading capabilities for applications written with _any_ Node.js server framework. There are working examples for **Express**, **Koa**, **Fastify**, and **Hapi**, but it should be usable with any framework that allows you to provide your own `http.Server` instance.
+- If you do need control over your server entry even during development, [`@vavite/reloader`](packages/reloader) is a Vite plugin that provides live reloading capabilities for applications written with _any_ Node.js server framework. It should be usable with any framework that allows you to provide your own `http.Server` instance. **Note that this is a less reliable method and some things don't work on some operating systems.**
 
 - [`@vavite/expose-vite-dev-server`](packages/expose-vite-dev-server) is a plugin that provides access to Vite's dev server by simply importing it. It's useful for accessing server methods like `ssrFixStacktrace` and `transformIndexHtml` during development using either `@vavite/connect` or `@vavite/reloader`.
 
