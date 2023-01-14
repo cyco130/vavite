@@ -11,10 +11,10 @@ import { Server as TlsServer } from "tls";
 function lazy(
 	importer: () => Promise<{ default: Lifecycle.Method }>,
 ): Lifecycle.Method {
-	return async (req, h) => {
+	return async function (req, h) {
 		try {
 			const routeHandler = (await importer()).default;
-			return routeHandler(req, h);
+			return routeHandler.call(this, req, h);
 		} catch (err) {
 			if (err instanceof Error) viteDevServer?.ssrFixStacktrace(err);
 			throw err;
