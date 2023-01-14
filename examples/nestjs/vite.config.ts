@@ -18,7 +18,7 @@ export default defineConfig({
 			},
 		}),
 		vavite({
-			serverEntry: "/src/main.ts",
+			handlerEntry: "/src/main.ts",
 			serveClientAssetsInDev: true,
 		}),
 	],
