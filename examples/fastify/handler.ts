@@ -41,27 +41,16 @@ fastify.get(
 	lazy(() => import("./routes/bar")),
 );
 
-let ready = false;
-let fastifyHandlerPromise: PromiseLike<void>;
-
-if (viteDevServer) {
-	fastifyHandlerPromise = fastify.ready().then(() => {
-		ready = true;
-	});
-} else {
-	console.log("Starting prod server");
-	fastify.listen({ port: 3000 }).catch((err) => {
-		console.error(err);
-		process.exit(1);
-	});
-}
+let fastifyReadyPromise: PromiseLike<void> | undefined = fastify.ready();
 
 export default async function handler(
 	request: IncomingMessage,
 	reply: ServerResponse,
 ) {
-	if (!ready) {
-		await fastifyHandlerPromise;
+	if (fastifyReadyPromise) {
+		await fastifyReadyPromise;
+		fastifyReadyPromise = undefined;
 	}
+
 	fastify.server.emit("request", request, reply);
 }

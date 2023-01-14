@@ -8,13 +8,8 @@ bootstrap();
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
-	if (viteDevServer) {
-		await app.init();
-		resolveHandler(await app.getHttpAdapter().getInstance());
-	} else {
-		const port = process.env.PORT || 3000;
-		app.listen(port);
-	}
+	await app.init();
+	resolveHandler(await app.getHttpAdapter().getInstance());
 }
 
 let resolveHandler: (value: Express) => void;

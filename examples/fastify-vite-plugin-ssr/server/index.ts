@@ -29,17 +29,9 @@ async function startServer() {
 		reply.code(statusCode).type(contentType).send(body);
 	});
 
-	if (viteDevServer) {
-		fastifyHandlerPromise = instance.ready().then(() => {
-			fastify = instance;
-		});
-	} else {
-		console.log("Starting prod server");
-		instance.listen({ port: 3000 }).catch((err) => {
-			console.error(err);
-			process.exit(1);
-		});
-	}
+	fastifyHandlerPromise = instance.ready().then(() => {
+		fastify = instance;
+	});
 }
 
 let fastify: FastifyInstance | undefined;
