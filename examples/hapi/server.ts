@@ -1,8 +1,8 @@
 /// <reference types="vite/client" />
+
 import Hapi, { Lifecycle } from "@hapi/hapi";
-import devServer from "vavite/http-dev-server";
 import viteDevServer from "vavite/vite-dev-server";
-import { Server as TlsServer } from "tls";
+import { IncomingMessage, ServerResponse } from "http";
 
 // This is an optional optimization to load routes lazily so that
 // when reloadOn option is set to "static-deps-change",
@@ -22,50 +22,40 @@ function lazy(
 	};
 }
 
-async function init() {
-	let server: Hapi.Server;
+let server: Hapi.Server;
 
-	if (devServer) {
-		server = Hapi.server({
-			listener: devServer,
-			autoListen: false,
-			tls: devServer instanceof TlsServer,
-		});
-	} else {
-		server = Hapi.server({
-			port: 3000,
-			host: "localhost",
-		});
-	}
-
-	server.route({
-		method: "GET",
-		path: "/",
-		handler: lazy(() => import("./routes/home")),
-	});
-
-	server.route({
-		method: "GET",
-		path: "/foo",
-		handler: lazy(() => import("./routes/foo")),
-	});
-
-	server.route({
-		method: "GET",
-		path: "/bar",
-		handler: lazy(() => import("./routes/bar")),
-	});
-
-	if (!devServer) {
-		console.log("Starting prod server");
-	}
-
-	await server.start();
-}
-
-process.on("unhandledRejection", (err) => {
-	console.log(err);
-	process.exit(1);
+server = Hapi.server({
+	autoListen: false,
 });
 
-init();
+server.route({
+	method: "GET",
+	path: "/",
+	handler: lazy(() => import("./routes/home")),
+});
+
+server.route({
+	method: "GET",
+	path: "/foo",
+	handler: lazy(() => import("./routes/foo")),
+});
+
+server.route({
+	method: "GET",
+	path: "/bar",
+	handler: lazy(() => import("./routes/bar")),
+});
+
+let promise: Promise<void> | undefined = server.start();
+
+export default async function handler(
+	req: IncomingMessage,
+	res: ServerResponse,
+) {
+	if (promise) {
+		await promise;
+		promise = undefined;
+	}
+
+	server.listener.emit("request", req, res);
+}
