@@ -1,17 +1,11 @@
 /// <reference types="vite/client" />
 
 import Fastify, { RouteHandlerMethod } from "fastify";
-import httpDevServer from "vavite/http-dev-server";
 import viteDevServer from "vavite/vite-dev-server";
-import { AddressInfo } from "net";
+import { IncomingMessage, ServerResponse } from "http";
 
 const fastify = Fastify({
-	serverFactory: httpDevServer
-		? (handler) => {
-				httpDevServer!.on("request", handler);
-				return httpDevServer!;
-		  }
-		: undefined,
+	// Your Fastify options go here.
 });
 
 // This is an optional optimization to load routes lazily so that
@@ -47,19 +41,27 @@ fastify.get(
 	lazy(() => import("./routes/bar")),
 );
 
-if (httpDevServer) {
-	// Fastify insists on calling listen itself.
-	// devServer ignores listen calls but calls the callback.
-	fastify
-		.listen({ port: (httpDevServer.address() as AddressInfo).port })
-		.catch((err) => {
-			console.error(err);
-			process.exit(1);
-		});
+let ready = false;
+let fastifyHandlerPromise: PromiseLike<void>;
+
+if (viteDevServer) {
+	fastifyHandlerPromise = fastify.ready().then(() => {
+		ready = true;
+	});
 } else {
 	console.log("Starting prod server");
 	fastify.listen({ port: 3000 }).catch((err) => {
 		console.error(err);
 		process.exit(1);
 	});
+}
+
+export default async function handler(
+	request: IncomingMessage,
+	reply: ServerResponse,
+) {
+	if (!ready) {
+		await fastifyHandlerPromise;
+	}
+	fastify.server.emit("request", request, reply);
 }

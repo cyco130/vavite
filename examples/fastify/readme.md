@@ -1,6 +1,6 @@
 # Vavite Fastify example
 
-`serverEntry` example that shows how to integrate with [Fastify](https://fastify.io/).
+`handlerEntry` example that shows how to integrate with [Fastify](https://fastify.io/).
 
 > [Try on StackBlitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/fastify)
 
