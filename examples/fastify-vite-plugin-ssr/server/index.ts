@@ -1,32 +1,26 @@
 /// <reference types="vite/client" />
 
-import httpDevServer from "vavite/http-dev-server";
-import Fastify from "fastify";
+import viteDevServer from "vavite/http-dev-server";
+import Fastify, { FastifyInstance } from "fastify";
 import FastifyStatic from "@fastify/static";
 import { AddressInfo } from "net";
 import { renderPage } from "vite-plugin-ssr";
 import { fileURLToPath } from "url";
+import { IncomingMessage, ServerResponse } from "http";
 
 startServer();
 
 async function startServer() {
-	const fastify = Fastify({
-		serverFactory: httpDevServer
-			? (handler) => {
-					httpDevServer!.on("request", handler);
-					return httpDevServer!;
-			  }
-			: undefined,
-	});
+	const instance = Fastify({});
 
-	if (!httpDevServer) {
-		await fastify.register(FastifyStatic, {
+	if (!viteDevServer) {
+		await instance.register(FastifyStatic, {
 			root: fileURLToPath(new URL("../client/assets", import.meta.url)),
 			prefix: "/assets/",
 		});
 	}
 
-	fastify.get("*", async (request, reply) => {
+	instance.get("*", async (request, reply) => {
 		const pageContext = await renderPage({ urlOriginal: request.url });
 		const { httpResponse } = pageContext;
 		if (!httpResponse) return;
@@ -35,20 +29,29 @@ async function startServer() {
 		reply.code(statusCode).type(contentType).send(body);
 	});
 
-	if (httpDevServer) {
-		// Fastify insists on calling listen itself.
-		// devServer ignores listen calls but calls the callback.
-		fastify
-			.listen({ port: (httpDevServer.address() as AddressInfo).port })
-			.catch((err) => {
-				console.error(err);
-				process.exit(1);
-			});
+	if (viteDevServer) {
+		fastifyHandlerPromise = instance.ready().then(() => {
+			fastify = instance;
+		});
 	} else {
 		console.log("Starting prod server");
-		fastify.listen({ port: 3000 }).catch((err) => {
+		instance.listen({ port: 3000 }).catch((err) => {
 			console.error(err);
 			process.exit(1);
 		});
 	}
+}
+
+let fastify: FastifyInstance | undefined;
+let fastifyHandlerPromise: PromiseLike<void>;
+
+export default async function handler(
+	request: IncomingMessage,
+	reply: ServerResponse,
+) {
+	if (!fastify) {
+		await fastifyHandlerPromise;
+	}
+
+	fastify!.server.emit("request", request, reply);
 }
