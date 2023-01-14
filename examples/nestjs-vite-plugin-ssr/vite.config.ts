@@ -42,7 +42,7 @@ export default defineConfig({
 			},
 		}),
 		vavite({
-			serverEntry: "/server/main.ts",
+			handlerEntry: "/server/main.ts",
 			serveClientAssetsInDev: true,
 		}),
 		react(),

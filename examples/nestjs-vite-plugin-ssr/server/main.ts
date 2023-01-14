@@ -1,19 +1,34 @@
 import { NestFactory } from "@nestjs/core";
 import type { Express } from "express";
-import httpDevServer from "vavite/http-dev-server";
+import { IncomingMessage, ServerResponse } from "http";
+import viteDevServer from "vavite/vite-dev-server";
 import { AppModule } from "./app.module";
 
 bootstrap();
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
-	app.setGlobalPrefix("api");
-	if (import.meta.env.PROD) {
+	if (viteDevServer) {
+		await app.init();
+		resolveHandler(await app.getHttpAdapter().getInstance());
+	} else {
 		const port = process.env.PORT || 3000;
 		app.listen(port);
-	} else {
-		await app.init();
-		const expressApp = (await app.getHttpAdapter().getInstance()) as Express;
-		httpDevServer!.on("request", expressApp);
 	}
+}
+
+let resolveHandler: (value: Express) => void;
+let expressHandler: Express | Promise<Express> = new Promise((resolve) => {
+	resolveHandler = resolve;
+});
+
+export default async function handler(
+	request: IncomingMessage,
+	reply: ServerResponse,
+) {
+	if (expressHandler instanceof Promise) {
+		expressHandler = await expressHandler;
+	}
+
+	expressHandler(request, reply);
 }
