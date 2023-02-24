@@ -1,5 +1,5 @@
-import { IncomingMessage, ServerResponse } from "http";
-import crypto from "crypto";
+import { IncomingMessage, ServerResponse } from "node:http";
+import crypto from "node:crypto";
 import type {
 	ConfigEnv,
 	Logger,

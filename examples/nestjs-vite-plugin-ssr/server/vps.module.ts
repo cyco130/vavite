@@ -1,8 +1,8 @@
 import { DynamicModule, Inject, Module, OnModuleInit } from "@nestjs/common";
 import { HttpAdapterHost } from "@nestjs/core";
 import type { NextFunction, Request, Response } from "express";
-import path, { join } from "path";
-import { fileURLToPath } from "url";
+import path, { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { renderPage } from "vite-plugin-ssr";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OPTIONS = Symbol.for("vite-plugin-ssr.options");

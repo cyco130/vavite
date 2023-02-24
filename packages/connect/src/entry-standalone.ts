@@ -1,4 +1,4 @@
-import { createServer } from "http";
+import { createServer } from "node:http";
 // @ts-expect-error: This is a virtual module
 // eslint-disable-next-line import/no-unresolved
 import handler from "/virtual:vavite-connect-handler";

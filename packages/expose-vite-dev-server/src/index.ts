@@ -1,5 +1,5 @@
 import type { Plugin, SSROptions, UserConfig, ViteDevServer } from "vite";
-import crypto from "crypto";
+import crypto from "node:crypto";
 
 export default function vaviteDevServerPlugin(): Plugin {
 	let dev: boolean;

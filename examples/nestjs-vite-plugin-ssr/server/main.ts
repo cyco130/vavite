@@ -1,7 +1,6 @@
 import { NestFactory } from "@nestjs/core";
 import type { Express } from "express";
-import { IncomingMessage, ServerResponse } from "http";
-import viteDevServer from "vavite/vite-dev-server";
+import { IncomingMessage, ServerResponse } from "node:http";
 import { AppModule } from "./app.module";
 
 bootstrap();

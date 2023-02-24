@@ -1,6 +1,6 @@
 import type { Plugin, UserConfig } from "vite";
-import path from "path";
-import url from "url";
+import path from "node:path";
+import url from "node:url";
 
 const dirname =
 	typeof __dirname === "undefined"
@@ -150,8 +150,8 @@ export default function vaviteConnect(
 	];
 }
 
-import type { Stats } from "fs";
-import type { IncomingMessage, ServerResponse } from "http";
+import type { Stats } from "node:fs";
+import type { IncomingMessage, ServerResponse } from "node:http";
 
 type Arrayable<T> = T | T[];
 

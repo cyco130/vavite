@@ -2,7 +2,7 @@
 
 import Fastify, { RouteHandlerMethod } from "fastify";
 import viteDevServer from "vavite/vite-dev-server";
-import { IncomingMessage, ServerResponse } from "http";
+import { IncomingMessage, ServerResponse } from "node:http";
 
 const fastify = Fastify({
 	// Your Fastify options go here.
