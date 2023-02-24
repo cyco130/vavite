@@ -2,7 +2,7 @@
 
 import Hapi, { Lifecycle } from "@hapi/hapi";
 import viteDevServer from "vavite/vite-dev-server";
-import { IncomingMessage, ServerResponse } from "http";
+import { IncomingMessage, ServerResponse } from "node:http";
 
 // This is an optional optimization to load routes lazily so that
 // when reloadOn option is set to "static-deps-change",

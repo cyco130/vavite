@@ -24,7 +24,7 @@ export default defineConfig({
 Then create an `handler.ts` (or `.js`) file in the root of your project that default exports a function that takes `(req, res, next)` and handles the request. For example:
 
 ```ts
-import type { IncomingMessage, ServerResponse } from "http";
+import type { IncomingMessage, ServerResponse } from "node:http";
 import type { SirvOptions } from "@vavite/connect";
 
 export default function handler(
