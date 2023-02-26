@@ -21,7 +21,16 @@ interface NodeResolveContext {
 
 interface NodeResolveResult {
 	/** A hint to the load hook (it might be ignored) */
-	format?: null | "builtin" | "commonjs" | "json" | "module" | "wasm";
+	format?:
+		| null
+		| "builtin"
+		| "commonjs"
+		| "json"
+		| "module"
+		| "wasm"
+		// These ones are to mark Vite URLs
+		| "vite"
+		| "vite-entry";
 	/** A signal that this hook intends to terminate the chain of resolve hooks. Default: false */
 	shortCircuit?: boolean;
 	/** The absolute URL to which this input resolves */
@@ -44,6 +53,8 @@ interface NodeLoadResult {
 	shortCircuit?: boolean;
 	/** The source for Node.js to evaluate */
 	source: string | ArrayBuffer | Uint8Array;
+	/** Not sure? */
+	responseURL?: string;
 }
 
 function timestamp(id: string): string {
@@ -65,15 +76,17 @@ function unwrapSpecifier(
 	if (specifier.startsWith("file:")) {
 		return [fileURLToPath(specifier)];
 	} else if (specifier.startsWith("vite:")) {
-		return [specifier.slice(5)];
-	} else if (specifier.startsWith("/@id/__x00__")) {
-		return ["\0" + specifier.slice(12), true];
+		return [specifier.slice(5), true];
+		// } else if (specifier.startsWith("/@id/__x00__")) {
+		// 	return ["\0" + specifier.slice(12), true];
 	} else if (specifier.startsWith("/@id/")) {
 		return [specifier.slice(5), true];
 	} else {
 		return [specifier];
 	}
 }
+
+const viteUrlMap = new WeakMap<ViteDevServer, Set<string>>();
 
 export async function resolve(
 	specifier: string,
@@ -87,6 +100,16 @@ export async function resolve(
 		return nextResolve(specifier, context);
 	}
 
+	// if (specifier.includes("src/routes/+page.ts")) {
+	// 	debugger;
+	// }
+
+	let map = viteUrlMap.get(__vite_dev_server__);
+	if (!map) {
+		map = new Set();
+		viteUrlMap.set(__vite_dev_server__, map);
+	}
+
 	if (specifier.match(/\?ssrLoadModuleEntry$/) && context.parentURL) {
 		specifier = specifier.slice(0, -"?ssrLoadModuleEntry".length);
 
@@ -96,23 +119,39 @@ export async function resolve(
 		);
 
 		if (resolved) {
+			const id = resolved[1];
+
+			let url =
+				(id.startsWith("/@id/") || id[0] === "\0" ? "vite:" : "file://") +
+				id +
+				timestamp(id);
+
+			url = url.replace(/\0/g, "__x00__");
+
+			map?.add(url);
+
 			return {
-				url: `vite:${specifier}${timestamp(resolved[1])}`,
+				url,
 				shortCircuit: true,
+				format: "vite",
 			};
 		}
-	} else if (context.parentURL?.startsWith("vite:")) {
+	} else if (context.parentURL && map?.has(context.parentURL)) {
 		if (specifier[0] === "." || specifier[0] === "/") {
 			const [unwrapped, isId] = unwrapSpecifier(specifier);
 
 			if (isId) {
+				const url = "vite:" + unwrapped + timestamp(unwrapped);
+				map?.add(url);
+
 				return {
-					url: "vite:" + unwrapped + timestamp(unwrapped),
+					url,
 					shortCircuit: true,
+					format: "vite",
 				};
 			}
 
-			const parent = context.parentURL.slice("vite:".length);
+			const [parent] = unwrapSpecifier(context.parentURL);
 
 			const resolved = await __vite_dev_server__.pluginContainer.resolveId(
 				unwrapped,
@@ -121,44 +160,35 @@ export async function resolve(
 			);
 
 			if (resolved && !resolved.external) {
-				const resolvedId = resolved.id.replace(/\0/g, "__x00__");
+				const id = resolved.id.replace(/\0/g, "__x00__");
+				const url =
+					(id.startsWith("/@id/") ? "vite:" : "file://") + id + timestamp(id);
+				map?.add(url);
 
 				return {
-					url: "vite:" + resolvedId + timestamp(resolvedId),
+					url,
 					shortCircuit: true,
+					format: "vite",
 				};
 			}
 		}
 
-		const parentId = context.parentURL.slice("vite:".length);
+		let [parentId] = unwrapSpecifier(context.parentURL);
+		if (parentId.startsWith(__vite_dev_server__.config.root + "/")) {
+			parentId = parentId.slice(__vite_dev_server__.config.root.length);
+		}
 		const parentFile = (
 			await __vite_dev_server__.moduleGraph.getModuleByUrl(parentId)
 		)?.file;
-		const parentURL = parentFile ? pathToFileURL(parentFile).href : parentId;
-		const nexContext = { ...context, parentURL };
-
-		try {
-			return await nextResolve(specifier, nexContext);
-		} catch (error) {
-			const extensions = [
-				".js",
-				".cjs",
-				".json",
-				"/index.js",
-				"/index.cjs",
-				"/index.json",
-			];
-
-			for (const ext of extensions) {
-				try {
-					return await nextResolve(specifier + ext, nexContext);
-				} catch {
-					// Ignore
-				}
-			}
-
-			throw error;
+		if (!parentFile) {
+			return nextResolve(specifier, context);
 		}
+		const nextContext = {
+			...context,
+			parentURL: pathToFileURL(parentFile).href,
+		};
+
+		return await nextResolve(specifier, nextContext);
 	}
 
 	return nextResolve(specifier, context);
@@ -173,8 +203,21 @@ export async function load(
 		return nextLoad(url, context);
 	}
 
-	if (url.startsWith("vite:")) {
-		const id = url.slice("vite:".length).replace(/__x00__/g, "\0");
+	if (context.format === "vite") {
+		let id: string;
+		let responseURL: string | undefined;
+		if (url.startsWith("file://")) {
+			id = url.slice(7);
+			if (id.startsWith(__vite_dev_server__.config.root + "/")) {
+				id = id.slice(__vite_dev_server__.config.root.length);
+			}
+		} else if (url.startsWith("vite:")) {
+			id = url.slice(5);
+			responseURL = url;
+			id = id.replace(/__x00__/g, "\0");
+		} else {
+			throw new Error(`Invalid Vite url ${url}`);
+		}
 
 		const loaded = await __vite_dev_server__.transformRequest(id, {
 			ssr: true,
@@ -198,6 +241,7 @@ export async function load(
 			format: "module",
 			source: code,
 			shortCircuit: true,
+			responseURL,
 		};
 	}
 

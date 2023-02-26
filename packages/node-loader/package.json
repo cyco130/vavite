@@ -17,8 +17,12 @@
       ]
     }
   },
+  "bin": {
+    "vavite-loader": "cli.js"
+  },
   "files": [
-    "dist"
+    "dist",
+    "cli.js"
   ],
   "description": "ESM loader for transpiling modules with Vite",
   "author": "Fatih Aygün <cyco130@gmail.com>",

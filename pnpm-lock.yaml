@@ -41,7 +41,7 @@ importers:
       '@types/node': ^18.14.1
       express: ^4.18.2
       typescript: ^4.9.5
-      vavite: workspace:1.5.3
+      vavite: 1.5.3
       vite: ^4.1.4
     dependencies:
       express: 4.18.2
@@ -57,7 +57,7 @@ importers:
       '@types/node': ^18.14.1
       fastify: ^4.13.0
       typescript: ^4.9.5
-      vavite: workspace:1.5.3
+      vavite: 1.5.3
       vite: ^4.1.4
     dependencies:
       fastify: 4.13.0
@@ -80,7 +80,7 @@ importers:
       react-dom: ^18.2.0
       ts-node: ^10.9.1
       typescript: ^4.9.5
-      vavite: workspace:1.5.3
+      vavite: 1.5.3
       vite: ^4.1.4
       vite-plugin-ssr: ^0.4.88
     dependencies:
@@ -105,7 +105,7 @@ importers:
       '@types/hapi__hapi': ^21.0.0
       '@types/node': ^18.14.1
       typescript: ^4.9.5
-      vavite: workspace:1.5.3
+      vavite: 1.5.3
       vite: ^4.1.4
     dependencies:
       '@hapi/hapi': 21.3.0
@@ -124,7 +124,7 @@ importers:
       '@types/node': ^18.14.1
       koa: ^2.14.1
       typescript: ^4.9.5
-      vavite: workspace:1.5.3
+      vavite: 1.5.3
       vite: ^4.1.4
     dependencies:
       '@koa/router': 12.0.0
@@ -149,7 +149,7 @@ importers:
       rollup-plugin-swc3: ^0.8.0
       rxjs: ^7.8.0
       typescript: ^4.9.5
-      vavite: workspace:1.5.3
+      vavite: 1.5.3
       vite: ^4.1.4
     dependencies:
       '@nestjs/common': 9.3.9_mnr6j2del53muneqly5h4y27ai
@@ -185,7 +185,7 @@ importers:
       rollup-plugin-swc3: ^0.8.0
       rxjs: ^7.8.0
       typescript: ^4.9.5
-      vavite: workspace:1.5.3
+      vavite: 1.5.3
       vite: ^4.1.4
       vite-plugin-ssr: ^0.4.88
       vite-tsconfig-paths: ^4.0.5
@@ -217,7 +217,7 @@ importers:
     specifiers:
       '@types/node': ^18.14.1
       typescript: ^4.9.5
-      vavite: workspace:1.5.3
+      vavite: 1.5.3
       vite: ^4.1.4
     devDependencies:
       '@types/node': 18.14.1
@@ -232,7 +232,7 @@ importers:
       express: ^4.18.2
       socket.io: ^4.6.1
       typescript: ^4.9.5
-      vavite: workspace:1.5.3
+      vavite: 1.5.3
       vite: ^4.1.4
     dependencies:
       express: 4.18.2
@@ -255,7 +255,7 @@ importers:
       react: ^18.2.0
       react-dom: ^18.2.0
       typescript: ^4.9.5
-      vavite: workspace:1.5.3
+      vavite: 1.5.3
       vite: ^4.1.4
     dependencies:
       express: 4.18.2
@@ -278,7 +278,7 @@ importers:
       '@vitejs/plugin-vue': ^4.0.0
       express: ^4.18.2
       typescript: ^4.9.5
-      vavite: workspace:1.5.3
+      vavite: 1.5.3
       vite: ^4.1.4
       vue: ^3.2.47
     dependencies:
@@ -305,7 +305,7 @@ importers:
       react-dom: ^18.2.0
       ts-node: ^10.9.1
       typescript: ^4.9.5
-      vavite: workspace:1.5.3
+      vavite: 1.5.3
       vite: ^4.1.4
       vite-plugin-ssr: ^0.4.88
     dependencies:
@@ -331,7 +331,7 @@ importers:
       '@vavite/node-loader': 1.5.2
       express: ^4.18.2
       typescript: ^4.9.5
-      vavite: workspace:1.5.3
+      vavite: 1.5.3
       vite: ^4.1.4
     dependencies:
       express: 4.18.2
@@ -462,10 +462,13 @@ importers:
       '@types/node': ^18.14.1
       '@vavite/connect': workspace:*
       '@vavite/expose-vite-dev-server': workspace:*
+      '@vavite/multibuild': workspace:^1.5.3
       '@vavite/multibuild-cli': workspace:*
       '@vavite/node-loader': workspace:*
       '@vavite/reloader': workspace:*
+      cac: ^6.7.14
       eslint: ^8.34.0
+      picocolors: ^1.0.0
       sirv: ^2.0.2
       tsup: ^6.6.3
       typescript: ^4.9.5
@@ -473,9 +476,12 @@ importers:
     dependencies:
       '@vavite/connect': link:../connect
       '@vavite/expose-vite-dev-server': link:../expose-vite-dev-server
+      '@vavite/multibuild': link:../multibuild
       '@vavite/multibuild-cli': link:../multibuild-cli
       '@vavite/node-loader': link:../node-loader
       '@vavite/reloader': link:../reloader
+      cac: 6.7.14
+      picocolors: 1.0.0
     devDependencies:
       '@cyco130/eslint-config': 3.0.1_7kw3g6rralp5ps6mg3uyzz6azm
       '@types/node': 18.14.1

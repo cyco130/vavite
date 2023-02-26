@@ -3,7 +3,7 @@ import { defineConfig } from "tsup";
 export default defineConfig([
 	// Plugin
 	{
-		entry: ["./src/index.ts"],
+		entry: ["./src/index.ts", "./src/cli.ts"],
 		format: ["esm"],
 		platform: "node",
 		target: "node16",

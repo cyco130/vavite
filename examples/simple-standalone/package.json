@@ -4,13 +4,13 @@
   "private": true,
   "scripts": {
     "start": "node dist",
-    "dev": "vite",
+    "dev": "vavite serve",
     "build": "vite build --ssr --mode=production"
   },
   "devDependencies": {
     "@types/node": "^18.14.1",
     "typescript": "^4.9.5",
-    "vavite": "workspace:1.5.3",
+    "vavite": "1.5.3",
     "vite": "^4.1.4"
   }
 }
