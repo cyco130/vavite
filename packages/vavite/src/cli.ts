@@ -56,7 +56,8 @@ function cleanOptions<Options extends GlobalCLIOptions>(
 }
 
 cli
-	.command("build [root]", "Build for production")
+	.command("[root]", "Build for production")
+	.alias("build")
 	.option("-c, --config <file>", `[string] use specified config file`)
 	.option("--base <path>", `[string] public base path (default: /)`)
 	.option("-l, --logLevel <level>", `[string] info | warn | error | silent`)

@@ -1,6 +1,6 @@
 {
   "name": "vavite",
-  "version": "1.5.3",
+  "version": "2.0.0",
   "description": "A Vite plugin for develoing server-side applications",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -56,7 +56,7 @@
   "dependencies": {
     "@vavite/connect": "workspace:*",
     "@vavite/expose-vite-dev-server": "workspace:*",
-    "@vavite/multibuild": "workspace:^1.5.3",
+    "@vavite/multibuild": "workspace:*",
     "@vavite/multibuild-cli": "workspace:*",
     "@vavite/node-loader": "workspace:*",
     "@vavite/reloader": "workspace:*",

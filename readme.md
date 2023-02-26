@@ -41,3 +41,5 @@ Vite's official SSR guide describes a workflow where Vite's development server i
 - [`@vavite/expose-vite-dev-server`](packages/expose-vite-dev-server) is a plugin that provides access to Vite's dev server by simply importing it. It's useful for accessing server methods like `ssrFixStacktrace` and `transformIndexHtml` during development using either `@vavite/connect` or `@vavite/reloader`.
 
 - Building an SSR application with Vite involves at least two invocations of Vite's build command: once for the client and once for the server. [`@vavite/multibuild`](packages/multibuild) provides a JavaScript API for orchestrating multiple Vite builds and [`@vavite/multibuild-cli`](packages/multibuild-cli) is a drop-in replacement for the `vite build` CLI command for invoking multiple builds.
+
+- [`@vavite/node-loader`](packages/node-loader) is a Vite plugin that makes it possible to debug SSR code with full support for sourcemaps and breakpoints. It uses a Node ESM loader behind the scenes.

@@ -24,6 +24,4 @@ export default defineConfig({
 });
 ```
 
-And run your project with `node --experimental-loader @vavite/node-loader my-server-entry.js`.
-
-You can add the `-r @vavite/node-loader/suppress-warning` before the loader option to suppress the warning about experimental loader.
+And run your project with `vavite-loader vite dev`.
