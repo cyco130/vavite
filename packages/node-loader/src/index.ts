@@ -87,6 +87,7 @@ function unwrapSpecifier(
 }
 
 const viteUrlMap = new WeakMap<ViteDevServer, Set<string>>();
+let projectRoot = "/";
 
 export async function resolve(
 	specifier: string,
@@ -100,9 +101,7 @@ export async function resolve(
 		return nextResolve(specifier, context);
 	}
 
-	// if (specifier.includes("src/routes/+page.ts")) {
-	// 	debugger;
-	// }
+	projectRoot = __vite_dev_server__.config.root.replace(/\\/g, "/");
 
 	let map = viteUrlMap.get(__vite_dev_server__);
 	if (!map) {
@@ -174,8 +173,8 @@ export async function resolve(
 		}
 
 		let [parentId] = unwrapSpecifier(context.parentURL);
-		if (parentId.startsWith(__vite_dev_server__.config.root + "/")) {
-			parentId = parentId.slice(__vite_dev_server__.config.root.length);
+		if (parentId.startsWith(projectRoot + "/")) {
+			parentId = parentId.slice(projectRoot.length);
 		}
 		const parentFile = (
 			await __vite_dev_server__.moduleGraph.getModuleByUrl(parentId)
@@ -208,8 +207,8 @@ export async function load(
 		let responseURL: string | undefined;
 		if (url.startsWith("file://")) {
 			id = url.slice(7);
-			if (id.startsWith(__vite_dev_server__.config.root + "/")) {
-				id = id.slice(__vite_dev_server__.config.root.length);
+			if (id.startsWith(projectRoot + "/")) {
+				id = id.slice(projectRoot.length);
 			}
 		} else if (url.startsWith("vite:")) {
 			id = url.slice(5);
