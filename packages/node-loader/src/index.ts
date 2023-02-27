@@ -84,6 +84,8 @@ function unwrapSpecifier(
 		// 	return ["\0" + specifier.slice(12), true];
 	} else if (specifier.startsWith("/@id/")) {
 		return [specifier.slice(5), true];
+	} else if (specifier.startsWith("/@")) {
+		return [specifier, true];
 	} else {
 		return [specifier];
 	}
@@ -163,11 +165,19 @@ export async function resolve(
 
 			const [parent] = unwrapSpecifier(context.parentURL);
 
-			const resolved = await __vite_dev_server__.pluginContainer.resolveId(
+			let resolved = await __vite_dev_server__.pluginContainer.resolveId(
 				unwrapped,
 				parent,
 				{ ssr: true },
 			);
+
+			if (!resolved && specifier[0] === "/") {
+				resolved = await __vite_dev_server__.pluginContainer.resolveId(
+					projectRoot + unwrapped,
+					parent,
+					{ ssr: true },
+				);
+			}
 
 			if (resolved && !resolved.external) {
 				const id = resolved.id.replace(/\0/g, "__x00__");
@@ -199,7 +209,17 @@ export async function resolve(
 			parentURL: pathToFileURL(parentFile),
 		};
 
-		return await nextResolve(specifier, nextContext);
+		try {
+			return await nextResolve(specifier, nextContext);
+		} catch (error: any) {
+			if (error.code !== "ERR_MODULE_NOT_FOUND") {
+				throw error;
+			}
+
+			nextContext.parentURL = pathToFileURL(projectRoot + parentFile);
+
+			return nextResolve(specifier, nextContext);
+		}
 	}
 
 	return nextResolve(specifier, context);
