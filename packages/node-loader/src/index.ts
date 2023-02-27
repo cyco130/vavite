@@ -1,4 +1,7 @@
-import { fileURLToPath, pathToFileURL } from "node:url";
+import {
+	fileURLToPath,
+	pathToFileURL as originalPathToFileURL,
+} from "node:url";
 import { ViteDevServer } from "vite";
 
 declare global {
@@ -89,6 +92,14 @@ function unwrapSpecifier(
 const viteUrlMap = new WeakMap<ViteDevServer, Set<string>>();
 let projectRoot = "/";
 
+function pathToFileURL(path: string): string {
+	const qmarkPos = path.indexOf("?");
+	const base = qmarkPos === -1 ? path : path.slice(0, qmarkPos);
+	const search = qmarkPos === -1 ? "" : path.slice(qmarkPos);
+
+	return originalPathToFileURL(base).href + search;
+}
+
 export async function resolve(
 	specifier: string,
 	context: NodeResolveContext,
@@ -121,9 +132,9 @@ export async function resolve(
 			const id = resolved[1];
 
 			let url =
-				(id.startsWith("/@id/") || id[0] === "\0" ? "vite:" : "file://") +
-				id +
-				timestamp(id);
+				(id.startsWith("/@id/") || id[0] === "\0"
+					? "vite:" + id
+					: pathToFileURL(id)) + timestamp(id);
 
 			url = url.replace(/\0/g, "__x00__");
 
@@ -161,7 +172,8 @@ export async function resolve(
 			if (resolved && !resolved.external) {
 				const id = resolved.id.replace(/\0/g, "__x00__");
 				const url =
-					(id.startsWith("/@id/") ? "vite:" : "file://") + id + timestamp(id);
+					(id.startsWith("/@id/") ? "vite:" + id : pathToFileURL(id)) +
+					timestamp(id);
 				map?.add(url);
 
 				return {
@@ -184,7 +196,7 @@ export async function resolve(
 		}
 		const nextContext = {
 			...context,
-			parentURL: pathToFileURL(parentFile).href,
+			parentURL: pathToFileURL(parentFile),
 		};
 
 		return await nextResolve(specifier, nextContext);
