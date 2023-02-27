@@ -132,7 +132,8 @@ export default function vaviteReloaderPlugin({
 		resolveId(source) {
 			if (
 				source === "@vavite/reloader/http-dev-server" ||
-				source === "vavite/http-dev-server"
+				source === "vavite/http-dev-server" ||
+				source === "virtual:vavite-http-dev-server"
 			) {
 				return "virtual:vavite-http-dev-server";
 			}

@@ -18,60 +18,40 @@ const browser = await puppeteer.launch({
 const pages = await browser.pages();
 const page = pages[0];
 
-const cases = [
-	{
-		framework: "simple-standalone",
-		env: "development",
-		file: "handler.ts",
-	},
+const baseCases: Array<{
+	framework: string;
+	file: string;
+}> = [
+	{ framework: "simple-standalone", file: "handler.ts" },
+	{ framework: "express", file: "routes/home.ts" },
+	{ framework: "fastify", file: "routes/home.ts" },
+	{ framework: "koa", file: "routes/home.ts" },
+	{ framework: "hapi", file: "routes/home.ts" },
+	{ framework: "ssr-react-express", file: "pages/Home.tsx" },
+	{ framework: "ssr-vue-express", file: "pages/Home.vue" },
+	{ framework: "vite-plugin-ssr", file: "pages/index/index.page.tsx" },
+];
 
-	{ framework: "simple-standalone", env: "production", file: "handler.ts" },
+const [major, minor] = process.version
+	.slice(1)
+	.split(".")
+	.map((x) => Number(x));
 
-	{ framework: "express", env: "development", file: "routes/home.ts" },
-	{ framework: "express", env: "production", file: "routes/home.ts" },
+const cases: Array<{
+	framework: string;
+	file: string;
+	env: "production" | "development" | "with-loader";
+}> = [
+	...baseCases.map((x) => ({ ...x, env: "production" as const })),
+	...baseCases.map((x) => ({ ...x, env: "development" as const })),
+];
 
-	{ framework: "fastify", env: "development", file: "routes/home.ts" },
-	{ framework: "fastify", env: "production", file: "routes/home.ts" },
+const loaderAvailable = major > 16 || (major === 16 && minor >= 12);
+if (loaderAvailable) {
+	cases.push(...baseCases.map((x) => ({ ...x, env: "with-loader" as const })));
+}
 
-	{ framework: "koa", env: "development", file: "routes/home.ts" },
-	{ framework: "koa", env: "production", file: "routes/home.ts" },
-
-	{ framework: "hapi", env: "development", file: "routes/home.ts" },
-	{ framework: "hapi", env: "production", file: "routes/home.ts" },
-
-	{
-		framework: "ssr-react-express",
-		env: "development",
-		file: "pages/Home.tsx",
-	},
-	{
-		framework: "ssr-react-express",
-		env: "production",
-		file: "pages/Home.tsx",
-	},
-	{
-		framework: "ssr-vue-express",
-		env: "development",
-		file: "pages/Home.vue",
-	},
-	{
-		framework: "ssr-vue-express",
-		env: "production",
-		file: "pages/Home.vue",
-	},
-	{
-		framework: "vite-plugin-ssr",
-		env: "development",
-		file: "pages/index/index.page.tsx",
-	},
-	{
-		framework: "vite-plugin-ssr",
-		env: "production",
-		file: "pages/index/index.page.tsx",
-	},
-] as const;
-
-describe.each(cases)("$framework - $env", ({ framework, env, file }) => {
+describe.each(cases)("$framework - $env ", ({ framework, env, file }) => {
 	const ssr = framework.includes("ssr");
 	const dir = path.resolve(__dirname, "..", "examples", framework);
 
@@ -79,14 +59,22 @@ describe.each(cases)("$framework - $env", ({ framework, env, file }) => {
 
 	beforeAll(async () => {
 		const command =
-			env === "development"
-				? "pnpm exec vite serve --strictPort --port 3000 --logLevel silent"
-				: "pnpm run build && pnpm start";
+			env === "production"
+				? "pnpm run build && pnpm start"
+				: "pnpm exec vite serve --strictPort --port 3000 --logLevel silent";
 
 		cp = spawn(command, {
 			shell: true,
 			stdio: "inherit",
 			cwd: dir,
+			env: {
+				...process.env,
+				...(env === "with-loader" && {
+					NODE_OPTIONS:
+						(process.env.NODE_OPTIONS ?? "") +
+						" -r vavite/suppress-loader-warnings --loader vavite/node-loader",
+				}),
+			},
 		});
 
 		// Wait until server is ready
@@ -134,7 +122,6 @@ describe.each(cases)("$framework - $env", ({ framework, env, file }) => {
 
 	test("renders home page", async () => {
 		const text = await fetch(TEST_HOST).then((r) => r.text());
-		if (!text.includes("Hello")) console.log(text);
 		expect(text).toContain("Hello");
 	}, 10_000);
 
@@ -155,7 +142,7 @@ describe.each(cases)("$framework - $env", ({ framework, env, file }) => {
 		}, 15_000);
 	}
 
-	if (env === "development") {
+	if (env !== "production") {
 		test("hot reloads page", async () => {
 			await page.goto(TEST_HOST);
 

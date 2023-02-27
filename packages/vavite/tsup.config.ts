@@ -9,7 +9,11 @@ export default defineConfig([
 		dts: true,
 	},
 	{
-		entry: ["./src/vite-dev-server.ts", "./src/http-dev-server.ts"],
+		entry: [
+			"./src/vite-dev-server.ts",
+			"./src/http-dev-server.ts",
+			"./src/cli.ts",
+		],
 		format: ["esm"],
 	},
 ]);

@@ -1,9 +1,17 @@
 /// <reference types="@vavite/multibuild-cli" />
 
-import { Plugin, UserConfig } from "vite";
+import { Plugin, PluginOption, UserConfig } from "vite";
 import vaviteConnect from "@vavite/connect";
 import vaviteReloader from "@vavite/reloader";
 import vaviteExposeViteDevServer from "@vavite/expose-vite-dev-server";
+import { nodeLoaderPlugin } from "@vavite/node-loader/plugin";
+
+declare global {
+	// eslint-disable-next-line no-var
+	var __vavite_loader__: boolean;
+}
+
+const hasLoader = global.__vavite_loader__;
 
 export interface VaviteOptions {
 	/** Entry module that default exports a middleware function.
@@ -45,7 +53,7 @@ export interface VaviteOptions {
 	reloadOn?: "any-change" | "static-deps-change";
 }
 
-export default function vavite(options: VaviteOptions): Plugin[] {
+export default function vavite(options: VaviteOptions): PluginOption {
 	const {
 		serverEntry,
 		handlerEntry,
@@ -64,7 +72,7 @@ export default function vavite(options: VaviteOptions): Plugin[] {
 
 	let buildStepStartCalled = false;
 
-	const plugins: Plugin[] = [
+	const plugins: (Plugin | false)[] = [
 		{
 			name: "vavite:check-multibuild",
 
@@ -98,6 +106,7 @@ export default function vavite(options: VaviteOptions): Plugin[] {
 				}
 			},
 		},
+		hasLoader && nodeLoaderPlugin(),
 	];
 
 	if (handlerEntry) {

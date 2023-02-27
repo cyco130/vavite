@@ -28,7 +28,8 @@ export default function vaviteDevServerPlugin(): Plugin {
 		resolveId(source, _importer, options) {
 			if (
 				(source === "@vavite/expose-vite-dev-server/vite-dev-server" ||
-					source === "vavite/vite-dev-server") &&
+					source === "vavite/vite-dev-server" ||
+					source === "virtual:vavite-vite-dev-server") &&
 				dev &&
 				options.ssr
 			) {

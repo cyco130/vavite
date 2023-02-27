@@ -9,7 +9,7 @@ startServer();
 async function startServer() {
 	const app = express();
 
-	if (import.meta.env.PROD) {
+	if (!httpDevServer) {
 		app.use(express.static("dist/client"));
 	}
 
@@ -24,11 +24,11 @@ async function startServer() {
 		res.status(statusCode).send(body);
 	});
 
-	if (import.meta.env.PROD) {
+	if (httpDevServer) {
+		httpDevServer!.on("request", app);
+	} else {
 		const port = process.env.PORT || 3000;
 		app.listen(port);
 		console.log(`Server running at http://localhost:${port}`);
-	} else {
-		httpDevServer!.on("request", app);
 	}
 }
