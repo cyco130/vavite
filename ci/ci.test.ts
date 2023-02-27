@@ -122,7 +122,6 @@ describe.each(cases)("$framework - $env ", ({ framework, env, file }) => {
 
 	test("renders home page", async () => {
 		const text = await fetch(TEST_HOST).then((r) => r.text());
-		if (!text.includes("Hello")) console.log(text);
 		expect(text).toContain("Hello");
 	}, 10_000);
 
