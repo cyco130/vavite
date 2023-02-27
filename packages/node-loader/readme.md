@@ -14,11 +14,11 @@ Add the following to your Vite config:
 
 ```ts
 import { defineConfig } from "vite";
-import { nodeLoader } from "@vavite/node-loader/plugin";
+import { nodeLoaderPlugin } from "@vavite/node-loader/plugin";
 
 export default defineConfig({
   plugins: [
-    nodeLoader(),
+    nodeLoaderPlugin(),
     // ...
   ],
 });
