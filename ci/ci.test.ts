@@ -11,7 +11,7 @@ import { kill } from "node:process";
 const TEST_HOST = "http://localhost:3000";
 
 const browser = await puppeteer.launch({
-	headless: false,
+	// headless: false,
 	defaultViewport: { width: 1200, height: 800 },
 });
 
@@ -22,14 +22,15 @@ const baseCases: Array<{
 	framework: string;
 	file: string;
 }> = [
-	// { framework: "simple-standalone", file: "handler.ts" },
-	// { framework: "express", file: "routes/home.ts" },
-	// { framework: "fastify", file: "routes/home.ts" },
-	// { framework: "koa", file: "routes/home.ts" },
-	// { framework: "hapi", file: "routes/home.ts" },
-	// { framework: "ssr-react-express", file: "pages/Home.tsx" },
-	// { framework: "ssr-vue-express", file: "pages/Home.vue" },
-	// { framework: "vite-plugin-ssr", file: "pages/index/index.page.tsx" },
+	{ framework: "simple-standalone", file: "handler.ts" },
+	{ framework: "express", file: "routes/home.ts" },
+	{ framework: "fastify", file: "routes/home.ts" },
+	{ framework: "koa", file: "routes/home.ts" },
+	{ framework: "hapi", file: "routes/home.ts" },
+	{ framework: "ssr-react-express", file: "pages/Home.tsx" },
+	{ framework: "ssr-vue-express", file: "pages/Home.vue" },
+	{ framework: "vite-plugin-ssr", file: "pages/index/index.page.tsx" },
+	{ framework: "nestjs", file: "src/app.controller.ts" },
 	{ framework: "nestjs-vite-plugin-ssr", file: "pages/index/index.page.tsx" },
 ];
 
@@ -59,10 +60,14 @@ describe.each(cases)("$framework - $env ", ({ framework, env, file }) => {
 	let cp: ChildProcess | undefined;
 
 	beforeAll(async () => {
-		const command =
+		let command =
 			env === "production"
 				? "pnpm run build && pnpm start"
 				: "pnpm exec vite serve --strictPort --port 3000 --logLevel silent";
+
+		if (framework === "nestjs-vite-plugin-ssr" && env !== "production") {
+			command = `pnpm exec vite optimize --force && ${command}`;
+		}
 
 		cp = spawn(command, {
 			shell: true,

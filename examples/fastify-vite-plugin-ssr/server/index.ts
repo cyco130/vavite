@@ -3,7 +3,6 @@
 import viteDevServer from "vavite/http-dev-server";
 import Fastify, { FastifyInstance } from "fastify";
 import FastifyStatic from "@fastify/static";
-import { AddressInfo } from "node:net";
 import { renderPage } from "vite-plugin-ssr";
 import { fileURLToPath } from "node:url";
 import { IncomingMessage, ServerResponse } from "node:http";

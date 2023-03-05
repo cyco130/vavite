@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vavite serve",
+    "dev": "vite optimize --force && vavite serve",
     "build": "vavite build",
     "start": "node dist/server"
   },

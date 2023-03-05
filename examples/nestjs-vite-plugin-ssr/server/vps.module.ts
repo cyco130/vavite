@@ -56,9 +56,7 @@ export class VpsModule implements OnModuleInit {
 
 		app.get("*", async (req: Request, res: Response, _next: NextFunction) => {
 			const urlOriginal = req.originalUrl;
-			const pageContext = await renderPage({
-				urlOriginal,
-			});
+			const pageContext = await renderPage({ urlOriginal });
 			const { httpResponse } = pageContext;
 			if (!httpResponse) return;
 			const { statusCode, contentType } = httpResponse;
