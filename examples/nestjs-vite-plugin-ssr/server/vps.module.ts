@@ -1,12 +1,12 @@
 import { DynamicModule, Inject, Module, OnModuleInit } from "@nestjs/common";
 import { HttpAdapterHost } from "@nestjs/core";
 import type { NextFunction, Request, Response } from "express";
-import path, { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { renderPage } from "vite-plugin-ssr";
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const OPTIONS = Symbol.for("vite-plugin-ssr.options");
 import { ServeStaticModule } from "@nestjs/serve-static";
+import devServer from "vavite/http-dev-server";
+
+const OPTIONS = Symbol.for("vite-plugin-ssr.options");
 
 interface ViteSsrOptions {
 	root?: string;
@@ -22,10 +22,11 @@ export class VpsModule implements OnModuleInit {
 
 	static forRoot(options?: ViteSsrOptions): DynamicModule {
 		options ??= {
-			root: join(__dirname, "..", "client"),
+			root: fileURLToPath(new URL("../client", import.meta.url)),
 		};
+
 		const imports: DynamicModule[] = [];
-		if (import.meta.env.PROD) {
+		if (!devServer) {
 			imports.push(
 				ServeStaticModule.forRoot({
 					rootPath: options.root,
@@ -33,6 +34,7 @@ export class VpsModule implements OnModuleInit {
 				}),
 			);
 		}
+
 		return {
 			module: VpsModule,
 			imports,
@@ -54,12 +56,7 @@ export class VpsModule implements OnModuleInit {
 
 		app.get("*", async (req: Request, res: Response, _next: NextFunction) => {
 			const urlOriginal = req.originalUrl;
-			const pageContextInit = {
-				urlOriginal,
-				req,
-				res,
-			};
-			const pageContext = await renderPage(pageContextInit);
+			const pageContext = await renderPage({ urlOriginal });
 			const { httpResponse } = pageContext;
 			if (!httpResponse) return;
 			const { statusCode, contentType } = httpResponse;

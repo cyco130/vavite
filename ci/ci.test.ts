@@ -30,6 +30,8 @@ const baseCases: Array<{
 	{ framework: "ssr-react-express", file: "pages/Home.tsx" },
 	{ framework: "ssr-vue-express", file: "pages/Home.vue" },
 	{ framework: "vite-plugin-ssr", file: "pages/index/index.page.tsx" },
+	{ framework: "nestjs", file: "src/app.controller.ts" },
+	{ framework: "nestjs-vite-plugin-ssr", file: "pages/index/index.page.tsx" },
 ];
 
 const [major, minor] = process.version
@@ -58,10 +60,14 @@ describe.each(cases)("$framework - $env ", ({ framework, env, file }) => {
 	let cp: ChildProcess | undefined;
 
 	beforeAll(async () => {
-		const command =
+		let command =
 			env === "production"
 				? "pnpm run build && pnpm start"
 				: "pnpm exec vite serve --strictPort --port 3000 --logLevel silent";
+
+		if (framework === "nestjs-vite-plugin-ssr" && env !== "production") {
+			command = `pnpm exec vite optimize --force && ${command}`;
+		}
 
 		cp = spawn(command, {
 			shell: true,

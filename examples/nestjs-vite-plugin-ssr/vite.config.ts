@@ -21,6 +21,10 @@ export default defineConfig({
 						output: {
 							// We have to disable this for multiple entries
 							inlineDynamicImports: false,
+							// vite-plugin-ssr overrides this, making it hard to find the entry file
+							entryFileNames() {
+								return "[name].js";
+							},
 						},
 					},
 				},
@@ -32,15 +36,18 @@ export default defineConfig({
 	},
 	esbuild: false,
 	plugins: [
-		swc({
-			jsc: {
-				transform: {
-					decoratorMetadata: true,
-					legacyDecorator: true,
+		{
+			...swc({
+				jsc: {
+					transform: {
+						decoratorMetadata: true,
+						legacyDecorator: true,
+					},
+					target: "es2017",
 				},
-				target: "es2017",
-			},
-		}),
+			}),
+			enforce: "pre", // Make sure this is applied before anything else
+		},
 		vavite({
 			handlerEntry: "/server/main.ts",
 			serveClientAssetsInDev: true,

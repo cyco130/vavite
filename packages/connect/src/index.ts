@@ -62,14 +62,16 @@ export default function vaviteConnect(
 				if (id === "/virtual:vavite-connect-handler") {
 					return this.resolve(handlerEntry);
 				} else if (id === "/virtual:vavite-connect-server") {
-					return path.resolve(
-						dirname,
-						clientAssetsDir
-							? bundleSirv
-								? "entry-standalone-bundled-sirv.mjs"
-								: "entry-standalone-imported-sirv.mjs"
-							: "entry-standalone.mjs",
-					);
+					return path
+						.resolve(
+							dirname,
+							clientAssetsDir
+								? bundleSirv
+									? "entry-standalone-bundled-sirv.mjs"
+									: "entry-standalone-imported-sirv.mjs"
+								: "entry-standalone.mjs",
+						)
+						.replace(/\\/g, "/");
 				}
 			},
 		},
