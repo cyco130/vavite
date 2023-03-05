@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 const suppressPath = fileURLToPath(
 	new URL("./suppress-warnings.cjs", import.meta.url).href,
 );
-const loaderPath = fileURLToPath(new URL("./index.js", import.meta.url).href);
+const loaderPath = new URL("./index.js", import.meta.url).href;
 
 const options =
 	(process.env.NODE_OPTIONS ? process.env.NODE_OPTIONS + " " : "") +
@@ -15,7 +15,7 @@ const args = process.argv.slice(3);
 
 // Run the command with the options
 const cp = spawn(command, args, {
-	shell: false,
+	shell: true,
 	stdio: "inherit",
 	env: {
 		...process.env,
