@@ -102,6 +102,14 @@ function pathToFileURL(path: string): string {
 	return originalPathToFileURL(base).href + search;
 }
 
+function urlToPath(url: string): string {
+	const qmarkPos = url.indexOf("?");
+	const base = qmarkPos === -1 ? url : url.slice(0, qmarkPos);
+	const search = qmarkPos === -1 ? "" : url.slice(qmarkPos);
+
+	return fileURLToPath(base) + search;
+}
+
 export async function resolve(
 	specifier: string,
 	context: NodeResolveContext,
@@ -238,7 +246,7 @@ export async function load(
 		let id: string;
 		let responseURL: string | undefined;
 		if (url.startsWith("file://")) {
-			id = url.slice(7);
+			id = urlToPath(url).replace(/\\/g, "/");
 			if (id.startsWith(projectRoot + "/")) {
 				id = id.slice(projectRoot.length);
 			}
