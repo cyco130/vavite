@@ -8,15 +8,18 @@ export default defineConfig({
 	},
 	esbuild: false,
 	plugins: [
-		swc({
-			jsc: {
-				transform: {
-					decoratorMetadata: true,
-					legacyDecorator: true,
+		{
+			...swc({
+				jsc: {
+					transform: {
+						decoratorMetadata: true,
+						legacyDecorator: true,
+					},
+					target: "es2021",
 				},
-				target: "es2021",
-			},
-		}),
+			}),
+			enforce: "pre", // Make sure this is applied before anything else
+		},
 		vavite({
 			handlerEntry: "/src/main.ts",
 			serveClientAssetsInDev: true,
