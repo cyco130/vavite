@@ -1,6 +1,6 @@
 {
   "name": "vavite",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "A Vite plugin for develoing server-side applications",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -46,8 +46,8 @@
   },
   "devDependencies": {
     "@cyco130/eslint-config": "^3.0.1",
-    "@types/node": "^18.14.1",
-    "eslint": "^8.34.0",
+    "@types/node": "^18.14.6",
+    "eslint": "^8.35.0",
     "sirv": "^2.0.2",
     "tsup": "^6.6.3",
     "typescript": "^4.9.5",

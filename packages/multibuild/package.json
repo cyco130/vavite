@@ -1,6 +1,6 @@
 {
   "name": "@vavite/multibuild",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "exports": {
@@ -31,13 +31,13 @@
   },
   "devDependencies": {
     "@cyco130/eslint-config": "^3.0.1",
-    "eslint": "^8.34.0",
+    "eslint": "^8.35.0",
     "tsup": "^6.6.3",
     "typescript": "^4.9.5",
     "vite": "^4.1.4"
   },
   "dependencies": {
-    "@types/node": "^18.14.1",
+    "@types/node": "^18.14.6",
     "cac": "^6.7.14",
     "picocolors": "^1.0.0"
   }
