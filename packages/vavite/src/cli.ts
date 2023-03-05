@@ -5,6 +5,7 @@ import {
 	LogLevel,
 	ResolvedConfig,
 	ServerOptions,
+	version as viteVersion,
 } from "vite";
 import { cac } from "cac";
 import multibuild from "@vavite/multibuild";
@@ -124,8 +125,8 @@ cli
 				onStartBuildStep(info) {
 					initialConfig.logger.info(
 						(info.currentStepIndex ? "\n" : "") +
-							pico.cyan("vavite: ") +
-							pico.white("running build step") +
+							pico.cyan("vavite: " + version) +
+							pico.white(" running build step") +
 							" " +
 							pico.blue(info.currentStep.name) +
 							" (" +
@@ -229,10 +230,8 @@ cli
 
 				info(
 					`\n  ${pico.green(
-						pico.black(pico.bgMagenta(" RAKKAS ")) +
-							" " +
-							pico.magenta(version) +
-							" development server is running 💃",
+						pico.cyan("vavite: " + version + " (vite: " + viteVersion + ")") +
+							" development server is running",
 					)} ${startupDurationString}\n`,
 					{ clear: !server.config.logger.hasWarned },
 				);
