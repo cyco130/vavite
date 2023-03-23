@@ -126,9 +126,11 @@ cli
 					initialConfig.logger.info(
 						(info.currentStepIndex ? "\n" : "") +
 							pico.cyan("vavite: " + version) +
-							pico.white(" running build step") +
-							" " +
-							pico.blue(info.currentStep.name) +
+							(info.currentStep.description
+								? pico.white(" " + info.currentStep.description)
+								: pico.white(" running build step") +
+								  " " +
+								  pico.blue(info.currentStep.name)) +
 							" (" +
 							pico.green(
 								info.currentStepIndex + 1 + "/" + info.buildSteps.length,

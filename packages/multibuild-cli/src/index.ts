@@ -104,15 +104,17 @@ cli
 			{
 				onInitialConfigResolved(config) {
 					initialConfig = config;
+					console.log(initialConfig.buildSteps);
 				},
 
 				onStartBuildStep(info) {
 					initialConfig.logger.info(
 						(info.currentStepIndex ? "\n" : "") +
 							colors.cyan("vavite: ") +
-							colors.white("running build step") +
-							" " +
-							colors.blue(info.currentStep.name) +
+							(info.currentStep.description ||
+								colors.white("running build step") +
+									" " +
+									colors.blue(info.currentStep.name)) +
 							" (" +
 							colors.green(
 								info.currentStepIndex + 1 + "/" + info.buildSteps.length,
