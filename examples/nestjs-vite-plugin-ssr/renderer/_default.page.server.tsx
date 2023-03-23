@@ -1,6 +1,7 @@
 import { renderToPipeableStream } from "react-dom/server";
 import reactStreaming from "react-streaming/server";
-import { escapeInject, PageContextBuiltIn } from "vite-plugin-ssr";
+import { escapeInject } from "vite-plugin-ssr/server";
+import type { PageContextBuiltIn } from "vite-plugin-ssr";
 import type { PageContext } from "./types";
 
 import logoUrl from "./logo.svg";

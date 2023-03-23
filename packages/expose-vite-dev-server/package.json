@@ -1,6 +1,6 @@
 {
   "name": "@vavite/expose-vite-dev-server",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "module": "./dist/index.mjs",
   "files": [
     "dist",
@@ -32,11 +32,11 @@
     "vite": ">=2.8.1"
   },
   "devDependencies": {
-    "@cyco130/eslint-config": "^3.0.1",
-    "@types/node": "^18.14.6",
-    "eslint": "^8.35.0",
-    "tsup": "^6.6.3",
-    "typescript": "^4.9.5",
-    "vite": "^4.1.4"
+    "@cyco130/eslint-config": "^3.0.2",
+    "@types/node": "^18.15.5",
+    "eslint": "^8.36.0",
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.2",
+    "vite": "^4.2.1"
   }
 }
