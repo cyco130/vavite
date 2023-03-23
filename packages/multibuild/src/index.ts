@@ -9,9 +9,23 @@ import {
 } from "vite";
 import colors from "picocolors";
 
-export interface BuildStep {
+export type BuildStep = ViteBuildStep | CustomBuildStep;
+
+export interface ViteBuildStep {
 	name: string;
+	description?: string;
 	config?: UserConfig;
+	vite?: true;
+}
+
+export interface CustomBuildStep {
+	vite: false;
+	name: string;
+	description?: string;
+	run(
+		info: VaviteMultiBuildInfo,
+		forwarded: Record<string, any>,
+	): void | Promise<void> | Record<string, any> | Promise<Record<string, any>>;
 }
 
 export interface VaviteMultiBuildInfo {
@@ -83,6 +97,15 @@ export default async function multibuild(
 		};
 
 		await options.onStartBuildStep?.(info);
+
+		if (step.vite === false) {
+			const result = await step.run(info, forwarded);
+			if (result !== undefined) {
+				forwarded[step.name] = result;
+			}
+
+			continue;
+		}
 
 		const multibuildPlugin: Plugin = {
 			name: "@vavite/multibuild",
