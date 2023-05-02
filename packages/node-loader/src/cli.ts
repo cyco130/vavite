@@ -8,7 +8,7 @@ const loaderPath = new URL("./index.js", import.meta.url).href;
 
 const options =
 	(process.env.NODE_OPTIONS ? process.env.NODE_OPTIONS + " " : "") +
-	`-r ${suppressPath} --loader ${loaderPath}`;
+	`-r ${JSON.stringify(suppressPath)} --loader ${loaderPath}`;
 
 const command = process.argv[2];
 const args = process.argv.slice(3);
