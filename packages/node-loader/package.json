@@ -1,6 +1,6 @@
 {
   "name": "@vavite/node-loader",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "type": "module",
   "exports": {
     ".": "./dist/index.js",
