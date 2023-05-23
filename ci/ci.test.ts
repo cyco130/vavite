@@ -32,6 +32,7 @@ const baseCases: Array<{
 	{ framework: "vite-plugin-ssr", file: "pages/index/index.page.tsx" },
 	{ framework: "nestjs", file: "src/app.controller.ts" },
 	{ framework: "nestjs-vite-plugin-ssr", file: "pages/index/index.page.tsx" },
+	{ framework: "fastify-vite-plugin-ssr", file: "pages/index/index.page.tsx" },
 ];
 
 const [major, minor] = process.version
