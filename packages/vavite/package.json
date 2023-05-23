@@ -1,6 +1,6 @@
 {
   "name": "vavite",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "A Vite plugin for develoing server-side applications",
   "type": "module",
   "main": "./dist/index.cjs",

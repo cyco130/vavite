@@ -16,7 +16,7 @@
     "@types/node": "^18.15.5",
     "rollup-plugin-swc3": "^0.8.0",
     "typescript": "^5.0.2",
-    "vavite": "1.8.0",
+    "vavite": "1.8.1",
     "vite": "^4.2.1"
   },
   "dependencies": {
