@@ -1,8 +1,8 @@
 {
   "name": "@vavite/multibuild-cli",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "bin": {
-    "vavite": "./cli.js"
+    "vavite-multibuild": "./cli.js"
   },
   "main": "./cli.js",
   "files": [

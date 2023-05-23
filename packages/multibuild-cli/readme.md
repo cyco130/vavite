@@ -2,9 +2,9 @@
 
 `@vavite/multibuild-cli` is a tool for orchestrating multiple [Vite](https://vitejs.dev) builds. This package is the CLI binary, check out [`@vavite/multibuild`](../multibuild) for the JavaScript API.
 
-Developing applications that perform server-side rendering (SSR) with Vite requires two separate build steps: one for the client and one for the server. This library allows you to run both builds in a and customize the configuration for each build.
+Developing applications that perform server-side rendering (SSR) with Vite requires two separate build steps: one for the client and one for the server. This library allows you to run both builds with a single command and customize the configuration for each build.
 
-We're hoping that, eventually, [this feature will be implemented in Vite itself](https://github.com/vitejs/vite/issues/5936). This package exists to provide workaround until then.
+We're hoping that, eventually, [this feature will be implemented in Vite itself](https://github.com/vitejs/vite/issues/5936). This package exists to provide a workaround until then.
 
 ## Usage
 
@@ -41,7 +41,7 @@ export default defineConfig({
 });
 ```
 
-You can then run the `vavite` command as a drop-in replacement for `vite build`. This will call `resolveConfig` with the `mode` parameter set to `"multibuild"` to extract the build steps. Setting `buildSteps` in subsequent steps has no effect.
+You can then run the `vavite-multibuild` command as a drop-in replacement for `vite build`. This will call `resolveConfig` with the `mode` parameter set to `"multibuild"` to extract the build steps. Setting `buildSteps` in subsequent steps has no effect.
 
 ## Sharing information between builds
 
