@@ -7,8 +7,6 @@ import { renderPage } from "vite-plugin-ssr/server";
 import { fileURLToPath } from "node:url";
 import { IncomingMessage, ServerResponse } from "node:http";
 
-startServer();
-
 async function startServer() {
 	const instance = Fastify({});
 
@@ -28,13 +26,16 @@ async function startServer() {
 		reply.code(statusCode).type(contentType).send(body);
 	});
 
-	fastifyHandlerPromise = instance.ready().then(() => {
-		fastify = instance;
-	});
+	await instance.ready();
+
+	fastify = instance;
 }
 
 let fastify: FastifyInstance | undefined;
-let fastifyHandlerPromise: PromiseLike<void>;
+const fastifyHandlerPromise = startServer().catch((error) => {
+	console.error(error);
+	process.exit(1);
+});
 
 export default async function handler(
 	request: IncomingMessage,
