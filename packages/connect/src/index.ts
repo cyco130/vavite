@@ -78,8 +78,6 @@ export default function vaviteConnect(
 		{
 			name: "@vavite/connect:server",
 
-			enforce: "post",
-
 			config(config, env) {
 				const common: UserConfig = {
 					optimizeDeps: {
