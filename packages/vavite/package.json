@@ -17,10 +17,16 @@
       "require": "./dist/index.cjs"
     },
     "./vite-dev-server": {
-      "import": "./dist/vite-dev-server.js"
+      "import": {
+        "types": "./vite-dev-server.d.ts",
+        "default": "./dist/vite-dev-server.js"
+      }
     },
     "./http-dev-server": {
-      "import": "./dist/http-dev-server.js"
+      "import": {
+        "types": "./http-dev-server.d.ts",
+        "default": "./dist/http-dev-server.js"
+      }
     },
     "./node-loader": "./node-loader.mjs",
     "./suppress-loader-warnings": "./suppress-loader-warnings.cjs",
