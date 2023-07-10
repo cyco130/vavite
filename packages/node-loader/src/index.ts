@@ -62,9 +62,8 @@ interface NodeLoadResult {
 
 function timestamp(id: string): string {
 	const ts =
-		__vite_dev_server__?.moduleGraph.getModuleById(
-			id,
-		)?.lastInvalidationTimestamp;
+		__vite_dev_server__?.moduleGraph.getModuleById(id)
+			?.lastInvalidationTimestamp;
 
 	if (ts) {
 		return `?t=${ts}`;
