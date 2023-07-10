@@ -14,9 +14,9 @@
   },
   "devDependencies": {
     "husky": "^8.0.3",
-    "lint-staged": "^13.2.0",
-    "prettier": "^2.8.6",
-    "publint": "^0.1.10"
+    "lint-staged": "^13.2.3",
+    "prettier": "^2.8.8",
+    "publint": "^0.1.16"
   },
   "pnpm": {
     "peerDependencyRules": {

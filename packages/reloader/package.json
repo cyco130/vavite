@@ -34,11 +34,11 @@
     "vite": ">=2.8.1"
   },
   "devDependencies": {
-    "@cyco130/eslint-config": "^3.0.2",
-    "@types/node": "^18.15.5",
-    "eslint": "^8.36.0",
+    "@cyco130/eslint-config": "^3.1.4",
+    "@types/node": "^18.16.19",
+    "eslint": "^8.44.0",
     "tsup": "^6.7.0",
-    "typescript": "^5.0.2",
-    "vite": "^4.2.1"
+    "typescript": "^5.1.6",
+    "vite": "^4.4.2"
   }
 }
