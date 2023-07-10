@@ -24,7 +24,7 @@ jobs:
 
       - name: Get branch name
         id: branch-name
-        uses: tj-actions/branch-names@v5.5
+        uses: tj-actions/branch-names@v6.5
 
       - name: Clone
         run: npx -y degit cyco130/vavite/examples/ssr-react-express#${{ steps.branch-name.outputs.current_branch }} ssr-react-express
