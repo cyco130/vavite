@@ -7,6 +7,11 @@ on:
         description: "Version to publish"
         required: true
         type: "string"
+      tag:
+        description: "Tag to publish"
+        required: true
+        type: "string"
+        default: "latest"
       commit:
         description: "Should we commit the version bump?"
         required: false
@@ -51,7 +56,7 @@ jobs:
       - name: "Publish to NPM"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: pnpm -r publish --access public --no-git-checks
+        run: pnpm -r publish --access public --no-git-checks --tag ${{ github.event.inputs.tag }}
 
       - name: "Commit version bump"
         if: ${{ github.event.inputs.commit == 'true' }}
