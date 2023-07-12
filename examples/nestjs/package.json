@@ -17,7 +17,7 @@
     "rollup-plugin-swc3": "^0.8.0",
     "typescript": "^5.0.2",
     "vavite": "1.8.2",
-    "vite": "^4.2.1"
+    "vite": "^4.4.3"
   },
   "dependencies": {
     "@nestjs/common": "^9.3.12",
