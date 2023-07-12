@@ -8,8 +8,8 @@
     "build": "vite build --ssr --mode=production"
   },
   "devDependencies": {
-    "@types/node": "^18.15.5",
-    "typescript": "^5.0.2",
+    "@types/node": "^18.16.19",
+    "typescript": "^5.1.6",
     "vavite": "1.8.2",
     "vite": "^4.4.3"
   }

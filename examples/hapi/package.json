@@ -12,12 +12,12 @@
   ],
   "devDependencies": {
     "@types/hapi__hapi": "^21.0.0",
-    "@types/node": "^18.15.5",
-    "typescript": "^5.0.2",
+    "@types/node": "^18.16.19",
+    "typescript": "^5.1.6",
     "vavite": "1.8.2",
     "vite": "^4.4.3"
   },
   "dependencies": {
-    "@hapi/hapi": "^21.3.0"
+    "@hapi/hapi": "^21.3.2"
   }
 }
