@@ -11,19 +11,7 @@ export default defineConfig({
 		{
 			name: "server",
 			config: {
-				build: {
-					ssr: true,
-					rollupOptions: {
-						output: {
-							// We have to disable this for multiple entries
-							inlineDynamicImports: false,
-							// vite-plugin-ssr overrides this, making it hard to find the entry file
-							entryFileNames() {
-								return "[name].js";
-							},
-						},
-					},
-				},
+				build: { ssr: true },
 			},
 		},
 	],
