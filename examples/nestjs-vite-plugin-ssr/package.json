@@ -28,7 +28,7 @@
     "@nestjs/common": "^9.4.3",
     "@nestjs/core": "^9.4.3",
     "@nestjs/platform-express": "^9.4.3",
-    "@nestjs/serve-static": "^3.0.1",
+    "@nestjs/serve-static": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-streaming": "0.3.14",
