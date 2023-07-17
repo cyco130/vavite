@@ -4,11 +4,13 @@
   "bin": {
     "vavite-multibuild": "./cli.js"
   },
-  "main": "./cli.js",
+  "exports": {
+    "types": "./index.d.ts"
+  },
   "files": [
     "dist",
     "cli.js",
-    "*.d.ts"
+    "index.d.ts"
   ],
   "description": "CLI command for orchestrating multiple Vite builds",
   "author": "Fatih Aygün <cyco130@gmail.com>",
@@ -21,10 +23,10 @@
     "test": "pnpm run test:typecheck && pnpm run test:lint && pnpm run test:package",
     "test:typecheck": "tsc -p tsconfig.json --noEmit",
     "test:lint": "eslint . --max-warnings 0 --ignore-pattern dist",
-    "test:package": "publint"
+    "test:package": "publint --strict"
   },
   "peerDependencies": {
-    "vite": ">=2.8.1"
+    "vite": "^2.8.1 | 3 | 4"
   },
   "devDependencies": {
     "@cyco130/eslint-config": "^3.3.0",

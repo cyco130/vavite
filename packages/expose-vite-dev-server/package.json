@@ -8,11 +8,22 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": {
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "default": "./dist/index.js"
+      }
     },
     "./vite-dev-server": {
       "import": "./dist/vite-dev-server.mjs"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*.d.ts"
+      ]
     }
   },
   "description": "Vite plugin for exposing Vite's development server to user code",
@@ -26,10 +37,10 @@
     "test": "pnpm run test:typecheck && pnpm run test:lint && pnpm run test:package",
     "test:typecheck": "tsc -p tsconfig.json --noEmit",
     "test:lint": "eslint . --max-warnings 0 --ignore-pattern dist",
-    "test:package": "publint"
+    "test:package": "publint --strict"
   },
   "peerDependencies": {
-    "vite": ">=2.8.1"
+    "vite": "^2.8.1 | 3 | 4"
   },
   "devDependencies": {
     "@cyco130/eslint-config": "^3.3.0",

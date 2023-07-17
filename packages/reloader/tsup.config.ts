@@ -6,8 +6,6 @@ export default defineConfig([
 		format: ["esm", "cjs"],
 		platform: "node",
 		target: "node14",
-		dts: {
-			entry: "./src/index.ts",
-		},
+		dts: true,
 	},
 ]);
