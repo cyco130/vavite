@@ -67,9 +67,9 @@ export default function vaviteConnect(
 							dirname,
 							clientAssetsDir
 								? bundleSirv
-									? "entry-standalone-bundled-sirv.mjs"
-									: "entry-standalone-imported-sirv.mjs"
-								: "entry-standalone.mjs",
+									? "entry-standalone-bundled-sirv.js"
+									: "entry-standalone-imported-sirv.js"
+								: "entry-standalone.js",
 						)
 						.replace(/\\/g, "/");
 				}

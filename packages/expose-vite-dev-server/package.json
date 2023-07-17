@@ -8,15 +8,11 @@
   ],
   "exports": {
     ".": {
-      "import": {
-        "default": "./dist/index.mjs"
-      },
-      "require": {
-        "default": "./dist/index.js"
-      }
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./vite-dev-server": {
-      "import": "./dist/vite-dev-server.mjs"
+      "import": "./dist/vite-dev-server.js"
     }
   },
   "typesVersions": {

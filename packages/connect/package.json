@@ -4,17 +4,17 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./entry-standalone": {
-      "import": "./dist/entry-standalone.mjs"
+      "import": "./dist/entry-standalone.js"
     },
     "./entry-standalone-bundled-sirv": {
-      "import": "./dist/entry-standalone-bundled-sirv.mjs"
+      "import": "./dist/entry-standalone-bundled-sirv.js"
     },
     "./entry-standalone-imported-sirv": {
-      "import": "./dist/entry-standalone-imported-sirv.mjs"
+      "import": "./dist/entry-standalone-imported-sirv.js"
     }
   },
   "typesVersions": {

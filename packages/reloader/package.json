@@ -8,12 +8,12 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./http-dev-server": {
-      "import": "./dist/http-dev-server.mjs",
-      "require": "./dist/http-dev-server.js"
+      "import": "./dist/http-dev-server.js",
+      "require": "./dist/http-dev-server.cjs"
     }
   },
   "typesVersions": {

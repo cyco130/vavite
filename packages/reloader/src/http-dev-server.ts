@@ -1,4 +1,5 @@
 import type { Server } from "node:http";
 
-declare const httpDevServer: Server | undefined;
+const httpDevServer: Server | undefined = undefined;
+
 export default httpDevServer;
