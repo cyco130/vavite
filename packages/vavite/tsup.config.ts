@@ -9,11 +9,14 @@ export default defineConfig([
 		dts: true,
 	},
 	{
-		entry: [
-			"./src/vite-dev-server.ts",
-			"./src/http-dev-server.ts",
-			"./src/cli.ts",
-		],
+		entry: ["./src/vite-dev-server.ts", "./src/http-dev-server.ts"],
 		format: ["esm"],
+		platform: "node",
+		dts: true,
+	},
+	{
+		entry: ["./src/cli.ts"],
+		format: ["esm"],
+		platform: "node",
 	},
 ]);

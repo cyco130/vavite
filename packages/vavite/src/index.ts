@@ -1,5 +1,3 @@
-/// <reference types="@vavite/multibuild" />
-
 import { Plugin, PluginOption, UserConfig } from "vite";
 import vaviteConnect from "@vavite/connect";
 import vaviteReloader from "@vavite/reloader";
@@ -134,3 +132,10 @@ export default function vavite(options: VaviteOptions): PluginOption {
 
 	return plugins;
 }
+
+export type {
+	BuildStep,
+	CustomBuildStep,
+	VaviteMultiBuildInfo,
+	ViteBuildStep,
+} from "@vavite/multibuild";

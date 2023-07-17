@@ -1,5 +1,3 @@
-/// <reference types="vavite/vite-config" />
-
 import { defineConfig } from "vite";
 import vavite from "vavite";
 import react from "@vitejs/plugin-react";

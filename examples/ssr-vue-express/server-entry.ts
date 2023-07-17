@@ -34,7 +34,7 @@ async function render(req: Request, res: Response, importer: PageImporter) {
 		clientEntryPath = "/client-entry.ts";
 	} else {
 		// In production we'll figure out the path to the client entry file using the manifest
-		// @ts-expect-error: This only exists after the client build is complete
+		// @ts-ignore: This only exists after the client build is complete
 		const manifest = (await import("./dist/client/manifest.json")).default;
 		clientEntryPath = manifest["client-entry.ts"].file;
 

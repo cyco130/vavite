@@ -1,4 +1,5 @@
 import { renderToPipeableStream } from "react-dom/server";
+// @ts-expect-error - no types
 import reactStreaming from "react-streaming/server";
 import { escapeInject } from "vite-plugin-ssr/server";
 import type { PageContextBuiltIn } from "vite-plugin-ssr";
