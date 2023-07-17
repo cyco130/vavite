@@ -30,7 +30,7 @@
     "vite": ">=2.8.1"
   },
   "devDependencies": {
-    "@cyco130/eslint-config": "^3.1.4",
+    "@cyco130/eslint-config": "^3.3.0",
     "eslint": "^8.44.0",
     "tsup": "^7.1.0",
     "typescript": "^5.1.6",

@@ -104,6 +104,7 @@ cli
 			{
 				onInitialConfigResolved(config) {
 					initialConfig = config;
+					// eslint-disable-next-line no-console
 					console.log(initialConfig.buildSteps);
 				},
 
