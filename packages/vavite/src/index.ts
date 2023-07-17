@@ -1,4 +1,4 @@
-/// <reference types="@vavite/multibuild-cli" />
+/// <reference types="@vavite/multibuild" />
 
 import { Plugin, PluginOption, UserConfig } from "vite";
 import vaviteConnect from "@vavite/connect";
