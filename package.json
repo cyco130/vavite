@@ -14,9 +14,9 @@
   },
   "devDependencies": {
     "husky": "^8.0.3",
-    "lint-staged": "^13.2.3",
-    "prettier": "^3.0.0",
-    "publint": "^0.1.16",
+    "lint-staged": "^13.3.0",
+    "prettier": "^3.0.1",
+    "publint": "^0.2.0",
     "typescript": "^5.1.6"
   },
   "pnpm": {
