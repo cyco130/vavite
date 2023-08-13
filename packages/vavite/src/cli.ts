@@ -15,6 +15,14 @@ import { spawn } from "node:child_process";
 
 const startTime = performance.now();
 
+const [major, minor] = process.version
+	.slice(1)
+	.split(".")
+	.map((x) => Number(x));
+
+const loaderAvailable =
+	(major > 16 || (major === 16 && minor >= 12)) && major < 20;
+
 interface GlobalCLIOptions {
 	"--"?: string[];
 	c?: boolean | string;
@@ -171,30 +179,36 @@ cli
 					useLoader?: boolean;
 				},
 		) => {
-			if (options.useLoader && !hasLoader) {
-				// Rerun the command with the loader options
-				const options =
-					(process.env.NODE_OPTIONS ? process.env.NODE_OPTIONS + " " : "") +
-					"-r vavite/suppress-loader-warnings --loader vavite/node-loader";
+			if (options.useLoader) {
+				if (!loaderAvailable) {
+					console.warn(
+						`--use-loader is ignored as it requires a Node.js version between 16.12 and 20`,
+					);
+				} else if (!hasLoader) {
+					// Rerun the command with the loader options
+					const options =
+						(process.env.NODE_OPTIONS ? process.env.NODE_OPTIONS + " " : "") +
+						"-r vavite/suppress-loader-warnings --loader vavite/node-loader";
 
-				const cp = spawn(process.execPath, process.argv.slice(1), {
-					stdio: "inherit",
-					env: {
-						...process.env,
-						NODE_OPTIONS: options,
-					},
-				});
+					const cp = spawn(process.execPath, process.argv.slice(1), {
+						stdio: "inherit",
+						env: {
+							...process.env,
+							NODE_OPTIONS: options,
+						},
+					});
 
-				cp.on("error", (err) => {
-					console.error(err);
-					process.exit(1);
-				});
+					cp.on("error", (err) => {
+						console.error(err);
+						process.exit(1);
+					});
 
-				cp.on("exit", (code) => {
-					process.exit(code ?? 0);
-				});
+					cp.on("exit", (code) => {
+						process.exit(code ?? 0);
+					});
 
-				return;
+					return;
+				}
 			}
 
 			delete options.useLoader;
