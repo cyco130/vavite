@@ -6,7 +6,7 @@ export default defineConfig([
 		entry: ["./src/index.ts"],
 		format: ["esm", "cjs"],
 		platform: "node",
-		target: "node14",
+		target: "node16",
 		dts: true,
 	},
 	// Standalone entry
