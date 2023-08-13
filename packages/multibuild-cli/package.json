@@ -4,9 +4,6 @@
   "bin": {
     "vavite-multibuild": "./cli.js"
   },
-  "exports": {
-    "types": "./index.d.ts"
-  },
   "files": [
     "dist",
     "cli.js",
