@@ -14,10 +14,10 @@
   },
   "devDependencies": {
     "husky": "^8.0.3",
-    "lint-staged": "^14.0.0",
-    "prettier": "^3.0.1",
-    "publint": "^0.2.0",
-    "typescript": "^5.1.6"
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.2",
+    "publint": "^0.2.2",
+    "typescript": "^5.2.2"
   },
   "pnpm": {
     "peerDependencyRules": {
