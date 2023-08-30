@@ -3,7 +3,7 @@ import vavite from "vavite";
 import { swc } from "rollup-plugin-swc3";
 import react from "@vitejs/plugin-react";
 import ssr from "vite-plugin-ssr/plugin";
-import tsconfigPaths from "vite-tsconfig-paths";
+import { join } from "node:path";
 
 export default defineConfig({
 	buildSteps: [
@@ -25,6 +25,10 @@ export default defineConfig({
 		{
 			...swc({
 				jsc: {
+					baseUrl: join(__dirname, "./src"),
+					paths: {
+						"*": ["*"],
+					},
 					transform: {
 						decoratorMetadata: true,
 						legacyDecorator: true,
@@ -40,6 +44,5 @@ export default defineConfig({
 		}),
 		react(),
 		ssr({ disableAutoFullBuild: true }),
-		tsconfigPaths(),
 	],
 });
