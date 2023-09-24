@@ -8,9 +8,9 @@
     "start": "node dist/server"
   },
   "devDependencies": {
-    "@types/express": "^4.17.17",
-    "@types/node": "^20.5.7",
-    "@vitejs/plugin-vue": "^4.3.3",
+    "@types/express": "^4.17.18",
+    "@types/node": "^20.6.5",
+    "@vitejs/plugin-vue": "^4.3.4",
     "typescript": "^5.2.2",
     "vavite": "2.0.2",
     "vite": "^4.4.9"
