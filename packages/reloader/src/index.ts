@@ -30,7 +30,7 @@ export interface VaviteReloaderOptions {
 	serveClientAssetsInDev?: boolean;
 }
 
-export default function vaviteReloaderPlugin({
+export function reloader({
 	entry = "/server",
 	reloadOn = "any-change",
 	serveClientAssetsInDev = false,

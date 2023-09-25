@@ -41,7 +41,7 @@ export default defineConfig({
 });
 ```
 
-You can then `import multibuild from "@vavite/multibuild"` and use it instead of Vite's `build` function to run a multi-step build.
+You can then `import { multibuild } from "@vavite/multibuild"` and use it instead of Vite's `build` function to run a multi-step build.
 
 `@vavite/multibuild` will call `resolveConfig` with the `mode` parameter set to `"multibuild"` to extract the build steps. Setting `buildSteps` in subsequent steps has no effect.
 

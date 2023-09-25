@@ -23,7 +23,7 @@ Install `vite` and `vavite` as development dependencies (`npm install --save-dev
 
 ```ts
 import { defineConfig } from "vite";
-import vavite from "vavite";
+import { vavite } from "vavite";
 
 export default defineConfig({
   plugins: [
@@ -145,7 +145,7 @@ Developing applications that perform server-side rendering (SSR) with Vite requi
 
 ```ts
 import { defineConfig } from "vite";
-import vavite from "vavite";
+import { vavite } from "vavite";
 
 export default defineConfig({
   plugins: [

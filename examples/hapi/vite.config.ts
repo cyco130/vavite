@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import vavite from "vavite";
+import { vavite } from "vavite";
 
 export default defineConfig({
 	plugins: [

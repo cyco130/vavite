@@ -8,11 +8,11 @@ Install `vite` and `@vavite/reloader` as development dependencies (`npm install 
 
 ```ts
 import { defineConfig } from "vite";
-import vaviteReloader from "@vavite/reloader";
+import { reloader } from "@vavite/reloader";
 
 export default defineConfig({
   plugins: [
-    vaviteReloader({
+    reloader({
       // Options, see below
     }),
   ],

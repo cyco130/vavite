@@ -1,6 +1,6 @@
 import { Plugin, PluginOption, UserConfig } from "vite";
-import vaviteConnect from "@vavite/connect";
-import vaviteReloader from "@vavite/reloader";
+import { vaviteConnect } from "@vavite/connect";
+import { reloader } from "@vavite/reloader";
 import vaviteExposeViteDevServer from "@vavite/expose-vite-dev-server";
 import { nodeLoaderPlugin } from "@vavite/node-loader/plugin";
 
@@ -51,7 +51,7 @@ export interface VaviteOptions {
 	reloadOn?: "any-change" | "static-deps-change";
 }
 
-export default function vavite(options: VaviteOptions): PluginOption {
+export function vavite(options: VaviteOptions): PluginOption {
 	const {
 		serverEntry,
 		handlerEntry,
@@ -120,7 +120,7 @@ export default function vavite(options: VaviteOptions): PluginOption {
 		);
 	} else {
 		plugins.push(
-			vaviteReloader({
+			reloader({
 				entry: serverEntry,
 				serveClientAssetsInDev,
 				reloadOn,

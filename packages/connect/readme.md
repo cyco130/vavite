@@ -10,7 +10,7 @@ Install `vite` and `@vavite/connect` as development dependencies (`npm install -
 
 ```ts
 import { defineConfig } from "vite";
-import vaviteConnect from "@vavite/connect";
+import { vaviteConnect } from "@vavite/connect";
 
 export default defineConfig({
   plugins: [

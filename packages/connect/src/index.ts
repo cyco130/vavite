@@ -40,9 +40,7 @@ export interface VaviteConnectOptions {
 	bundleSirv?: boolean;
 }
 
-export default function vaviteConnect(
-	options: VaviteConnectOptions = {},
-): Plugin[] {
+export function vaviteConnect(options: VaviteConnectOptions = {}): Plugin[] {
 	const {
 		handlerEntry = "/handler",
 		customServerEntry,

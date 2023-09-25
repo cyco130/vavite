@@ -1,6 +1,6 @@
 import { BuildOptions, LogLevel, ResolvedConfig } from "vite";
 import { cac } from "cac";
-import multibuild from "@vavite/multibuild";
+import { multibuild } from "@vavite/multibuild";
 import { version } from "../package.json";
 import colors from "picocolors";
 

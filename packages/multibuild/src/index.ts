@@ -46,7 +46,7 @@ export interface MultibuildOptions {
 	onStartBuildStep?(info: VaviteMultiBuildInfo): void | Promise<void>;
 }
 
-export default async function multibuild(
+export async function multibuild(
 	config: InlineConfig = {},
 	options: MultibuildOptions = {},
 ) {

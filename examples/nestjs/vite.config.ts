@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import vavite from "vavite";
+import { vavite } from "vavite";
 import { swc } from "rollup-plugin-swc3";
 
 export default defineConfig({
