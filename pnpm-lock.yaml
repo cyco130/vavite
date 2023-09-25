@@ -68,7 +68,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
       vavite:
-        specifier: 2.0.2
+        specifier: 3.0.0
         version: link:../../packages/vavite
       vite:
         specifier: ^4.4.9
@@ -87,7 +87,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
       vavite:
-        specifier: 2.0.2
+        specifier: 3.0.0
         version: link:../../packages/vavite
       vite:
         specifier: ^4.4.9
@@ -129,7 +129,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
       vavite:
-        specifier: 2.0.2
+        specifier: 3.0.0
         version: link:../../packages/vavite
       vite:
         specifier: ^4.4.9
@@ -151,7 +151,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
       vavite:
-        specifier: 2.0.2
+        specifier: 3.0.0
         version: link:../../packages/vavite
       vite:
         specifier: ^4.4.9
@@ -179,7 +179,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
       vavite:
-        specifier: 2.0.2
+        specifier: 3.0.0
         version: link:../../packages/vavite
       vite:
         specifier: ^4.4.9
@@ -219,7 +219,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
       vavite:
-        specifier: 2.0.2
+        specifier: 3.0.0
         version: link:../../packages/vavite
       vite:
         specifier: ^4.4.9
@@ -286,7 +286,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
       vavite:
-        specifier: 2.0.2
+        specifier: 3.0.0
         version: link:../../packages/vavite
       vite:
         specifier: ^4.4.9
@@ -304,7 +304,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
       vavite:
-        specifier: 2.0.2
+        specifier: 3.0.0
         version: link:../../packages/vavite
       vite:
         specifier: ^4.4.9
@@ -329,7 +329,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
       vavite:
-        specifier: 2.0.2
+        specifier: 3.0.0
         version: link:../../packages/vavite
       vite:
         specifier: ^4.4.9
@@ -366,7 +366,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
       vavite:
-        specifier: 2.0.2
+        specifier: 3.0.0
         version: link:../../packages/vavite
       vite:
         specifier: ^4.4.9
@@ -394,7 +394,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
       vavite:
-        specifier: 2.0.2
+        specifier: 3.0.0
         version: link:../../packages/vavite
       vite:
         specifier: ^4.4.9
@@ -436,7 +436,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
       vavite:
-        specifier: 2.0.2
+        specifier: 3.0.0
         version: link:../../packages/vavite
       vite:
         specifier: ^4.4.9
@@ -2344,8 +2344,8 @@ packages:
       '@types/mime': 3.0.1
       '@types/node': 20.6.5
 
-  /@types/yauzl@2.10.0:
-    resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
+  /@types/yauzl@2.10.1:
+    resolution: {integrity: sha512-CHzgNU3qYBnp/O4S3yv2tXPlvMTq0YWSTVg2/JYLqWZGHwwgJGAwd00poay/11asPq8wLFwHzubyInqHIFmmiw==}
     requiresBuild: true
     dependencies:
       '@types/node': 20.6.5
@@ -3095,7 +3095,7 @@ packages:
       normalize-path: 3.0.0
       readdirp: 3.6.0
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /chromium-bidi@0.4.28(devtools-protocol@0.0.1179426):
@@ -4058,7 +4058,7 @@ packages:
       get-stream: 5.2.0
       yauzl: 2.10.0
     optionalDependencies:
-      '@types/yauzl': 2.10.0
+      '@types/yauzl': 2.10.1
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -4268,8 +4268,8 @@ packages:
   /fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
 
-  /fsevents@2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+  /fsevents@2.3.3:
+    resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
@@ -6060,7 +6060,7 @@ packages:
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /rollup@3.28.0:
@@ -6068,7 +6068,7 @@ packages:
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
 
   /run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
@@ -6985,7 +6985,7 @@ packages:
       postcss: 8.4.27
       rollup: 3.28.0
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
 
   /vitest@0.34.5:
     resolution: {integrity: sha512-CPI68mmnr2DThSB3frSuE5RLm9wo5wU4fbDrDwWQQB1CWgq9jQVoQwnQSzYAjdoBOPoH2UtXpOgHVge/uScfZg==}

@@ -1,6 +1,6 @@
 {
   "name": "@vavite/expose-vite-dev-server",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "type": "module",
   "files": [
     "dist",
