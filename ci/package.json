@@ -6,15 +6,15 @@
     "ci": "vitest run --reporter=verbose --no-threads"
   },
   "dependencies": {
-    "@types/node": "^20.5.7",
+    "@types/node": "^20.6.5",
     "kill-port": "^2.0.1",
     "node-fetch": "^3.3.2",
     "ps-tree": "^1.2.0",
-    "puppeteer": "^21.1.1",
+    "puppeteer": "^21.3.4",
     "typescript": "^5.2.2",
-    "vitest": "^0.34.3"
+    "vitest": "^0.34.5"
   },
   "devDependencies": {
-    "@types/ps-tree": "^1.1.2"
+    "@types/ps-tree": "^1.1.3"
   }
 }
