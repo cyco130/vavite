@@ -37,6 +37,7 @@ interface GlobalCLIOptions {
 	filter?: string;
 	m?: string;
 	mode?: string;
+	force?: boolean;
 }
 
 const cli = cac("vavite");
