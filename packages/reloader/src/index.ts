@@ -244,7 +244,10 @@ export function reloader({
 									resolveListenerPromise();
 								} else {
 									// eslint-disable-next-line prefer-spread
-									return target[prop].apply(target, [event, ...rest] as any);
+									return (target as any)[prop].apply(target, [
+										event,
+										...rest,
+									] as any);
 								}
 							};
 						} else if (prop === "listen") {
