@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import { vavite } from "vavite";
 import { swc } from "rollup-plugin-swc3";
 import react from "@vitejs/plugin-react";
-import ssr from "vite-plugin-ssr/plugin";
+import ssr from "vike/plugin";
 import { join } from "node:path";
 
 export default defineConfig({

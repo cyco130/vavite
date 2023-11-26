@@ -2,11 +2,11 @@ import { DynamicModule, Inject, Module, OnModuleInit } from "@nestjs/common";
 import { HttpAdapterHost } from "@nestjs/core";
 import type { NextFunction, Request, Response } from "express";
 import { fileURLToPath } from "node:url";
-import { renderPage } from "vite-plugin-ssr/server";
+import { renderPage } from "vike/server";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import devServer from "vavite/http-dev-server";
 
-const OPTIONS = Symbol.for("vite-plugin-ssr.options");
+const OPTIONS = Symbol.for("vike.options");
 
 interface ViteSsrOptions {
 	root?: string;

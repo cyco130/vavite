@@ -34,6 +34,6 @@
     "react-streaming": "0.3.14",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
-    "vite-plugin-ssr": "^0.4.142"
+    "vike": "^0.4.147"
   }
 }

@@ -1,16 +1,15 @@
 import ReactDOMServer from "react-dom/server";
 import { PageWrapper } from "./PageWrapper";
-import { escapeInject, dangerouslySkipEscape } from "vite-plugin-ssr/server";
+import { escapeInject, dangerouslySkipEscape } from "vike/server";
 import logoUrl from "./logo.svg";
 import type { PageContext } from "./types";
-import type { PageContextBuiltIn } from "vite-plugin-ssr/types";
 
 export { render };
 
 // See https://vite-plugin-ssr.com/data-fetching
 export const passToClient = ["pageProps", "urlPathname"];
 
-async function render(pageContext: PageContextBuiltIn & PageContext) {
+async function render(pageContext: PageContext) {
 	const { Page, pageProps } = pageContext;
 	const pageHtml = ReactDOMServer.renderToString(
 		<PageWrapper pageContext={pageContext}>
