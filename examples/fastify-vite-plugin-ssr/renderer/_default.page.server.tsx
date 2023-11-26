@@ -4,7 +4,6 @@ import { PageWrapper } from "./PageWrapper";
 import { escapeInject, dangerouslySkipEscape } from "vike/server";
 import logoUrl from "./logo.svg";
 import type { PageContext } from "./types";
-s;
 
 export { render };
 

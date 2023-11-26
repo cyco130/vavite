@@ -22,8 +22,9 @@ async function startServer() {
 		const { httpResponse } = pageContext;
 		if (!httpResponse) return;
 
-		const { statusCode, body, contentType } = httpResponse;
-		reply.code(statusCode).type(contentType).send(body);
+		const { statusCode, body } = httpResponse;
+
+		reply.code(statusCode).headers(httpResponse.headers).send(body);
 	});
 
 	await instance.ready();
