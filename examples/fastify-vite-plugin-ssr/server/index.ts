@@ -24,7 +24,11 @@ async function startServer() {
 
 		const { statusCode, body } = httpResponse;
 
-		reply.code(statusCode).headers(httpResponse.headers).send(body);
+		reply
+			.code(statusCode)
+			.headers(httpResponse.headers)
+			.type("text/html")
+			.send(body);
 	});
 
 	await instance.ready();
