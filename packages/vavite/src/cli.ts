@@ -66,15 +66,17 @@ function cleanOptions<Options extends GlobalCLIOptions>(
 }
 
 cli
-	.command("[root]", "Build for production")
-	.alias("build")
 	.option("-c, --config <file>", `[string] use specified config file`)
 	.option("--base <path>", `[string] public base path (default: /)`)
 	.option("-l, --logLevel <level>", `[string] info | warn | error | silent`)
 	.option("--clearScreen", `[boolean] allow/disable clear screen when logging`)
 	.option("-d, --debug [feat]", `[string | boolean] show debug logs`)
 	.option("-f, --filter <filter>", `[string] filter debug logs`)
-	.option("-m, --mode <mode>", `[string] set env mode`)
+	.option("-m, --mode <mode>", `[string] set env mode`);
+
+cli
+	.command("[root]", "Build for production")
+	.alias("build")
 	.option("--target <target>", `[string] transpile target (default: 'modules')`)
 	.option("--outDir <dir>", `[string] output directory (default: dist)`)
 	.option(
