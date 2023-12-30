@@ -2,11 +2,11 @@ import { DynamicModule, Inject, Module, OnModuleInit } from "@nestjs/common";
 import { HttpAdapterHost } from "@nestjs/core";
 import type { NextFunction, Request, Response } from "express";
 import { fileURLToPath } from "node:url";
-import { renderPage } from "vite-plugin-ssr/server";
+import { renderPage } from "vike/server";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import devServer from "vavite/http-dev-server";
 
-const OPTIONS = Symbol.for("vite-plugin-ssr.options");
+const OPTIONS = Symbol.for("vike.options");
 
 interface ViteSsrOptions {
 	root?: string;
@@ -59,8 +59,13 @@ export class VpsModule implements OnModuleInit {
 			const pageContext = await renderPage({ urlOriginal });
 			const { httpResponse } = pageContext;
 			if (!httpResponse) return;
-			const { statusCode, contentType } = httpResponse;
-			res.status(statusCode).type(contentType);
+			const { statusCode } = httpResponse;
+			res.status(statusCode);
+
+			for (let [key, value] of Object.entries(httpResponse.headers)) {
+				res.setHeader(key, value);
+			}
+
 			httpResponse.pipe(res);
 		});
 	}

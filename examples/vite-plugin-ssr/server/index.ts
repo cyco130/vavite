@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 import express from "express";
-import { renderPage } from "vite-plugin-ssr/server";
+import { renderPage } from "vike/server";
 import httpDevServer from "vavite/http-dev-server";
 
 startServer();

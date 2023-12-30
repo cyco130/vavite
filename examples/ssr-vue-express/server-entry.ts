@@ -35,7 +35,8 @@ async function render(req: Request, res: Response, importer: PageImporter) {
 	} else {
 		// In production we'll figure out the path to the client entry file using the manifest
 		// @ts-ignore: This only exists after the client build is complete
-		const manifest = (await import("./dist/client/manifest.json")).default;
+		const manifest = (await import("./dist/client/.vite/manifest.json"))
+			.default;
 		clientEntryPath = manifest["client-entry.ts"].file;
 
 		// In a real application we would also use the manifest to generate
