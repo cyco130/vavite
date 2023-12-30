@@ -140,8 +140,8 @@ cli
 							(info.currentStep.description
 								? pico.white(" " + info.currentStep.description)
 								: pico.white(" running build step") +
-								  " " +
-								  pico.blue(info.currentStep.name)) +
+									" " +
+									pico.blue(info.currentStep.name)) +
 							" (" +
 							pico.green(
 								info.currentStepIndex + 1 + "/" + info.buildSteps.length,
@@ -244,7 +244,7 @@ cli
 							`(ready in ${pico.white(
 								pico.bold(Math.ceil(performance.now() - startTime)),
 							)} ms)`,
-					  )
+						)
 					: "";
 
 				info(
