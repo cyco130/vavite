@@ -12,7 +12,7 @@
     "ps-tree": "^1.2.0",
     "puppeteer": "^21.3.4",
     "typescript": "^5.2.2",
-    "vitest": "^0.34.5"
+    "vitest": "^1.1.0"
   },
   "devDependencies": {
     "@types/ps-tree": "^1.1.3"
