@@ -253,6 +253,7 @@ export function reloader({
 						} else if (prop === "listen") {
 							return (...args: any[]) => {
 								const listener = args.find((arg) => typeof arg === "function");
+								// eslint-disable-next-line @typescript-eslint/no-floating-promises
 								if (listener) Promise.resolve().then(listener);
 								resolveListenerPromise();
 							};
@@ -262,7 +263,10 @@ export function reloader({
 					},
 				});
 
-				loadEntry();
+				loadEntry().catch((err) => {
+					logger.error("@vavite/reloader: Failed to load server entry");
+					logger.error(err);
+				});
 			});
 
 			if (serveClientAssetsInDev) {

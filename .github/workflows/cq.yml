@@ -19,13 +19,8 @@ defaults:
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node_version: [18]
-      fail-fast: false
-    name: "Code quality checks on node-${{ matrix.node_version }}, ${{ matrix.os }}"
+    runs-on: ubuntu-latest
+    name: "Code quality checks"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,10 +30,10 @@ jobs:
         with:
           version: 8
 
-      - name: Set node version to ${{ matrix.node_version }}
-        uses: actions/setup-node@v3
+      - name: Set node version to 20
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node_version }}
+          node-version: 20
           cache: "pnpm"
 
       - name: Install

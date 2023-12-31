@@ -102,7 +102,7 @@ export function vaviteConnect(options: VaviteConnectOptions = {}): Plugin[] {
 							? {
 									__VAVITE_CLIENT_BUILD_OUTPUT_DIR:
 										JSON.stringify(clientAssetsDir),
-							  }
+								}
 							: {},
 					};
 				}
