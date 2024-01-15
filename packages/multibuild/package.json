@@ -1,6 +1,6 @@
 {
   "name": "@vavite/multibuild",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
