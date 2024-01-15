@@ -50,13 +50,13 @@
     "vite": "^2.8.1 || 3 || 4 || 5"
   },
   "devDependencies": {
-    "@cyco130/eslint-config": "^3.6.0",
-    "@types/node": "^20.10.6",
+    "@cyco130/eslint-config": "^3.6.1",
+    "@types/node": "^20.11.1",
     "eslint": "^8.56.0",
     "sirv": "^2.0.4",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3",
-    "vite": "^5.0.10"
+    "vite": "^5.0.11"
   },
   "dependencies": {
     "@vavite/connect": "workspace:*",

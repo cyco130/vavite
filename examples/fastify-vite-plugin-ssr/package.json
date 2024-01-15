@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "@fastify/static": "^6.12.0",
-    "@types/node": "^20.10.6",
-    "@types/react": "^18.2.46",
+    "@types/node": "^20.11.1",
+    "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
     "@vitejs/plugin-react": "^4.2.1",
     "cross-env": "^7.0.3",
@@ -20,7 +20,7 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "vavite": "4.0.0",
-    "vike": "^0.4.152",
-    "vite": "^5.0.10"
+    "vike": "^0.4.156",
+    "vite": "^5.0.11"
   }
 }
