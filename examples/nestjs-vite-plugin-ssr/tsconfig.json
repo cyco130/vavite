@@ -12,6 +12,6 @@
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
 		"jsx": "react-jsx",
-		"types": ["vite/client"]
-	}
+		"types": ["vite/client"],
+	},
 }
