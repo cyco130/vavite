@@ -11,12 +11,12 @@
     "dist"
   ],
   "devDependencies": {
-    "@types/node": "^20.11.5",
+    "@types/node": "^20.11.10",
     "typescript": "^5.3.3",
     "vavite": "4.0.2",
     "vite": "^5.0.12"
   },
   "dependencies": {
-    "fastify": "^4.25.2"
+    "fastify": "^4.26.0"
   }
 }
