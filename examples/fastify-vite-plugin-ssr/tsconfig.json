@@ -7,6 +7,6 @@
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"jsx": "react",
 		"esModuleInterop": true,
-		"skipLibCheck": true,
-	},
+		"skipLibCheck": true
+	}
 }

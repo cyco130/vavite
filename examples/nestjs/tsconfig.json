@@ -8,6 +8,6 @@
 		"skipLibCheck": true,
 		"moduleResolution": "Bundler",
 		"experimentalDecorators": true,
-		"types": ["vite/client"],
-	},
+		"types": ["vite/client"]
+	}
 }

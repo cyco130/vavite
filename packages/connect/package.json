@@ -53,6 +53,6 @@
     "vite": "^5.0.12"
   },
   "dependencies": {
-    "@types/node": "^20.11.10"
+    "@types/node": "^20.11.16"
   }
 }
