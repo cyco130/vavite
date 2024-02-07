@@ -14,9 +14,9 @@
     "format": "prettier --ignore-path .gitignore --ignore-unknown . '!pnpm-lock.yaml' --write"
   },
   "devDependencies": {
-    "husky": "^9.0.7",
-    "lint-staged": "^15.2.0",
-    "prettier": "^3.2.4",
+    "husky": "^9.0.10",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
     "publint": "^0.2.7",
     "typescript": "^5.3.3"
   },
