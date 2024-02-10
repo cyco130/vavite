@@ -205,31 +205,29 @@ export function reloader({
 				| ((
 						req: IncomingMessage,
 						res: ServerResponse,
-						next: () => void,
+						next?: (error?: unknown) => void,
 				  ) => void)
 				| undefined;
 
 			function addMiddleware() {
-				server.middlewares.use(async (req, res) => {
-					function renderError(status: number, message: string) {
-						res.statusCode = status;
-						res.end(message);
-					}
-
+				server.middlewares.use(async (req, res, next) => {
 					await listenerPromise;
 
 					req.url = req.originalUrl;
 					try {
-						await listener!(req, res, () => {
-							if (!res.writableEnded) renderError(404, "Not found");
+						await listener!(req, res, (error: unknown) => {
+							if (error) {
+								next(error);
+							} else if (!res.writableEnded) {
+								next();
+							}
 						});
 					} catch (err) {
 						if (err instanceof Error) {
 							server.ssrFixStacktrace(err);
-							return renderError(500, err.stack || err.message);
-						} else {
-							return renderError(500, "Unknown error");
 						}
+
+						next(err);
 					}
 				});
 			}

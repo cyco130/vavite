@@ -112,28 +112,25 @@ export function vaviteConnect(options: VaviteConnectOptions = {}): Plugin[] {
 
 			configureServer(server) {
 				function addMiddleware() {
-					server.middlewares.use(async (req, res) => {
-						function renderError(status: number, message: string) {
-							res.statusCode = status;
-							res.end(message);
-						}
-
+					server.middlewares.use(async (req, res, next) => {
 						// Restore the original URL (SPA middleware may have changed it)
 						req.url = req.originalUrl || req.url;
 
 						try {
 							const module = await server.ssrLoadModule(handlerEntry);
-
-							await module.default(req, res, () => {
-								if (!res.writableEnded) renderError(404, "Not found");
+							await module.default(req, res, (error: unknown) => {
+								if (error) {
+									next(error);
+								} else if (!res.writableEnded) {
+									next();
+								}
 							});
 						} catch (err) {
 							if (err instanceof Error) {
 								server.ssrFixStacktrace(err);
-								renderError(500, err.stack || err.message);
-							} else {
-								renderError(500, "Unknown error");
 							}
+
+							next(err);
 						}
 					});
 				}
