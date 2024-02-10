@@ -68,7 +68,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
       vavite:
-        specifier: 4.0.2
+        specifier: 4.0.3
         version: link:../../packages/vavite
       vite:
         specifier: ^5.0.12
@@ -87,7 +87,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
       vavite:
-        specifier: 4.0.2
+        specifier: 4.0.3
         version: link:../../packages/vavite
       vite:
         specifier: ^5.0.12
@@ -129,7 +129,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
       vavite:
-        specifier: 4.0.2
+        specifier: 4.0.3
         version: link:../../packages/vavite
       vike:
         specifier: ^0.4.160
@@ -151,7 +151,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
       vavite:
-        specifier: 4.0.2
+        specifier: 4.0.3
         version: link:../../packages/vavite
       vite:
         specifier: ^5.0.12
@@ -179,7 +179,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
       vavite:
-        specifier: 4.0.2
+        specifier: 4.0.3
         version: link:../../packages/vavite
       vite:
         specifier: ^5.0.12
@@ -219,7 +219,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
       vavite:
-        specifier: 4.0.2
+        specifier: 4.0.3
         version: link:../../packages/vavite
       vite:
         specifier: ^5.0.12
@@ -286,7 +286,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
       vavite:
-        specifier: 4.0.2
+        specifier: 4.0.3
         version: link:../../packages/vavite
       vite:
         specifier: ^5.0.12
@@ -304,7 +304,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
       vavite:
-        specifier: 4.0.2
+        specifier: 4.0.3
         version: link:../../packages/vavite
       vite:
         specifier: ^5.0.12
@@ -329,7 +329,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
       vavite:
-        specifier: 4.0.2
+        specifier: 4.0.3
         version: link:../../packages/vavite
       vite:
         specifier: ^5.0.12
@@ -366,7 +366,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
       vavite:
-        specifier: 4.0.2
+        specifier: 4.0.3
         version: link:../../packages/vavite
       vite:
         specifier: ^5.0.12
@@ -394,7 +394,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
       vavite:
-        specifier: 4.0.2
+        specifier: 4.0.3
         version: link:../../packages/vavite
       vite:
         specifier: ^5.0.12
@@ -436,7 +436,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
       vavite:
-        specifier: 4.0.2
+        specifier: 4.0.3
         version: link:../../packages/vavite
       vike:
         specifier: ^0.4.160
