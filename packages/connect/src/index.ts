@@ -38,6 +38,12 @@ export interface VaviteConnectOptions {
 	 * @default true
 	 */
 	bundleSirv?: boolean;
+
+	/** Whether to use the vite runtime to execute the server entry.
+	 * @experimental
+	 * @default false (can be overriden by the USE_VITE_RUNTIME environment variable to "true")
+	 */
+	useViteRuntime?: boolean;
 }
 
 export function vaviteConnect(options: VaviteConnectOptions = {}): Plugin[] {
@@ -48,7 +54,10 @@ export function vaviteConnect(options: VaviteConnectOptions = {}): Plugin[] {
 		standalone = true,
 		clientAssetsDir = null,
 		bundleSirv = true,
+		useViteRuntime = process.env.USE_VITE_RUNTIME === "true",
 	} = options;
+
+	let viteRuntime: import("vite/runtime").ViteRuntime | undefined;
 
 	return [
 		{
@@ -117,7 +126,22 @@ export function vaviteConnect(options: VaviteConnectOptions = {}): Plugin[] {
 						req.url = req.originalUrl || req.url;
 
 						try {
-							const module = await server.ssrLoadModule(handlerEntry);
+							let runner:
+								| typeof server.ssrLoadModule
+								| import("vite/runtime").ViteRuntime["executeEntrypoint"] =
+								server.ssrLoadModule.bind(server);
+
+							if (useViteRuntime) {
+								if (!viteRuntime) {
+									const { createViteRuntime } = await import("vite");
+									viteRuntime = await createViteRuntime(server);
+								}
+
+								runner = viteRuntime.executeEntrypoint.bind(viteRuntime);
+							}
+
+							const module = await runner(handlerEntry);
+
 							await module.default(req, res, (error: unknown) => {
 								if (error) {
 									next(error);

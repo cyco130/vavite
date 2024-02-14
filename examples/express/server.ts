@@ -3,6 +3,8 @@
 import express, { RequestHandler } from "express";
 import viteDevServer from "vavite/vite-dev-server";
 
+console.log("Running the server");
+
 const app = express();
 
 // This is an optional optimization to load routes lazily so that

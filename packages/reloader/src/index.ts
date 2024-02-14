@@ -28,16 +28,24 @@ export interface VaviteReloaderOptions {
 	 * @default false
 	 */
 	serveClientAssetsInDev?: boolean;
+
+	/** Whether to use the vite runtime to execute the server entry.
+	 * @experimental
+	 * @default false (can be overriden by the USE_VITE_RUNTIME environment variable to "true")
+	 */
+	useViteRuntime?: boolean;
 }
 
 export function reloader({
 	entry = "/server",
 	reloadOn = "any-change",
 	serveClientAssetsInDev = false,
+	useViteRuntime = process.env.USE_VITE_RUNTIME === "true",
 }: VaviteReloaderOptions = {}): Plugin {
 	let resolvedEntry: string;
 	let entryDeps: Set<string>;
 	let globalSymbol: string;
+	let viteRuntime: import("vite/runtime").ViteRuntime | undefined;
 
 	function getModuleContents() {
 		return `export default ${globalSymbol}`;
@@ -69,7 +77,21 @@ export function reloader({
 		}
 
 		resolvedEntry = resolved.id;
-		await viteServer.ssrLoadModule(resolvedEntry);
+
+		let runner:
+			| typeof viteServer.ssrLoadModule
+			| import("vite/runtime").ViteRuntime["executeEntrypoint"] =
+			viteServer.ssrLoadModule.bind(viteServer);
+
+		if (useViteRuntime) {
+			if (!viteRuntime) {
+				const { createViteRuntime } = await import("vite");
+				viteRuntime = await createViteRuntime(viteServer);
+			}
+			runner = viteRuntime.executeEntrypoint.bind(viteRuntime);
+		}
+
+		await runner(resolvedEntry);
 
 		if (reloadOn === "any-change") return;
 
