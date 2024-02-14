@@ -49,6 +49,11 @@ export interface VaviteOptions {
 	 * @default "any-change"
 	 */
 	reloadOn?: "any-change" | "static-deps-change";
+	/** Whether to use the vite runtime to execute the server entry.
+	 * @experimental
+	 * @default false (can be overriden by the USE_VITE_RUNTIME environment variable to "true")
+	 */
+	useViteRuntime?: boolean;
 }
 
 export function vavite(options: VaviteOptions): PluginOption {
@@ -60,6 +65,7 @@ export function vavite(options: VaviteOptions): PluginOption {
 		clientAssetsDir,
 		bundleSirv,
 		reloadOn,
+		useViteRuntime,
 	} = options;
 
 	if (!serverEntry && !handlerEntry) {
@@ -116,6 +122,7 @@ export function vavite(options: VaviteOptions): PluginOption {
 				standalone,
 				clientAssetsDir,
 				bundleSirv,
+				useViteRuntime,
 			}),
 		);
 	} else {
@@ -124,6 +131,7 @@ export function vavite(options: VaviteOptions): PluginOption {
 				entry: serverEntry,
 				serveClientAssetsInDev,
 				reloadOn,
+				useViteRuntime,
 			}),
 		);
 	}

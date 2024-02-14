@@ -15,7 +15,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "typescript": "^5.3.3",
     "vavite": "4.0.3",
-    "vite": "^5.0.12"
+    "vite": "^5.1.2"
   },
   "dependencies": {
     "express": "^4.18.2",

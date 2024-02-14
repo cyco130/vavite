@@ -11,7 +11,7 @@ import { kill } from "node:process";
 const TEST_HOST = "http://localhost:3000";
 
 const browser = await puppeteer.launch({
-	headless: "new",
+	headless: true,
 	defaultViewport: { width: 1200, height: 800 },
 });
 
@@ -44,11 +44,15 @@ const [major, minor] = process.version
 const cases: Array<{
 	framework: string;
 	file: string;
-	env: "production" | "development" | "with-loader";
+	env: "production" | "development" | "with-loader" | "with-vite-runtime";
 }> = [
 	...baseCases.map((x) => ({ ...x, env: "production" as const })),
 	...baseCases.map((x) => ({ ...x, env: "development" as const })),
 ];
+
+cases.push(
+	...baseCases.map((x) => ({ ...x, env: "with-vite-runtime" as const })),
+);
 
 const loaderAvailable =
 	(major > 16 || (major === 16 && minor >= 12)) && major < 20;
@@ -83,6 +87,9 @@ describe.each(cases)("$framework - $env ", ({ framework, env, file }) => {
 					NODE_OPTIONS:
 						(process.env.NODE_OPTIONS ?? "") +
 						" -r vavite/suppress-loader-warnings --loader vavite/node-loader",
+				}),
+				...(env === "with-vite-runtime" && {
+					USE_VITE_RUNTIME: "true",
 				}),
 			},
 		});
