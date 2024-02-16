@@ -1,4 +1,4 @@
-import { Plugin, PluginOption, UserConfig } from "vite";
+import { Plugin, UserConfig } from "vite";
 import { vaviteConnect } from "@vavite/connect";
 import { reloader } from "@vavite/reloader";
 import vaviteExposeViteDevServer from "@vavite/expose-vite-dev-server";
@@ -56,7 +56,7 @@ export interface VaviteOptions {
 	useViteRuntime?: boolean;
 }
 
-export function vavite(options: VaviteOptions): PluginOption {
+export function vavite(options: VaviteOptions): Plugin[] {
 	const {
 		serverEntry,
 		handlerEntry,
@@ -138,7 +138,7 @@ export function vavite(options: VaviteOptions): PluginOption {
 
 	plugins.push(vaviteExposeViteDevServer());
 
-	return plugins;
+	return plugins.filter(Boolean) as Plugin[];
 }
 
 export type {
