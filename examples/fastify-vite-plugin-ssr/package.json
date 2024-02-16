@@ -8,19 +8,19 @@
     "start": "cross-env NODE_ENV=production node dist/server/index.mjs"
   },
   "dependencies": {
-    "@fastify/static": "^7.0.0",
-    "@types/node": "^20.11.16",
+    "@fastify/static": "^7.0.1",
+    "@types/node": "^20.11.19",
     "@types/react": "^18.2.55",
-    "@types/react-dom": "^18.2.18",
+    "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react": "^4.2.1",
     "cross-env": "^7.0.3",
-    "fastify": "^4.26.0",
+    "fastify": "^4.26.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "vavite": "4.1.0",
-    "vike": "^0.4.160",
-    "vite": "^5.1.2"
+    "vike": "^0.4.161",
+    "vite": "^5.1.3"
   }
 }
