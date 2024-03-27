@@ -18,7 +18,7 @@
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
     "publint": "^0.2.7",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.3"
   },
   "pnpm": {
     "peerDependencyRules": {

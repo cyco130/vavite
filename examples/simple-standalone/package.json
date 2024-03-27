@@ -8,9 +8,9 @@
     "build": "vite build --ssr --mode=production"
   },
   "devDependencies": {
-    "@types/node": "^20.11.25",
-    "typescript": "^5.4.2",
+    "@types/node": "^20.11.30",
+    "typescript": "^5.4.3",
     "vavite": "4.1.1",
-    "vite": "^5.1.5"
+    "vite": "^5.2.6"
   }
 }
