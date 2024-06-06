@@ -28,7 +28,7 @@ jobs:
           - os: ubuntu-latest
             node_version: 18
           - os: ubuntu-latest
-            node_version: 21
+            node_version: 22
       fail-fast: false
     name: "CI tests on node-${{ matrix.node_version }}, ${{ matrix.os }}"
     steps:
