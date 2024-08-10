@@ -54,19 +54,18 @@ export class VpsModule implements OnModuleInit {
 		}
 		const app = httpAdapter.getInstance();
 
-		app.get("*", async (req: Request, res: Response, _next: NextFunction) => {
+		app.get("*", async (req: Request, res: Response, next: NextFunction) => {
 			const urlOriginal = req.originalUrl;
 			const pageContext = await renderPage({ urlOriginal });
 			const { httpResponse } = pageContext;
-			if (!httpResponse) return;
-			const { statusCode } = httpResponse;
-			res.status(statusCode);
-
-			for (let [key, value] of Object.entries(httpResponse.headers)) {
-				res.setHeader(key, value);
+			if (!httpResponse) {
+				next();
+				return;
 			}
-
-			httpResponse.pipe(res);
+			const { body, statusCode, headers } = httpResponse;
+			headers.forEach(([name, value]) => res.header(name, value));
+			res.status(statusCode);
+			res.send(body);
 		});
 	}
 }
