@@ -1,17 +1,17 @@
-# Vavite vite-plugin-ssr example with Express
+# Vavite Vike example with Express
 
-Simple example of using [vite-plugin-ssr](https://vite-plugin-ssr.com) with Vavite and Express that shows how to:
+Simple example of using [Vike](https://vike.dev/) with Vavite and Express that shows how to:
 
 - Integrate Express with Vite's dev server
 - Run multiple build steps (for client and server)
-- Perform React SSR with vite-plugin-ssr
+- Perform React SSR with Vike
 
-> [Try on StackBlitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/vite-plugin-ssr)
+> [Try on StackBlitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/vike)
 
 Clone with:
 
 ```bash
-npx degit cyco130/vavite/examples/vite-plugin-ssr
+npx degit cyco130/vavite/examples/vike
 ```
 
 > All examples have `"type": "module"` in their `package.json`.

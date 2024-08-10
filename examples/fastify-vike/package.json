@@ -1,5 +1,5 @@
 {
-  "name": "@vavite/example-fastify-vite-plugin-ssr",
+  "name": "@vavite/example-fastify-vike",
   "type": "module",
   "private": true,
   "scripts": {

@@ -20,10 +20,10 @@ Vite's official SSR guide describes a workflow where Vite's development server i
 - [hapi](examples/hapi): Integrating with Hapi ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/hapi))
 - [ssr-react-express](examples/ssr-react-express): React SSR with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/ssr-react-express))
 - [ssr-vue-express](examples/ssr-vue-express): Vue SSR with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/ssr-vue-express))
-- [vite-plugin-ssr](examples/vite-plugin-ssr): vite-plugin-ssr with React and Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/vite-plugin-ssr))
+- [vike](examples/vike): Vike with React and Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/vike))
 - [socket-io](examples/socket-io): [socket.io](https://socket.io/) with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/socket-io))
 - [Nest.js](examples/nestjs): [Nest.js](https://nestjs.com/) with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/nestjs))
-- [Nest.js with vite-plugin-ssr](examples/nestjs-vite-plugin-ssr): [Nest.js](https://nestjs.com/) with vite-plugin-ssr ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/nestjs-vite-plugin-ssr))
+- [Nest.js with vike](examples/nestjs-vike): [Nest.js](https://nestjs.com/) with Vike ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/nestjs-vike))
 
 ## Packages
 

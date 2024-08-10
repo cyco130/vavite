@@ -5,7 +5,9 @@ import { vavite } from "vavite";
 
 export default defineConfig({
 	buildSteps: [
-		{ name: "client" },
+		{
+			name: "client",
+		},
 		{
 			name: "server",
 			config: {

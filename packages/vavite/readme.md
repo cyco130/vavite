@@ -11,7 +11,7 @@ Vite's official SSR guide describes a workflow where Vite's development server i
 - [simple-standalone](../../examples/simple-standalone): Simple handlerEntry example
 - [ssr-react-express](../../examples/ssr-react-express): React SSR with Express
 - [ssr-vue-express](../../examples/ssr-vue-express): Vue SSR with Express
-- [vite-plugin-ssr](../../examples/vite-plugin-ssr): vite-plugin-ssr with React and express
+- [vike](../../examples/vike): Vike with React and express
 - [express](../../examples/express): Integrating with Express
 - [koa](../../examples/koa): Integrating with Koa
 - [fastify](../../examples/fastify): Integrating with Fastify
