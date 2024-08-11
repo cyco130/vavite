@@ -8,7 +8,6 @@
   "dependencies": {
     "@types/node": "^18.19.44",
     "kill-port": "^2.0.1",
-    "node-fetch": "^3.3.2",
     "ps-tree": "^1.2.0",
     "puppeteer": "^23.0.2",
     "typescript": "^5.5.4",
