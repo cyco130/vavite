@@ -29,11 +29,11 @@ const baseCases: Array<{
 	{ framework: "hapi", file: "routes/home.ts" },
 	{ framework: "ssr-react-express", file: "pages/Home.tsx" },
 	{ framework: "ssr-vue-express", file: "pages/Home.vue" },
-	{ framework: "vike", file: "pages/index/index.page.tsx" },
+	{ framework: "vike", file: "pages/index/+Page.tsx" },
 	{ framework: "nestjs", file: "src/app.controller.ts" },
 	// This one is annoyingly flaky
-	// { framework: "nestjs-vike", file: "pages/index/index.page.tsx" },
-	{ framework: "fastify-vike", file: "pages/index/index.page.tsx" },
+	// { framework: "nestjs-vike", file: "pages/index/+Page.tsx" },
+	{ framework: "fastify-vike", file: "pages/index/+Page.tsx" },
 ];
 
 const [major, minor] = process.version
