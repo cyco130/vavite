@@ -1,0 +1,26 @@
+{
+  "name": "@vavite/example-vike",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vavite serve",
+    "build": "vavite build",
+    "start": "cross-env NODE_ENV=production node dist/server/index.mjs"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^18.19.44",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "cross-env": "^7.0.3",
+    "express": "^4.19.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4",
+    "vavite": "4.1.1",
+    "vike": "^0.4.183",
+    "vite": "^5.4.0"
+  }
+}

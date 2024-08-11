@@ -93,7 +93,7 @@ importers:
         specifier: ^5.4.0
         version: 5.4.0(@types/node@18.19.44)
 
-  examples/fastify-vite-plugin-ssr:
+  examples/fastify-vike:
     dependencies:
       '@fastify/static':
         specifier: ^7.0.4
@@ -225,7 +225,7 @@ importers:
         specifier: ^5.4.0
         version: 5.4.0(@types/node@18.19.44)
 
-  examples/nestjs-vite-plugin-ssr:
+  examples/nestjs-vike:
     dependencies:
       '@nestjs/common':
         specifier: ^10.3.10
@@ -400,7 +400,7 @@ importers:
         specifier: ^5.4.0
         version: 5.4.0(@types/node@18.19.44)
 
-  examples/vite-plugin-ssr:
+  examples/vike:
     dependencies:
       '@types/express':
         specifier: ^4.17.21

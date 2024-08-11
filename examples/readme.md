@@ -11,9 +11,9 @@
 - [fastify](fastify): Integrating with Fastify ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/fastify))
 - [hapi](hapi): Integrating with Hapi ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/hapi))
 - [NestJS](nestjs): Integrating with [NestJS](https://nestjs.com/)
-- [NestJS+vite-plugin-ssr](nestjs-vite-plugin-ssr): vite-plugin-ssr with React and NestJS
+- [NestJS+Vike](nestjs-vike): Vike with React and NestJS
 - [ssr-react-express](ssr-react-express): React SSR with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/ssr-react-express))
 - [ssr-vue-express](ssr-vue-express): Vue SSR with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/ssr-vue-express))
-- [vite-plugin-ssr](vite-plugin-ssr): vite-plugin-ssr with React and Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/vite-plugin-ssr))
-- [fastify-vite-plugin-ssr](fastify-vite-plugin-ssr): vite-plugin-ssr with React and Fastify ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/fastify-vite-plugin-ssr))
+- [vike](vike): Vike with React and Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/vike))
+- [fastify-vike](fastify-vike): Vike with React and Fastify ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/fastify-vike))
 - [socket-io](socket-io): [socket.io](https://socket.io/) with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/socket-io))

@@ -29,11 +29,11 @@ const baseCases: Array<{
 	{ framework: "hapi", file: "routes/home.ts" },
 	{ framework: "ssr-react-express", file: "pages/Home.tsx" },
 	{ framework: "ssr-vue-express", file: "pages/Home.vue" },
-	{ framework: "vite-plugin-ssr", file: "pages/index/index.page.tsx" },
+	{ framework: "vike", file: "pages/index/+Page.tsx" },
 	{ framework: "nestjs", file: "src/app.controller.ts" },
 	// This one is annoyingly flaky
-	// { framework: "nestjs-vite-plugin-ssr", file: "pages/index/index.page.tsx" },
-	{ framework: "fastify-vite-plugin-ssr", file: "pages/index/index.page.tsx" },
+	// { framework: "nestjs-vike", file: "pages/index/+Page.tsx" },
+	{ framework: "fastify-vike", file: "pages/index/+Page.tsx" },
 ];
 
 const [major, minor] = process.version
@@ -73,7 +73,7 @@ describe.each(cases)("$framework - $env ", ({ framework, env, file }) => {
 				? "pnpm run build && pnpm start"
 				: "pnpm exec vite serve --strictPort --port 3000 --logLevel silent";
 
-		if (framework === "nestjs-vite-plugin-ssr" && env !== "production") {
+		if (framework === "nestjs-vike" && env !== "production") {
 			command = `pnpm exec vite optimize --force && ${command}`;
 		}
 
