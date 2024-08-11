@@ -3,7 +3,6 @@ import puppeteer from "puppeteer";
 import path from "node:path";
 import fs from "node:fs";
 import { spawn, ChildProcess } from "node:child_process";
-import fetch from "node-fetch";
 import { promisify } from "node:util";
 import psTree from "ps-tree";
 import { kill } from "node:process";
