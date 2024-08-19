@@ -19,7 +19,7 @@
     "vite": "^5.4.0"
   },
   "dependencies": {
-    "@koa/router": "^12.0.1",
+    "@koa/router": "^13.0.0",
     "koa": "^2.15.3"
   }
 }

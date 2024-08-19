@@ -157,8 +157,8 @@ importers:
   examples/koa:
     dependencies:
       '@koa/router':
-        specifier: ^12.0.1
-        version: 12.0.1
+        specifier: ^13.0.0
+        version: 13.0.0
       koa:
         specifier: ^2.15.3
         version: 2.15.3
@@ -1351,9 +1351,9 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@koa/router@12.0.1':
-    resolution: {integrity: sha512-ribfPYfHb+Uw3b27Eiw6NPqjhIhTpVFzEWLwyc/1Xp+DCdwRRyIlAUODX+9bPARF6aQtUu1+/PHzdNvRzcs/+Q==}
-    engines: {node: '>= 12'}
+  '@koa/router@13.0.0':
+    resolution: {integrity: sha512-P278xb5IoLtDn2inRsCzJVKGxt5RkjOivwxGbniMO1sI8bft1/Dr93UsRP5aByT8C74x8zqxDYyPXrQwRKIhjg==}
+    engines: {node: '>= 18'}
 
   '@lukeed/csprng@1.1.0':
     resolution: {integrity: sha512-Z7C/xXCiGWsg0KuKsHTKJxbWhpI3Vs5GwLfOean7MGyVFGqdRgBbAjOCh6u4bbjPc/8MJ2pZmK/0DLdCbivLDA==}
@@ -5166,15 +5166,11 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@koa/router@12.0.1':
+  '@koa/router@13.0.0':
     dependencies:
-      debug: 4.3.6
       http-errors: 2.0.0
       koa-compose: 4.1.0
-      methods: 1.1.2
       path-to-regexp: 6.2.2
-    transitivePeerDependencies:
-      - supports-color
 
   '@lukeed/csprng@1.1.0': {}
 
