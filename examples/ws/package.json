@@ -1,0 +1,27 @@
+{
+  "name": "@vavite/example-reloader-ws",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node dist",
+    "dev": "vite",
+    "build": "vite build --ssr --mode=production"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/express-ws": "^3.0.5",
+    "@types/node": "^18.19.44",
+    "@types/ws": "^8.5.12",
+    "typescript": "^5.5.4",
+    "vavite": "4.1.2",
+    "vite": "^5.4.0"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-ws": "^5.0.2",
+    "ws": "^8.18.0"
+  }
+}
