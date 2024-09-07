@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Websocket example</title>
+	</head>
+	<body>
+		<h1>Hello</h1>
+
+		<a href="/test">Test route</a>
+
+		<p>
+			<button>Open socket (check console and network tab)</button>
+		</p>
+
+		<script>
+			document.querySelector("button").addEventListener("click", () => {
+				let socket = new WebSocket(location.origin + "/ws");
+				console.log("Socket is CONNECTING...");
+				socket.onopen = () => {
+					console.log("Socket opened on client");
+					socket.send("Hello from client");
+				};
+			});
+		</script>
+	</body>
+</html>
