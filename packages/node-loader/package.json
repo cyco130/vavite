@@ -26,7 +26,7 @@
   ],
   "description": "ESM loader for transpiling modules with Vite",
   "author": "Fatih Aygün <cyco130@gmail.com>",
-  "repository": "https://github.com/cyco130/vavite",
+  "repository": "github:cyco130/vavite",
   "license": "MIT",
   "scripts": {
     "build": "tsup",
