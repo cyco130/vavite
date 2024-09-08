@@ -14,10 +14,10 @@
     "format": "prettier --ignore-path .gitignore --ignore-unknown . '!pnpm-lock.yaml' --write"
   },
   "devDependencies": {
-    "husky": "^9.1.4",
-    "lint-staged": "^15.2.8",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.10",
     "prettier": "^3.3.3",
-    "publint": "^0.2.9",
+    "publint": "^0.2.10",
     "typescript": "^5.5.4"
   },
   "pnpm": {
