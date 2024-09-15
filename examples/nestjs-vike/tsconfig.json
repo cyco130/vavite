@@ -9,6 +9,7 @@
 		"strict": true,
 		"skipLibCheck": true,
 		"moduleResolution": "Bundler",
+		"customConditions": ["import"],
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
 		"jsx": "react-jsx",

@@ -3,6 +3,7 @@
 		"strict": true,
 		"module": "ES2020",
 		"moduleResolution": "Bundler",
+		"customConditions": ["import"],
 		"target": "ES2017",
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"jsx": "react-jsx",
