@@ -1,6 +1,6 @@
 {
   "name": "vavite",
-  "version": "4.1.3",
+  "version": "5.0.0",
   "description": "A Vite plugin for develoing server-side applications",
   "type": "module",
   "files": [

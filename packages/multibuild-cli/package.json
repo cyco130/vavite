@@ -1,6 +1,6 @@
 {
   "name": "@vavite/multibuild-cli",
-  "version": "4.1.3",
+  "version": "5.0.0",
   "type": "module",
   "bin": {
     "vavite-multibuild": "./cli.js"
