@@ -56,8 +56,8 @@ importers:
         version: 4.21.0
     devDependencies:
       '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^5.0.0
+        version: 5.0.0
       '@types/node':
         specifier: ^18.19.50
         version: 18.19.50
@@ -204,8 +204,8 @@ importers:
         specifier: ^1.7.26
         version: 1.7.26
       '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^5.0.0
+        version: 5.0.0
       '@types/node':
         specifier: ^18.19.50
         version: 18.19.50
@@ -259,8 +259,8 @@ importers:
         specifier: ^1.7.26
         version: 1.7.26
       '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^5.0.0
+        version: 5.0.0
       '@types/node':
         specifier: ^18.19.50
         version: 18.19.50
@@ -317,8 +317,8 @@ importers:
         version: 4.7.5
     devDependencies:
       '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^5.0.0
+        version: 5.0.0
       '@types/node':
         specifier: ^18.19.50
         version: 18.19.50
@@ -345,8 +345,8 @@ importers:
         version: 18.3.1(react@18.3.1)
     devDependencies:
       '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^5.0.0
+        version: 5.0.0
       '@types/node':
         specifier: ^18.19.50
         version: 18.19.50
@@ -379,8 +379,8 @@ importers:
         version: 3.5.5(typescript@5.6.2)
     devDependencies:
       '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^5.0.0
+        version: 5.0.0
       '@types/node':
         specifier: ^18.19.50
         version: 18.19.50
@@ -400,8 +400,8 @@ importers:
   examples/vike:
     dependencies:
       '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^5.0.0
+        version: 5.0.0
       '@types/node':
         specifier: ^18.19.50
         version: 18.19.50
@@ -455,8 +455,8 @@ importers:
         version: 8.18.0
     devDependencies:
       '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^5.0.0
+        version: 5.0.0
       '@types/express-ws':
         specifier: ^3.0.5
         version: 3.0.5
@@ -1410,6 +1410,7 @@ packages:
   '@koa/router@13.0.1':
     resolution: {integrity: sha512-3NKqQt8pKjTKUBVnQx/E980rB6IyERd8QruImdxIVM2vb8TJWKYPnesw+mfElV/3wmdrc/rWk60Rs41Prr4XgQ==}
     engines: {node: '>= 18'}
+    deprecated: Unexpected behavior appears just after bumping 'path-to-regex' dependency. So, please try v12.0.2 or v13.1.0+
 
   '@lukeed/csprng@1.1.0':
     resolution: {integrity: sha512-Z7C/xXCiGWsg0KuKsHTKJxbWhpI3Vs5GwLfOean7MGyVFGqdRgBbAjOCh6u4bbjPc/8MJ2pZmK/0DLdCbivLDA==}
@@ -1811,11 +1812,14 @@ packages:
   '@types/express-serve-static-core@4.19.5':
     resolution: {integrity: sha512-y6W03tvrACO72aijJ5uF02FRq5cgDR9lUxddQ8vyF+GvmjJQqbzDcJngEjURc+ZsG31VI3hODNZJ2URj86pzmg==}
 
+  '@types/express-serve-static-core@5.0.0':
+    resolution: {integrity: sha512-AbXMTZGt40T+KON9/Fdxx0B2WK5hsgxcfXJLr5bFpZ7b4JCex2WyQPTEKdXqfHiY5nKKBScZ7yCoO6Pvgxfvnw==}
+
   '@types/express-ws@3.0.5':
     resolution: {integrity: sha512-lbWMjoHrm/v85j81UCmb/GNZFO3genxRYBW1Ob7rjRI+zxUBR+4tcFuOpKKsYQ1LYTYiy3356epLeYi/5zxUwA==}
 
-  '@types/express@4.17.21':
-    resolution: {integrity: sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==}
+  '@types/express@5.0.0':
+    resolution: {integrity: sha512-DvZriSMehGHL1ZNLzi6MidnsDhUZM/x2pRdDIKdwbUNqqwHxMlRdkxtn6/EPKyqKpHqTl/4nRZsRNLpZxZRpPQ==}
 
   '@types/http-assert@1.5.5':
     resolution: {integrity: sha512-4+tE/lwdAahgZT1g30Jkdm9PzFRde0xwxBNUyRsCitRvCQB90iuA2uJYdUnhnANRcqGXaWOGY4FEoxeElNAK2g==}
@@ -5757,7 +5761,7 @@ snapshots:
   '@types/cookies@0.9.0':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/express': 4.17.21
+      '@types/express': 5.0.0
       '@types/keygrip': 1.0.6
       '@types/node': 18.19.50
 
@@ -5774,16 +5778,23 @@ snapshots:
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
 
+  '@types/express-serve-static-core@5.0.0':
+    dependencies:
+      '@types/node': 18.19.50
+      '@types/qs': 6.9.15
+      '@types/range-parser': 1.2.7
+      '@types/send': 0.17.4
+
   '@types/express-ws@3.0.5':
     dependencies:
-      '@types/express': 4.17.21
+      '@types/express': 5.0.0
       '@types/express-serve-static-core': 4.19.5
       '@types/ws': 8.5.12
 
-  '@types/express@4.17.21':
+  '@types/express@5.0.0':
     dependencies:
       '@types/body-parser': 1.19.5
-      '@types/express-serve-static-core': 4.19.5
+      '@types/express-serve-static-core': 5.0.0
       '@types/qs': 6.9.15
       '@types/serve-static': 1.15.7
 
