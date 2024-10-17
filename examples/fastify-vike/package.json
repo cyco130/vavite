@@ -8,7 +8,7 @@
     "start": "cross-env NODE_ENV=production node dist/server/index.mjs"
   },
   "dependencies": {
-    "@fastify/static": "^7.0.4",
+    "@fastify/static": "^8.0.2",
     "@types/node": "^18.19.50",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
