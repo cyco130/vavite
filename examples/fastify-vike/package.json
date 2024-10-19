@@ -9,18 +9,18 @@
   },
   "dependencies": {
     "@fastify/static": "^7.0.4",
-    "@types/node": "^18.19.50",
-    "@types/react": "^18.3.5",
-    "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.3.1",
+    "@types/node": "^18.19.57",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
     "cross-env": "^7.0.3",
     "fastify": "^4.28.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.2",
+    "typescript": "^5.6.3",
     "vavite": "5.0.0",
-    "vike": "^0.4.195",
-    "vite": "^5.4.5"
+    "vike": "^0.4.199",
+    "vite": "^5.4.9"
   }
 }
