@@ -14,7 +14,7 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "cross-env": "^7.0.3",
-    "fastify": "^4.28.1",
+    "fastify": "^5.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "ts-node": "^10.9.2",
