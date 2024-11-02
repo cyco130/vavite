@@ -8,15 +8,15 @@
     "start": "node dist/server"
   },
   "devDependencies": {
-    "@types/express": "^4.17.21",
-    "@types/node": "^18.19.50",
-    "@vitejs/plugin-vue": "^5.1.3",
-    "typescript": "^5.6.2",
+    "@types/express": "^5.0.0",
+    "@types/node": "^18.19.63",
+    "@vitejs/plugin-vue": "^5.1.4",
+    "typescript": "^5.6.3",
     "vavite": "5.0.0",
-    "vite": "^5.4.5"
+    "vite": "^5.4.10"
   },
   "dependencies": {
-    "express": "^4.21.0",
-    "vue": "^3.5.5"
+    "express": "^4.21.1",
+    "vue": "^3.5.12"
   }
 }

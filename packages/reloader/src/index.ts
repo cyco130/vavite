@@ -263,7 +263,6 @@ export function reloader({
 									listener = rest[0];
 									resolveListenerPromise();
 								} else {
-									// eslint-disable-next-line prefer-spread
 									return (target as any)[prop].apply(target, [
 										event,
 										...rest,
