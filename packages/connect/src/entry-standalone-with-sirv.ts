@@ -10,7 +10,6 @@ let sirvHandler: RequestHandler;
 
 async function init() {
 	// @ts-expect-error: This is a virtual module
-	// eslint-disable-next-line import/no-unresolved
 	handleExports = await import("/virtual:vavite-connect-handler");
 
 	sirvHandler = sirv(
@@ -38,7 +37,6 @@ async function init() {
 }
 
 init().catch((error) => {
-	// eslint-disable-next-line no-console
 	console.error(error);
 	process.exit(1);
 });
