@@ -12,7 +12,7 @@
     "@types/node": "^18.19.63",
     "@vitejs/plugin-vue": "^5.1.4",
     "typescript": "^5.6.3",
-    "vavite": "5.0.0",
+    "vavite": "5.0.1",
     "vite": "^5.4.10"
   },
   "dependencies": {
