@@ -9,14 +9,14 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
-    "@types/node": "^18.19.63",
-    "@vitejs/plugin-vue": "^5.1.4",
-    "typescript": "^5.6.3",
+    "@types/node": "^18.19.67",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "typescript": "^5.7.2",
     "vavite": "5.0.1",
-    "vite": "^5.4.10"
+    "vite": "^5.4.11"
   },
   "dependencies": {
     "express": "^4.21.1",
-    "vue": "^3.5.12"
+    "vue": "^3.5.13"
   }
 }
