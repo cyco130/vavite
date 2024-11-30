@@ -20,7 +20,7 @@
     "cross-env": "^7.0.3",
     "rollup-plugin-swc3": "^0.12.1",
     "typescript": "^5.7.2",
-    "vavite": "5.0.1",
+    "vavite": "5.1.0",
     "vite": "^5.4.11",
     "vite-tsconfig-paths": "^5.1.3"
   },
