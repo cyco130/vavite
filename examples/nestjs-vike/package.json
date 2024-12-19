@@ -21,7 +21,7 @@
     "rollup-plugin-swc3": "^0.12.1",
     "typescript": "^5.7.2",
     "vavite": "5.1.0",
-    "vite": "^5.4.11",
+    "vite": "^6.0.4",
     "vite-tsconfig-paths": "^5.1.3"
   },
   "dependencies": {
