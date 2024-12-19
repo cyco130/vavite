@@ -50,8 +50,8 @@
   },
   "devDependencies": {
     "@cyco130/eslint-config": "^5.0.1",
-    "@types/node": "^18.19.67",
-    "eslint": "^9.16.0",
+    "@types/node": "^18.19.68",
+    "eslint": "^9.17.0",
     "sirv": "^3.0.0",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
