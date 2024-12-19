@@ -55,7 +55,7 @@
     "sirv": "^3.0.0",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
-    "vite": "^5.4.11"
+    "vite": "^6.0.4"
   },
   "dependencies": {
     "@vavite/connect": "workspace:*",
