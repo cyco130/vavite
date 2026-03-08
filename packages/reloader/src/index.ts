@@ -83,11 +83,18 @@ export function reloader({
 			| import("vite/runtime").ViteRuntime["executeEntrypoint"] =
 			viteServer.ssrLoadModule.bind(viteServer);
 
-		if (useViteRuntime) {
-			if (!viteRuntime) {
+		if (useViteRuntime && !viteRuntime) {
+			try {
 				const { createViteRuntime } = await import("vite");
 				viteRuntime = await createViteRuntime(viteServer);
+			} catch {
+				logger.warn(
+					"@vavite/reloader: createViteRuntime is not available in this version of Vite. Falling back to ssrLoadModule.",
+				);
 			}
+		}
+
+		if (viteRuntime) {
 			runner = viteRuntime.executeEntrypoint.bind(viteRuntime);
 		}
 
