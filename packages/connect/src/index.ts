@@ -131,12 +131,18 @@ export function vaviteConnect(options: VaviteConnectOptions = {}): Plugin[] {
 								| import("vite/runtime").ViteRuntime["executeEntrypoint"] =
 								server.ssrLoadModule.bind(server);
 
-							if (useViteRuntime) {
-								if (!viteRuntime) {
+							if (useViteRuntime && !viteRuntime) {
+								try {
 									const { createViteRuntime } = await import("vite");
 									viteRuntime = await createViteRuntime(server);
+								} catch {
+									console.warn(
+										"@vavite/connect: createViteRuntime is not available in this version of Vite. Falling back to ssrLoadModule.",
+									);
 								}
+							}
 
+							if (viteRuntime) {
 								runner = viteRuntime.executeEntrypoint.bind(viteRuntime);
 							}
 
