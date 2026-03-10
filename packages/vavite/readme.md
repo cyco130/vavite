@@ -166,3 +166,8 @@ All packages under the `@vavite` namespace and the `vavite` CLI command are now 
 - Explicitly add code to start the server in production: `if (import.meta.env.COMMAND === "serve") { startMyServer(myHandler); }`
 - Import `viteDevServer` from `vavite:vite-dev-server` instead of `vavite/vite-dev-server`.
 - Add `if (import.meta.hot) { import.meta.hot.accept(); }` to your server entry file for better performance.
+
+### Removed examples
+
+- All `vike` (formerly `vite-plugin-ssr`) examples are removed. Vike itself provides equivalent functionality to load server-side code.
+- Vue SSR example is removed. My Vue knowledge is limited and I don't want to mislead with a bad example. It should be possible for someone more knowledgeable to create a good example though. PRs are welcome!
