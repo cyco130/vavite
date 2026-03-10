@@ -6,25 +6,16 @@
     "build": "pnpm -r --filter \"./packages/*\" run build",
     "prepare": "husky",
     "precommit": "lint-staged",
-    "test": "pnpm run \"/^(cq|ci)$/\"",
-    "cq": "pnpm run /^test:/",
-    "ci": "pnpm -r --stream --workspace-concurrency=1 run ci",
+    "format": "oxfmt",
+    "ci": "pnpm -r --stream run ci",
+    "test": "pnpm run /^test:/",
     "test:packages": "pnpm -r --stream run test",
-    "test:prettier": "prettier --check --ignore-path .gitignore --ignore-unknown . '!pnpm-lock.yaml'",
-    "format": "prettier --ignore-path .gitignore --ignore-unknown . '!pnpm-lock.yaml' --write"
+    "test:format": "oxfmt --check"
   },
   "devDependencies": {
     "husky": "^9.1.7",
-    "lint-staged": "^15.2.10",
-    "prettier": "^3.4.1",
-    "publint": "^0.2.12",
-    "typescript": "^5.7.2"
-  },
-  "pnpm": {
-    "peerDependencyRules": {
-      "ignoreMissing": [
-        "rollup"
-      ]
-    }
+    "lint-staged": "^16.2.7",
+    "oxfmt": "^0.35.0",
+    "typescript": "^5.9.3"
   }
 }

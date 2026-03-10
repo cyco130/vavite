@@ -2,12 +2,11 @@ import { describe, test, expect, beforeAll, afterAll } from "vitest";
 import puppeteer from "puppeteer";
 import path from "node:path";
 import fs from "node:fs";
-import { spawn, ChildProcess } from "node:child_process";
-import { promisify } from "node:util";
-import psTree from "ps-tree";
-import { kill } from "node:process";
+import { spawn } from "node:child_process";
+import { launchAndTest, LaunchAndTestCleanupFunction } from "kill-em-all";
 
-const TEST_HOST = "http://localhost:3000";
+const TEST_PORT = 3000;
+const TEST_HOST = `http://localhost:${TEST_PORT}`;
 
 const browser = await puppeteer.launch({
 	headless: true,
@@ -21,119 +20,54 @@ const baseCases: Array<{
 	framework: string;
 	file: string;
 }> = [
-	{ framework: "simple-standalone", file: "handler.ts" },
-	{ framework: "express", file: "routes/home.ts" },
-	{ framework: "fastify", file: "routes/home.ts" },
-	{ framework: "koa", file: "routes/home.ts" },
-	{ framework: "hapi", file: "routes/home.ts" },
-	{ framework: "ssr-react-express", file: "pages/Home.tsx" },
-	{ framework: "ssr-vue-express", file: "pages/Home.vue" },
-	{ framework: "vike", file: "pages/index/+Page.tsx" },
+	{ framework: "simple-standalone", file: "src/entry.server.ts" },
+	{ framework: "express", file: "src/routes/home.ts" },
+	{ framework: "fastify", file: "src/routes/home.ts" },
+	{ framework: "koa", file: "src/routes/home.ts" },
+	{ framework: "hapi", file: "src/routes/home.ts" },
+	{ framework: "ssr-react-express", file: "src/pages/Home.tsx" },
 	{ framework: "nestjs", file: "src/app.controller.ts" },
-	// This one is annoyingly flaky
-	// { framework: "nestjs-vike", file: "pages/index/+Page.tsx" },
-	{ framework: "fastify-vike", file: "pages/index/+Page.tsx" },
 ];
-
-const [major, minor] = process.version
-	.slice(1)
-	.split(".")
-	.map((x) => Number(x));
 
 const cases: Array<{
 	framework: string;
 	file: string;
-	env: "production" | "development" | "with-loader" | "with-vite-runtime";
+	env: "production" | "development";
 }> = [
 	...baseCases.map((x) => ({ ...x, env: "production" as const })),
 	...baseCases.map((x) => ({ ...x, env: "development" as const })),
 ];
 
-cases.push(
-	...baseCases.map((x) => ({ ...x, env: "with-vite-runtime" as const })),
-);
-
-const loaderAvailable =
-	(major > 16 || (major === 16 && minor >= 12)) && major < 20;
-
-if (loaderAvailable) {
-	cases.push(...baseCases.map((x) => ({ ...x, env: "with-loader" as const })));
-}
-
 describe.each(cases)("$framework - $env ", ({ framework, env, file }) => {
 	const ssr = framework.includes("ssr");
 	const dir = path.resolve(__dirname, "..", "examples", framework);
-
-	let cp: ChildProcess | undefined;
+	let kill: LaunchAndTestCleanupFunction;
 
 	beforeAll(async () => {
 		let command =
 			env === "production"
 				? "pnpm run build && pnpm start"
-				: "pnpm exec vite serve --strictPort --port 3000 --logLevel silent";
+				: `pnpm exec vite serve --strictPort --port ${TEST_PORT} --logLevel silent`;
 
 		if (framework === "nestjs-vike" && env !== "production") {
 			command = `pnpm exec vite optimize --force && ${command}`;
 		}
 
-		cp = spawn(command, {
+		const cp = spawn(command, {
 			shell: true,
 			stdio: "inherit",
 			cwd: dir,
 			env: {
 				...process.env,
-				...(env === "with-loader" && {
-					NODE_OPTIONS:
-						(process.env.NODE_OPTIONS ?? "") +
-						" -r vavite/suppress-loader-warnings --loader vavite/node-loader",
-				}),
-				...(env === "with-vite-runtime" && {
-					USE_VITE_RUNTIME: "true",
-				}),
+				PORT: String(TEST_PORT),
 			},
 		});
 
-		// Wait until server is ready
-		await new Promise<void>((resolve, reject) => {
-			cp!.on("error", reject);
-
-			cp!.on("exit", (code) => {
-				if (code !== 0) {
-					cp = undefined;
-					reject(new Error(`Process exited with code ${code}`));
-				}
-			});
-
-			const interval = setInterval(() => {
-				fetch(TEST_HOST)
-					.then(async (r) => {
-						if (r.status === 200) {
-							clearInterval(interval);
-							resolve();
-						}
-					})
-					.catch(() => {
-						// Ignore error
-					});
-			}, 250);
-		});
+		kill = await launchAndTest(cp, TEST_HOST);
 	}, 60_000);
 
 	afterAll(async () => {
-		if (!cp || cp.exitCode || !cp.pid) {
-			return;
-		}
-
-		const tree = await promisify(psTree)(cp.pid);
-		const pids = [cp.pid, ...tree.map((p) => +p.PID)];
-
-		for (const pid of pids) {
-			kill(+pid, "SIGINT");
-		}
-
-		await new Promise((resolve) => {
-			cp!.on("exit", resolve);
-		});
+		await kill();
 	});
 
 	test("renders home page", async () => {
@@ -170,11 +104,11 @@ describe.each(cases)("$framework - $env ", ({ framework, env, file }) => {
 			await fs.promises.writeFile(filePath, newContent);
 			await new Promise((resolve) => setTimeout(resolve, 500));
 
-			if (!ssr) {
-				await page.goto(TEST_HOST);
-			}
-
 			try {
+				if (!ssr) {
+					await page.goto(TEST_HOST);
+				}
+
 				await page.waitForFunction(
 					() => document.body.textContent?.includes("Hot reloadin'"),
 					{ timeout: 60_000 },

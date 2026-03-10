@@ -2,9 +2,11 @@ import { defineConfig } from "vite";
 import { vavite } from "vavite";
 
 export default defineConfig({
-	plugins: [
-		vavite({
-			handlerEntry: "/server.ts",
-		}),
-	],
+	appType: "custom",
+	builder: {
+		async buildApp(builder) {
+			await builder.build(builder.environments.ssr!);
+		},
+	},
+	plugins: [vavite()],
 });

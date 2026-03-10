@@ -1,5 +1,5 @@
-import { Controller, Get, Req, Request } from "@nestjs/common";
-import viteDevServer from "vavite/vite-dev-server";
+import { Controller, Get, Req } from "@nestjs/common";
+import viteDevServer from "vavite:vite-dev-server";
 
 @Controller()
 export class AppController {

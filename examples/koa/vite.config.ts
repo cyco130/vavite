@@ -2,11 +2,11 @@ import { defineConfig } from "vite";
 import { vavite } from "vavite";
 
 export default defineConfig({
-	plugins: [
-		vavite({
-			serverEntry: "/server.ts",
-			reloadOn: "static-deps-change",
-			serveClientAssetsInDev: true,
-		}),
-	],
+	appType: "custom",
+	builder: {
+		async buildApp(builder) {
+			await builder.build(builder.environments.ssr!);
+		},
+	},
+	plugins: [vavite()],
 });

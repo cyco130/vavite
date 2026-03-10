@@ -1,149 +1,296 @@
-import { Plugin, UserConfig } from "vite";
-import { vaviteConnect } from "@vavite/connect";
-import { reloader } from "@vavite/reloader";
-import vaviteExposeViteDevServer from "@vavite/expose-vite-dev-server";
-import { nodeLoaderPlugin } from "@vavite/node-loader/plugin";
-
-declare global {
-	// eslint-disable-next-line no-var
-	var __vavite_loader__: boolean;
-}
-
-const hasLoader = global.__vavite_loader__;
+import {
+	isRunnableDevEnvironment,
+	type ConfigPluginContext,
+	type Connect,
+	type Plugin,
+} from "vite";
+import { exposeEnvironment as exposeEnvironmentPlugin } from "./expose-environment";
+import { exposeDevServer as exposeDevServerPlugin } from "./expose-dev-server";
+import { basename } from "node:path";
 
 export interface VaviteOptions {
-	/** Entry module that default exports a middleware function.
-	 * You have to provide either a handler entry or a server entry.
-	 * If you provide both, the server entry will only be used in the
-	 * production build.
-	 */
-	handlerEntry?: string;
-	/** Server entry point. You have to provide either a handler entry
-	 * or a server entry. If you provide both, the server entry will only
-	 * be used in the production build.
-	 */
-	serverEntry?: string;
-	/** Whether to serve client-side assets in development.
-	 * @default false
-	 */
-	serveClientAssetsInDev?: boolean;
-	/** If you only provide a handler entry, this option controls whether
-	 * to build a standalone server application or a middleware function.
-	 * @default true
-	 */
-	standalone?: boolean;
-	/** Directory where the client-side assets are located. Set to null to disable
-	 * static file serving in production.
-	 * @default null
-	 */
-	clientAssetsDir?: string | null;
-	/** Whether to bundle the sirv package or to import it when building in standalone
-	 * mode. You have to install it as a production dependency if this is set to false.
-	 * @default true
-	 */
-	bundleSirv?: boolean;
 	/**
-	 * When to reload the server. "any-change" reloads every time any of the dependencies of the
-	 * server entry changes. "static-deps-change" only reloads when statically imported dependencies
-	 * change, dynamically imported dependencies are not tracked.
-	 * @default "any-change"
+	 * The entries to register.
+	 *
+	 * @default [{ environment: "ssr", entry: "/src/entry.server", exportName: "default" }]
 	 */
-	reloadOn?: "any-change" | "static-deps-change";
-	/** Whether to use the vite runtime to execute the server entry.
-	 * @experimental
-	 * @default false (can be overriden by the USE_VITE_RUNTIME environment variable to "true")
+	entries?: VaviteEntry[];
+	/**
+	 * Whether to expose the current environment and command as `import.meta.env.ENVIRONMENT`
+	 * and `import.meta.env.COMMAND`. This is useful for conditionally running code based on the
+	 * environment or command. For example, you can check `import.meta.env.COMMAND === "serve"`
+	 * to run code only in development mode.
+	 *
+	 * @default true
 	 */
-	useViteRuntime?: boolean;
+	exposeEnvironment?: boolean;
+	/**
+	 * Whether to expose the Vite dev server in development mode. This allows you to access the dev
+	 * server instance in your handler entries and use its features, such as `transformIndexHtml`.
+	 *
+	 * @default true
+	 */
+	exposeDevServer?: boolean;
 }
 
-export function vavite(options: VaviteOptions): Plugin[] {
+export interface VaviteEntry {
+	/**
+	 * The name of the environment to load the handler entry from. The environment must be defined
+	 * in the Vite config and must be a runnable environment.
+	 *
+	 * @default "ssr"
+	 */
+	environment?: string;
+	/**
+	 * The path to the module exporting the handler function. Start with "/" for entries within the
+	 * project root or specify a bare import like "my-package/handler" for entries from dependencies.
+	 */
+	entry: string;
+	/**
+	 * Name of the export to use as the handler function.
+	 *
+	 * @default "default"
+	 */
+	exportName?: string;
+	/**
+	 * Whether to register the middleware before or after Vite's own middlewares. If not specified,
+	 * Vavite will try to automatically determine the order based on whether a client entry is in
+	 * the config.
+	 */
+	order?: "pre" | "post";
+	/**
+	 * Whether to add the entry to the Rollup input options. This is usually what you want.
+	 *
+	 * @default true
+	 */
+	addEntryToInputOptions?: boolean | string;
+}
+
+export function vavite(options: VaviteOptions = {}): Plugin[] {
 	const {
-		serverEntry,
-		handlerEntry,
-		serveClientAssetsInDev,
-		standalone,
-		clientAssetsDir,
-		bundleSirv,
-		reloadOn,
-		useViteRuntime,
+		entries = [{ environment: "ssr", entry: "/src/entry.server" }],
+		exposeEnvironment = true,
+		exposeDevServer = true,
 	} = options;
 
-	if (!serverEntry && !handlerEntry) {
-		throw new Error(
-			"vavite: either serverEntry or handlerEntry must be specified",
-		);
-	}
+	let defaultMiddlewareOrder: "pre" | "post" = "post";
 
-	let buildStepStartCalled = false;
+	const middlewarePlugin: Plugin = {
+		name: "vavite",
 
-	const plugins: (Plugin | false)[] = [
-		{
-			name: "vavite:check-multibuild",
+		config: {
+			order: "post",
+			handler(config) {
+				const inputs = new Map<string, Map<string, string | null>>();
 
-			buildStepStart() {
-				buildStepStartCalled = true;
-			},
+				for (const entry of entries) {
+					const {
+						environment: environmentName = "ssr",
+						entry: entryPath = "/src/entry.server",
+						addEntryToInputOptions = true,
+					} = entry;
 
-			config() {
-				return {
-					ssr: {
-						optimizeDeps: {
-							exclude: ["vavite"],
-						},
-					},
-					optimizeDeps: {
-						exclude: ["vavite"],
-					},
-				} as UserConfig;
-			},
+					if (addEntryToInputOptions) {
+						if (!inputs.has(environmentName)) {
+							inputs.set(environmentName, new Map());
+						}
 
-			configResolved(config) {
-				if (
-					config.buildSteps &&
-					config.command === "build" &&
-					config.mode !== "multibuild" &&
-					!buildStepStartCalled
-				) {
-					throw new Error(
-						"vavite: You have multiple build steps defined in your Vite config, please use the 'vavite' command instead of 'vite build' to build.",
+						inputs
+							.get(environmentName)!
+							.set(
+								entryPath,
+								typeof addEntryToInputOptions === "string"
+									? addEntryToInputOptions
+									: null,
+							);
+					}
+				}
+
+				for (const [environmentName, entries] of inputs) {
+					config.environments ??= {};
+					config.environments[environmentName] ??= {};
+					config.environments[environmentName].build ??= {};
+					config.environments[environmentName].build.rollupOptions ??= {};
+					config.environments[environmentName].build.rollupOptions.input ??= {};
+
+					const normalizedInput = addToRollupInput(
+						config.environments[environmentName].build.rollupOptions.input,
+						entries,
+						this.warn,
 					);
+
+					config.environments[environmentName].build.rollupOptions.input =
+						normalizedInput;
 				}
 			},
 		},
-		hasLoader && nodeLoaderPlugin(),
-	];
 
-	if (handlerEntry) {
-		plugins.push(
-			...vaviteConnect({
-				handlerEntry,
-				customServerEntry: serverEntry,
-				serveClientAssetsInDev,
-				standalone,
-				clientAssetsDir,
-				bundleSirv,
-				useViteRuntime,
-			}),
-		);
-	} else {
-		plugins.push(
-			reloader({
-				entry: serverEntry,
-				serveClientAssetsInDev,
-				reloadOn,
-				useViteRuntime,
-			}),
-		);
+		configResolved(config) {
+			// Try to determine whether to register the middleware before or after Vite's own
+			// middlewares based on whether a client entry is explicitly defined in the config.
+			const input =
+				config.build.rollupOptions.input ??
+				config.environments.client?.build.rollupOptions.input;
+
+			if (!input) {
+				defaultMiddlewareOrder = "pre";
+				return;
+			}
+
+			if (
+				typeof input === "string" ||
+				(Array.isArray(input) && input.length > 0) ||
+				Object.keys(input).length > 0
+			) {
+				defaultMiddlewareOrder = "post";
+			}
+		},
+
+		async configureServer(server) {
+			const postMiddlewares: Connect.NextHandleFunction[] = [];
+
+			for (const entry of entries) {
+				const {
+					environment: environmentName = "ssr",
+					entry: entryPath = "/src/entry.server",
+					exportName = "default",
+					order = defaultMiddlewareOrder,
+				} = entry;
+
+				const environment = server.environments[environmentName];
+
+				if (!environment) {
+					return this.error(
+						`[vavite] Non-existing environment ${JSON.stringify(environmentName)}`,
+					);
+				}
+
+				if (!isRunnableDevEnvironment(environment)) {
+					return this.error(
+						`[vavite] Environment ${JSON.stringify(environmentName)} is not runnable and cannot be used as an entry`,
+					);
+				}
+
+				const quotedEnvironmentName = JSON.stringify(environmentName);
+
+				const vaviteMiddleware: Connect.NextHandleFunction = async (
+					req,
+					res,
+					next,
+				) => {
+					const quotedEntry = JSON.stringify(entryPath);
+					try {
+						const module = await environment.runner.import(entryPath);
+						const imported = module[exportName];
+						if (typeof imported !== "function") {
+							throw new Error(
+								`[vavite] ${quotedEnvironmentName} environment entry ${quotedEntry} doesn't export a function as ${JSON.stringify(exportName)}`,
+							);
+						}
+
+						const handler: Connect.NextHandleFunction = imported;
+
+						await handler(req, res, next);
+					} catch (error) {
+						next(error);
+					}
+				};
+
+				if (order === "post") {
+					postMiddlewares.push(vaviteMiddleware);
+				} else {
+					server.middlewares.use(vaviteMiddleware);
+				}
+
+				continue;
+			}
+
+			if (postMiddlewares.length) {
+				return () => {
+					for (const middleware of postMiddlewares) {
+						server.middlewares.use(middleware);
+					}
+				};
+			}
+		},
+	};
+
+	const plugins = [middlewarePlugin];
+
+	if (exposeEnvironment) {
+		plugins.push(exposeEnvironmentPlugin());
 	}
 
-	plugins.push(vaviteExposeViteDevServer());
+	if (exposeDevServer) {
+		plugins.push(exposeDevServerPlugin());
+	}
 
-	return plugins.filter(Boolean) as Plugin[];
+	return plugins;
 }
 
-export type {
-	BuildStep,
-	CustomBuildStep,
-	VaviteMultiBuildInfo,
-	ViteBuildStep,
-} from "@vavite/multibuild";
+function addToRollupInput(
+	input: string | string[] | Record<string, string>,
+	entries: Map<string, string | null>,
+	warn: ConfigPluginContext["warn"],
+): Record<string, string> {
+	if (typeof input === "string") {
+		warn(
+			`Rollup input is a string. It has been converted to an object to add the entries ${JSON.stringify(
+				Array.from(entries.keys()),
+			)}.`,
+		);
+		input = [input];
+	}
+
+	let result: Record<string, string>;
+	if (Array.isArray(input)) {
+		warn(
+			`Rollup input is an array. It has been converted to an object to add the entries ${JSON.stringify(
+				Array.from(entries.keys()),
+			)}.`,
+		);
+		result = {};
+		for (const entry of input) {
+			let key = simplifyEntryName(entry);
+			let counter = 1;
+			while (key in result) {
+				key = `${key}${counter++}`;
+			}
+
+			result[key] = entry;
+		}
+	} else {
+		result = input;
+	}
+
+	for (const [entryPath, key] of entries) {
+		let name = key ?? simplifyEntryName(entryPath);
+		let counter = 1;
+		while (name in result) {
+			name = `${name}${counter++}`;
+		}
+		result[name] = entryPath;
+
+		if (counter > 1) {
+			warn(
+				`Entry ${JSON.stringify(entryPath)} has a name collision with another entry. It has been renamed to ${JSON.stringify(name)} in the Rollup input options.`,
+			);
+		}
+	}
+
+	return result;
+}
+
+function simplifyEntryName(entryPath: string) {
+	let result = basename(entryPath);
+	if (
+		result.endsWith(".ts") ||
+		result.endsWith(".js") ||
+		result.endsWith(".tsx") ||
+		result.endsWith(".jsx")
+	) {
+		result = result.replace(/\.[^/.]+$/, "");
+	}
+
+	return result;
+}

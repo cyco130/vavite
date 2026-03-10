@@ -1,0 +1,15 @@
+import type { RequestHandler } from "express";
+import viteDevServer from "vavite:vite-dev-server";
+import nav from "./nav";
+
+const homeRoute: RequestHandler = async (req, res) => {
+	let html = "<h1>Hello from home page</h1>" + nav;
+
+	if (viteDevServer) {
+		html = await viteDevServer.transformIndexHtml(req.url, html);
+	}
+
+	res.send(html);
+};
+
+export default homeRoute;

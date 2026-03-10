@@ -1,14 +1,29 @@
 {
 	"compilerOptions": {
-		"target": "es2020",
-		"module": "ESNext",
-		"esModuleInterop": true,
+		"noEmit": true,
+
+		"checkJs": true,
 		"forceConsistentCasingInFileNames": true,
-		"strict": true,
 		"skipLibCheck": true,
-		"moduleResolution": "Bundler",
+
+		"strict": true,
+		"noImplicitOverride": true,
+		"noUncheckedIndexedAccess": true,
+
+		"module": "preserve",
+		"esModuleInterop": true,
+		"verbatimModuleSyntax": true,
+		"isolatedModules": true,
+		"moduleDetection": "force",
+		"resolveJsonModule": true,
 		"customConditions": ["import"],
-		"experimentalDecorators": true,
-		"types": ["vite/client"]
-	}
+
+		"target": "es2022",
+		"lib": ["es2022"],
+
+		"types": ["vite/client", "vavite/types"],
+
+		"experimentalDecorators": true
+	},
+	"exclude": ["node_modules", "dist"]
 }

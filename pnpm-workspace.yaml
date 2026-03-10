@@ -1,4 +1,11 @@
 packages:
-  - "packages/*"
-  - "ci"
-  - "examples/*"
+  - packages/*
+  - examples/*
+  - ci
+
+onlyBuiltDependencies:
+  - "@nestjs/core"
+  - "@swc/core"
+  - esbuild
+  - puppeteer
+  - unrs-resolver
