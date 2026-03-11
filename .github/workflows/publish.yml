@@ -60,10 +60,15 @@ jobs:
       - name: "Publish to NPM"
         run: pnpm -r publish --access public --no-git-checks --provenance --tag ${{ github.event.inputs.tag }}
 
-      - name: "Commit version bump"
+      - name: "Commit version bump if needed"
         if: ${{ github.event.inputs.commit == 'true' }}
         run: |
-          git status
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Committing version bump..."
+          else
+            echo "No changes to commit."
+            exit 0
+          fi
           git commit -am "release: ${{ github.event.inputs.version }}"
           git push
           git tag ${{ github.event.inputs.version }}
