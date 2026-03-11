@@ -64,12 +64,8 @@ jobs:
         if: ${{ github.event.inputs.commit == 'true' }}
         run: |
           if [ -n "$(git status --porcelain)" ]; then
-            echo "Committing version bump..."
-          else
-            echo "No changes to commit."
-            exit 0
+            git commit -am "release: ${{ github.event.inputs.version }}"
+            git push
           fi
-          git commit -am "release: ${{ github.event.inputs.version }}"
-          git push
           git tag ${{ github.event.inputs.version }}
           git push --tags
