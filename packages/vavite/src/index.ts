@@ -7,6 +7,7 @@ import {
 import { exposeEnvironment as exposeEnvironmentPlugin } from "./expose-environment";
 import { exposeDevServer as exposeDevServerPlugin } from "./expose-dev-server";
 import { basename } from "node:path";
+import { createProxy, type ServerOptions as ProxyOptions } from "http-proxy-3";
 
 export interface VaviteOptions {
 	/**
@@ -33,7 +34,12 @@ export interface VaviteOptions {
 	exposeDevServer?: boolean;
 }
 
-export interface VaviteEntry {
+export type VaviteEntry =
+	| VaviteRunnableHandlerEntry
+	| VaviteRunnableServerEntry;
+
+export interface VaviteRunnableHandlerEntry {
+	type?: "runnable-handler";
 	/**
 	 * The name of the environment to load the handler entry from. The environment must be defined
 	 * in the Vite config and must be a runnable environment.
@@ -65,6 +71,43 @@ export interface VaviteEntry {
 	 */
 	addEntryToInputOptions?: boolean | string;
 }
+
+export interface VaviteRunnableServerEntry {
+	type: "runnable-server";
+	/**
+	 * The name of the environment to load the handler entry from. The environment must be defined
+	 * in the Vite config and must be a runnable environment.
+	 *
+	 * @default "ssr"
+	 */
+	environment?: string;
+	/**
+	 * The path to the module exporting the server module. Start with "/" for entries within the
+	 * project root or specify a bare import like "my-package/server" for entries from dependencies.
+	 */
+	entry: string;
+	/**
+	 * The options for the proxy middleware that forwards requests to the server. At least one of
+	 * the `target` option must be specified to indicate where to proxy the requests.
+	 *
+	 * @see https://github.com/sagemathinc/http-proxy-3#options
+	 */
+	proxyOptions: ProxyOptions;
+	/**
+	 * Whether to register the proxy before or after Vite's own middlewares. If not specified,
+	 * Vavite will try to automatically determine the order based on whether a client entry is in
+	 * the config.
+	 */
+	order?: "pre" | "post";
+	/**
+	 * Whether to add the entry to the Rollup input options. This is usually what you want.
+	 *
+	 * @default true
+	 */
+	addEntryToInputOptions?: boolean | string;
+}
+
+export type { ProxyOptions };
 
 export function vavite(options: VaviteOptions = {}): Plugin[] {
 	const {
@@ -152,8 +195,7 @@ export function vavite(options: VaviteOptions = {}): Plugin[] {
 			for (const entry of entries) {
 				const {
 					environment: environmentName = "ssr",
-					entry: entryPath = "/src/entry.server",
-					exportName = "default",
+					entry: entryPath,
 					order = defaultMiddlewareOrder,
 				} = entry;
 
@@ -173,28 +215,67 @@ export function vavite(options: VaviteOptions = {}): Plugin[] {
 
 				const quotedEnvironmentName = JSON.stringify(environmentName);
 
-				const vaviteMiddleware: Connect.NextHandleFunction = async (
-					req,
-					res,
-					next,
-				) => {
-					const quotedEntry = JSON.stringify(entryPath);
-					try {
-						const module = await environment.runner.import(entryPath);
-						const imported = module[exportName];
-						if (typeof imported !== "function") {
-							throw new Error(
-								`[vavite] ${quotedEnvironmentName} environment entry ${quotedEntry} doesn't export a function as ${JSON.stringify(exportName)}`,
-							);
-						}
+				let vaviteMiddleware: Connect.NextHandleFunction;
 
-						const handler: Connect.NextHandleFunction = imported;
+				if (entry.type === "runnable-handler" || entry.type === undefined) {
+					const { exportName = "default" } = entry;
 
-						await handler(req, res, next);
-					} catch (error) {
-						next(error);
-					}
-				};
+					const vaviteRunnableHandlerMiddleware: Connect.NextHandleFunction =
+						async (req, res, next) => {
+							const quotedEntry = JSON.stringify(entryPath);
+							try {
+								const module = await environment.runner.import(entryPath);
+								const imported = module[exportName];
+								if (typeof imported !== "function") {
+									throw new Error(
+										`[vavite] ${quotedEnvironmentName} environment entry ${quotedEntry} doesn't export a function as ${JSON.stringify(exportName)}`,
+									);
+								}
+
+								const handler: Connect.NextHandleFunction = imported;
+
+								await handler(req, res, next);
+							} catch (error) {
+								next(error);
+							}
+						};
+
+					vaviteMiddleware = vaviteRunnableHandlerMiddleware;
+				} else if (entry.type === "runnable-server") {
+					// Load the server module early
+					await environment.runner.import(entryPath).catch(() => {});
+
+					const { proxyOptions } = entry;
+
+					const proxy = createProxy(proxyOptions);
+
+					const vaviteRunnableServerMiddleware: Connect.NextHandleFunction =
+						async (req, res, next) => {
+							try {
+								// Try to reload the server module in case of previous errors
+								await environment.runner.import(entryPath);
+
+								// Pass to correct proxy (websocket or http) based on the request
+								if (
+									proxyOptions.ws &&
+									req.headers.upgrade &&
+									req.headers.upgrade.toLowerCase() === "websocket"
+								) {
+									proxy.ws(req, res, next);
+								} else {
+									proxy.web(req, res, next);
+								}
+							} catch (error) {
+								next(error);
+							}
+						};
+
+					vaviteMiddleware = vaviteRunnableServerMiddleware;
+				} else {
+					return this.error(
+						`[vavite]: Unknown entry type: ${JSON.stringify(entry.type)}`,
+					);
+				}
 
 				if (order === "post") {
 					postMiddlewares.push(vaviteMiddleware);

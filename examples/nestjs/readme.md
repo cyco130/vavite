@@ -1,6 +1,6 @@
 # Vavite NestJS example
 
-`serverEntry` example that shows how to integrate with [NestJS](https://nestjs.com/).
+Example that shows how to integrate with [NestJS](https://nestjs.com/) in `"runnable-handler"` mode.
 
 Clone with:
 

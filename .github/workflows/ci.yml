@@ -49,6 +49,11 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
       - name: Disable AppArmor on Ubuntu
         if: runner.os == 'Linux'
         run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns

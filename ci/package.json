@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "ci": "vitest run --reporter=verbose"
+    "ci": "vitest run --reporter=verbose --maxConcurrency=0"
   },
   "dependencies": {
     "@types/node": "^20.19.37",

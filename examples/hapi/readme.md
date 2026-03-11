@@ -1,6 +1,6 @@
 # Vavite Hapi example
 
-`serverEntry` example that shows how to integrate with [Hapi](https://hapijs.com).
+Example that shows how to integrate with [Hapi](https://hapijs.com) in `"runnable-handler"` mode.
 
 > [Try on StackBlitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/hapi)
 
