@@ -27,7 +27,7 @@ app.get("/", async (req, res) => {
 		clientEntryPath = "/src/entry.client.ts";
 	}
 
-	let html = `<!DOCTYPE html>
+	const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
@@ -40,10 +40,6 @@ app.get("/", async (req, res) => {
 </body>
 </html>
 `;
-
-	if (viteDevServer) {
-		html = await viteDevServer.transformIndexHtml(req.url, html);
-	}
 
 	res.setHeader("Content-Type", "text/html; charset=utf-8");
 	res.end(html);

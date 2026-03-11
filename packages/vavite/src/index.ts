@@ -65,6 +65,14 @@ export interface VaviteRunnableHandlerEntry {
 	 */
 	order?: "pre" | "post";
 	/**
+	 * Whether the handler is final and should not call `next()` to pass to the next middleware. If
+	 * set to true, Vavite will not pass the `next` function to the handler and the handler is
+	 * expected to end the response.\
+	 *
+	 * @default true for the last entry, false for the others
+	 */
+	final?: boolean;
+	/**
 	 * Whether to add the entry to the Rollup input options. This is usually what you want.
 	 *
 	 * @default true
@@ -99,6 +107,21 @@ export interface VaviteRunnableServerEntry {
 	 * the config.
 	 */
 	order?: "pre" | "post";
+	/**
+	 * @experimental
+	 *
+	 * Whether the server can decide not to handle a request and pass it to the next middleware by
+	 * responding with a 404 status code and a `Vavite-Try-Next-Upstream` header set to `true`. This is
+	 * useful for implementing features like API routes where some requests should be handled by
+	 * the server and others should be passed to the next middleware (e.g. Vite's static file
+	 * serving).
+	 *
+	 * If set to false, some proxy features like cookie rewriting and header case preservation
+	 * won't work.
+	 *
+	 * @default true
+	 */
+	final?: boolean;
 	/**
 	 * Whether to add the entry to the Rollup input options. This is usually what you want.
 	 *
@@ -192,10 +215,11 @@ export function vavite(options: VaviteOptions = {}): Plugin[] {
 		async configureServer(server) {
 			const postMiddlewares: Connect.NextHandleFunction[] = [];
 
-			for (const entry of entries) {
+			for (const [index, entry] of entries.entries()) {
 				const {
 					environment: environmentName = "ssr",
 					entry: entryPath,
+					final = index === entries.length - 1,
 					order = defaultMiddlewareOrder,
 				} = entry;
 
@@ -232,9 +256,13 @@ export function vavite(options: VaviteOptions = {}): Plugin[] {
 									);
 								}
 
-								const handler: Connect.NextHandleFunction = imported;
+								const handler = imported;
 
-								await handler(req, res, next);
+								if (final) {
+									await handler(req, res);
+								} else {
+									await handler(req, res, next);
+								}
 							} catch (error) {
 								next(error);
 							}
@@ -247,7 +275,35 @@ export function vavite(options: VaviteOptions = {}): Plugin[] {
 
 					const { proxyOptions } = entry;
 
-					const proxy = createProxy(proxyOptions);
+					const proxy = createProxy(
+						final
+							? proxyOptions
+							: {
+									...proxyOptions,
+									selfHandleResponse: true,
+								},
+					);
+
+					if (!final) {
+						proxy.on("proxyRes", (proxyRes, req, res) => {
+							if (
+								proxyRes.statusCode === 404 &&
+								proxyRes.headers["vavite-try-next-upstream"] === "true"
+							) {
+								proxyRes.destroy();
+								(req as any).vaviteNextUpstream();
+								return;
+							}
+
+							res.statusCode = proxyRes.statusCode ?? 200;
+							for (const [key, value] of Object.entries(proxyRes.headers)) {
+								if (value !== undefined) {
+									res.setHeader(key, value);
+								}
+							}
+							proxyRes.pipe(res);
+						});
+					}
 
 					const vaviteRunnableServerMiddleware: Connect.NextHandleFunction =
 						async (req, res, next) => {
@@ -261,8 +317,10 @@ export function vavite(options: VaviteOptions = {}): Plugin[] {
 									req.headers.upgrade &&
 									req.headers.upgrade.toLowerCase() === "websocket"
 								) {
+									(req as any).vaviteNextUpstream = next;
 									proxy.ws(req, res, next);
 								} else {
+									(req as any).vaviteNextUpstream = next;
 									proxy.web(req, res, next);
 								}
 							} catch (error) {

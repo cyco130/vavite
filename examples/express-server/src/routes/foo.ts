@@ -1,13 +1,8 @@
 import type { RequestHandler } from "express";
-import viteDevServer from "vavite:vite-dev-server";
 import nav from "./nav";
 
 const fooRoute: RequestHandler = async (req, res) => {
-	let html = "<h1>Hello from page /foo</h1>" + nav;
-
-	if (viteDevServer) {
-		html = await viteDevServer.transformIndexHtml(req.url, html);
-	}
+	const html = "<h1>Hello from page /foo</h1>" + nav;
 
 	res.send(html);
 };
