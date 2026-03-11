@@ -229,11 +229,3 @@ All packages under the `@vavite` namespace and the `vavite` CLI command are now 
 
 - All `vike` (formerly `vite-plugin-ssr`) examples are removed. Vike itself provides equivalent functionality to load server-side code.
 - Vue SSR example is removed. My Vue knowledge is limited and I don't want to mislead with a bad example. It should be possible for someone more knowledgeable to create a good example though. PRs are welcome!
-
-```
-
-```
-
-```
-
-```
