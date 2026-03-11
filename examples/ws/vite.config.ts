@@ -3,10 +3,23 @@ import { vavite } from "vavite";
 
 export default defineConfig({
 	appType: "custom",
-	plugins: [
-		vavite({
-			handlerEntry: "/server.ts",
-			serveClientAssetsInDev: true,
-		}),
-	],
+	environments: {
+		client: {
+			build: {
+				manifest: true,
+				outDir: "dist/client",
+				rollupOptions: {
+					input: {
+						"entry.client": "/src/entry.client.ts",
+					},
+				},
+			},
+		},
+		ssr: {
+			build: {
+				outDir: "dist/server",
+			},
+		},
+	},
+	plugins: [vavite()],
 });

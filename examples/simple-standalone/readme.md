@@ -1,6 +1,6 @@
 # Vavite Simple Standalone example
 
-Simplest example that specifies a `handlerEntry` and handles incoming requests.
+Simplest example that shows how to create a simple `node:http` server.
 
 > [Try on StackBlitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/simple-standalone)
 

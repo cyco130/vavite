@@ -1,6 +1,6 @@
 # Vavite Express example
 
-`serverEntry` example that shows how to integrate with [Express](https://expressjs.com/).
+Example that shows how to integrate with [Express](https://expressjs.com/) in `"runnable-handler"` mode.
 
 > [Try on StackBlitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/express)
 

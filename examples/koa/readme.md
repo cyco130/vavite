@@ -1,6 +1,6 @@
 # Vavite Koa example
 
-`serverEntry` example that shows how to integrate with [Koa](https://koajs.com/).
+Example that shows how to integrate with [Koa](https://koajs.com/) in `"runnable-handler"` mode.
 
 > [Try on StackBlitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/koa)
 

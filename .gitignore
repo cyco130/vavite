@@ -1,3 +1,6 @@
+# macOS files
+.DS_Store
+
 # Logs
 logs
 *.log
@@ -118,7 +121,6 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
-.vscode/
 
 # yarn v2
 .yarn/cache
@@ -130,7 +132,5 @@ dist
 # Local files
 *.local.*
 
-# Packed package files
+# Packed packages
 *.tgz
-
-.DS_Store
