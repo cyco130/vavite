@@ -158,6 +158,21 @@ importers:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@20.19.37)(yaml@2.8.2)
 
+  examples/resource-cleanup:
+    devDependencies:
+      '@types/node':
+        specifier: ^20.19.37
+        version: 20.19.37
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+      vavite:
+        specifier: 6.0.0
+        version: link:../../packages/vavite
+      vite:
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@20.19.37)(yaml@2.8.2)
+
   examples/simple-standalone:
     devDependencies:
       '@types/node':
@@ -212,13 +227,22 @@ importers:
 
   examples/ws:
     dependencies:
+      express:
+        specifier: ^5.2.1
+        version: 5.2.1
       ws:
         specifier: ^8.19.0
         version: 8.19.0
     devDependencies:
+      '@types/express':
+        specifier: ^5.0.6
+        version: 5.0.6
       '@types/node':
         specifier: ^20.19.37
         version: 20.19.37
+      '@types/ws':
+        specifier: ^8.18.1
+        version: 8.18.1
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -1286,6 +1310,9 @@ packages:
 
   '@types/serve-static@2.2.0':
     resolution: {integrity: sha512-8mam4H1NHLtu7nmtalF7eyBH14QyOASmcxHhSfEoRyr0nP/YdoesEtU+uSRvMe96TW/HPTtkoKqQLl53N7UXMQ==}
+
+  '@types/ws@8.18.1':
+    resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
 
   '@types/yauzl@2.10.3':
     resolution: {integrity: sha512-oJoftv0LSuaDZE3Le4DbKX+KS9G36NzOeSap90UIK0yMA/NhKJhqlSGtNDORNRaIbQfzjXDrQa0ytJ6mNRGz/Q==}
@@ -4644,6 +4671,10 @@ snapshots:
   '@types/serve-static@2.2.0':
     dependencies:
       '@types/http-errors': 2.0.5
+      '@types/node': 20.19.37
+
+  '@types/ws@8.18.1':
+    dependencies:
       '@types/node': 20.19.37
 
   '@types/yauzl@2.10.3':

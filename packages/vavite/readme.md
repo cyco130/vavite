@@ -11,14 +11,17 @@ Vite's official SSR guide describes a workflow where Vite's development server i
 The easiest way to start with Vavite is to follow the examples:
 
 - Server-only setups:
-  - [simple-standalone](examples/simple-standalone): Simple `node:http` server example ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/simple-standalone))
-  - [express](examples/express): Integrating with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/express))
-  - [koa](examples/koa): Integrating with Koa ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/koa))
-  - [fastify](examples/fastify): Integrating with Fastify ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/fastify))
-  - [hapi](examples/hapi): Integrating with Hapi ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/hapi))
-  - [Nest.js](examples/nestjs): [Nest.js](https://nestjs.com/) with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/nestjs))
+  - [simple-standalone](/examples/simple-standalone): Simple `node:http` server example ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/simple-standalone))
+  - [express](/examples/express): Integrating with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/express))
+  - [koa](/examples/koa): Integrating with Koa ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/koa))
+  - [fastify](/examples/fastify): Integrating with Fastify ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/fastify))
+  - [hapi](/examples/hapi): Integrating with Hapi ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/hapi))
+  - [Nest.js](/examples/nestjs): [Nest.js](https://nestjs.com/) with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/nestjs))
 - SSR setups
-  - [ssr-react-express](examples/ssr-react-express): React SSR with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/ssr-react-express))
+  - [ssr-react-express](/examples/ssr-react-express): React SSR with Express ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/ssr-react-express))
+- Other examples
+  - [resource-cleanup](/examples/resource-cleanup): Demonstrating patterns for cleaning up resources on hot reload
+  - [ws](/examples/ws): WebSocket server example ([Stackblitz](https://stackblitz.com/github/cyco130/vavite/tree/main/examples/ws))
 
 ## Usage
 
@@ -125,6 +128,61 @@ By default, Vavite will expose some information about the environment your code 
 
 For many SSR setups, you might require access to Vite's dev server instance. You can `import viteDevServer from "vavite:vite-dev-server"`. `viteDevServer` will be undefined in the production environment.
 
+### Cleaning up resources on hot reload
+
+Vavite supports hot module replacement (HMR) on the server. If you have any resources like database connections or WebSocket servers that need to be cleaned up on hot reload, you can use the `import.meta.hot.dispose` hook:
+
+```ts
+export const someResource = createSomeResource();
+
+if (import.meta.hot) {
+  import.meta.hot.accept();
+
+  import.meta.hot.dispose(() => {
+    someResource.cleanup();
+  });
+}
+```
+
+Alternatively, you can reuse the resource if its configuration hasn't changed with the following pattern:
+
+```ts
+import { createDbConnection } from "some-db-library";
+
+const CONFIG = {
+  // ...
+};
+
+if (import.meta.hot && import.meta.hot.data.oldConfig) {
+  function isSameConfig(oldConfig: typeof CONFIG): boolean {
+    return isDeepEqualInSomeSense(oldConfig, CONFIG);
+  }
+
+  if (!isSameConfig(import.meta.hot.data.oldConfig)) {
+    console.log(
+      "Config changed, will close the old database connection and create a new one",
+    );
+    import.meta.hot.data.oldDb.close();
+    delete import.meta.hot.data.oldDb;
+  } else {
+    console.log("Config is the same, will reuse the same database connection");
+  }
+}
+
+export const db = import.meta.hot?.data.oldDb ?? createDbConnection(CONFIG);
+
+if (import.meta.hot) {
+  import.meta.hot.accept();
+
+  import.meta.hot.dispose(() => {
+    import.meta.hot!.data.oldConfig = CONFIG;
+    import.meta.hot!.data.oldDb = db;
+  });
+}
+```
+
+In the production build, Vite will remove all HMR-related code, so there will be no performance overhead.
+
 ## Migrating from v5
 
 Vite has introduced a new [Environment API](https://vite.dev/guide/api-environment) that provides some of the functionality that Vavite used to provide in a much cleaner and efficient way out-of-the-box. As a result, Vavite v6 is a complete rewrite which is much leaner than v5. But it also means that there are some breaking changes.
@@ -171,3 +229,11 @@ All packages under the `@vavite` namespace and the `vavite` CLI command are now 
 
 - All `vike` (formerly `vite-plugin-ssr`) examples are removed. Vike itself provides equivalent functionality to load server-side code.
 - Vue SSR example is removed. My Vue knowledge is limited and I don't want to mislead with a bad example. It should be possible for someone more knowledgeable to create a good example though. PRs are welcome!
+
+```
+
+```
+
+```
+
+```
