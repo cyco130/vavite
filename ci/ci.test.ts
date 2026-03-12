@@ -21,14 +21,14 @@ const baseCases: Array<{
 	file: string;
 	packageManager?: "pnpm" | "bun";
 }> = [
-	// { framework: "simple-standalone", file: "src/entry.server.ts" },
-	// { framework: "express", file: "src/routes/home.ts" },
-	// { framework: "express-server", file: "src/routes/home.ts" },
-	// { framework: "fastify", file: "src/routes/home.ts" },
-	// { framework: "koa", file: "src/routes/home.ts" },
-	// { framework: "hapi", file: "src/routes/home.ts" },
-	// { framework: "ssr-react-express", file: "src/pages/Home.tsx" },
-	// { framework: "nestjs", file: "src/app.controller.ts" },
+	{ framework: "simple-standalone", file: "src/entry.server.ts" },
+	{ framework: "express", file: "src/routes/home.ts" },
+	{ framework: "express-server", file: "src/routes/home.ts" },
+	{ framework: "fastify", file: "src/routes/home.ts" },
+	{ framework: "koa", file: "src/routes/home.ts" },
+	{ framework: "hapi", file: "src/routes/home.ts" },
+	{ framework: "ssr-react-express", file: "src/pages/Home.tsx" },
+	{ framework: "nestjs", file: "src/app.controller.ts" },
 	{
 		framework: "bun-server",
 		file: "src/routes/home.ts",
