@@ -333,7 +333,7 @@ All packages under the `@vavite` namespace and the `vavite` CLI command are now 
 
 ### Other changes needed in the Vite config
 
-- Set `appType: "custom"` unless you really want Vite to server `index.html` for the `/` route.
+- Set `appType: "custom"` unless you really want Vite to serve `index.html` for the `/` route.
 - Remove `buildSteps` and use `vite build --app` or the `builder.buildApp` Vite config option to orchestrate the build process programmatically.
 
 ### Changes needed in your server code
