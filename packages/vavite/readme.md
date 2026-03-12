@@ -8,6 +8,8 @@ Vite's official SSR guide describes a workflow where Vite's development server i
 
 ## Getting started
 
+The easiest way to get started is to use one of the [examples](#examples) as a template. To start from scratch, follow these steps:
+
 1. Install `vavite` as a development dependency in your project.
    ```sh
    npm install --save-dev vavite
