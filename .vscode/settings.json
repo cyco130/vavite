@@ -1,4 +1,0 @@
-{
-	"oxc.fmt.configPath": ".oxfmtrc.json",
-	"editor.defaultFormatter": "oxc.oxc-vscode"
-}

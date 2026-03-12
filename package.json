@@ -6,16 +6,16 @@
     "build": "pnpm -r --filter \"./packages/*\" run build",
     "prepare": "husky",
     "precommit": "lint-staged",
-    "format": "oxfmt",
+    "format": "prettier --write .",
     "ci": "pnpm -r --stream run ci",
     "test": "pnpm run /^test:/",
     "test:packages": "pnpm -r --stream run test",
-    "test:format": "oxfmt --check"
+    "test:format": "prettier --check ."
   },
   "devDependencies": {
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
-    "oxfmt": "^0.35.0",
+    "prettier": "^3.8.1",
     "typescript": "^5.9.3"
   }
 }

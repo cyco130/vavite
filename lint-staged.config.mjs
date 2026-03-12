@@ -1,3 +1,3 @@
 export default {
-	"*": "oxfmt --no-error-on-unmatched-pattern",
+	"*": "prettier --ignore-unknown --write",
 };
