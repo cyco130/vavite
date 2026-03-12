@@ -213,15 +213,36 @@ export function vavite(options: VaviteOptions = {}): Plugin[] {
 		},
 
 		async configureServer(server) {
+			const sortedEntries = entries
+				.map((entry) => ({
+					...entry,
+					order: entry.order ?? defaultMiddlewareOrder,
+				}))
+				.sort((a, b) => {
+					if (a.order === b.order) {
+						return 0;
+					}
+
+					return a.order === "pre" ? -1 : 1;
+				});
+
 			const postMiddlewares: Connect.NextHandleFunction[] = [];
 
-			for (const [index, entry] of entries.entries()) {
+			for (const [index, entry] of sortedEntries.entries()) {
 				const {
 					environment: environmentName = "ssr",
 					entry: entryPath,
-					final = index === entries.length - 1,
+					final = index === sortedEntries.length - 1,
 					order = defaultMiddlewareOrder,
 				} = entry;
+
+				if (final && index !== sortedEntries.length - 1) {
+					this.warn(
+						`Entry ${JSON.stringify(
+							entryPath,
+						)} is marked as final but it's not the last entry in the chain. This might lead to unexpected behavior.`,
+					);
+				}
 
 				const environment = server.environments[environmentName];
 
