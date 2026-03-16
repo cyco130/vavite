@@ -8,8 +8,8 @@
   "dependencies": {
     "@types/node": "^20.19.37",
     "kill-em-all": "^0.0.5",
-    "puppeteer": "^24.39.0",
+    "puppeteer": "^24.39.1",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.18"
+    "vitest": "^4.1.0"
   }
 }
