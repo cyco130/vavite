@@ -43,7 +43,7 @@
     "@types/node": "^20.19.37",
     "eslint": "^10.0.3",
     "publint": "^0.3.18",
-    "tsdown": "0.21.2",
+    "tsdown": "0.21.3",
     "typescript": "^5.9.3",
     "vite": "^7.3.1"
   },

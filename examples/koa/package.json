@@ -8,7 +8,7 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@koa/router": "^15.3.1",
+    "@koa/router": "^15.3.2",
     "koa": "^3.1.2"
   },
   "devDependencies": {
