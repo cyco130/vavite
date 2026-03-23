@@ -149,6 +149,11 @@ export function vavite(options: VaviteOptions = {}): Plugin[] {
 			handler(config) {
 				const inputs = new Map<string, Map<string, string | null>>();
 
+				const hasRoldown = this.meta.rolldownVersion !== undefined;
+				const optionsKey = hasRoldown
+					? ("rolldownOptions" as const)
+					: ("rollupOptions" as const);
+
 				for (const entry of entries) {
 					const {
 						environment: environmentName = "ssr",
@@ -176,27 +181,33 @@ export function vavite(options: VaviteOptions = {}): Plugin[] {
 					config.environments ??= {};
 					config.environments[environmentName] ??= {};
 					config.environments[environmentName].build ??= {};
-					config.environments[environmentName].build.rollupOptions ??= {};
-					config.environments[environmentName].build.rollupOptions.input ??= {};
+					config.environments[environmentName].build[optionsKey] ??= {};
+					config.environments[environmentName].build[optionsKey].input ??= {};
 
 					const normalizedInput = addToRollupInput(
-						config.environments[environmentName].build.rollupOptions.input,
+						config.environments[environmentName].build[optionsKey].input,
 						entries,
 						this.warn,
 					);
 
-					config.environments[environmentName].build.rollupOptions.input =
+					config.environments[environmentName].build[optionsKey].input =
 						normalizedInput;
 				}
 			},
 		},
 
 		configResolved(config) {
+			const hasRoldown = this.meta.rolldownVersion !== undefined;
+			const optionsKey = hasRoldown
+				? ("rolldownOptions" as const)
+				: ("rollupOptions" as const);
+
 			// Try to determine whether to register the middleware before or after Vite's own
 			// middlewares based on whether a client entry is explicitly defined in the config.
+
 			const input =
-				config.build.rollupOptions.input ??
-				config.environments.client?.build.rollupOptions.input;
+				config.build[optionsKey].input ??
+				config.environments.client?.build[optionsKey].input;
 
 			if (!input) {
 				defaultMiddlewareOrder = "pre";

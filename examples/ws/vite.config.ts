@@ -8,7 +8,8 @@ export default defineConfig({
 			build: {
 				manifest: true,
 				outDir: "dist/client",
-				rollupOptions: {
+				// or rollupOptions for Vite v7
+				rolldownOptions: {
 					input: {
 						"entry.client": "/src/entry.client.ts",
 					},
