@@ -8,7 +8,7 @@
     "build": "vite build"
   },
   "dependencies": {
-    "fastify": "^5.8.2"
+    "fastify": "^5.8.4"
   },
   "devDependencies": {
     "@types/node": "^20.19.37",
