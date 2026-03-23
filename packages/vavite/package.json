@@ -39,11 +39,11 @@
     "http-proxy-3": "^1.23.2"
   },
   "devDependencies": {
-    "@cyco130/eslint-config": "^6.2.3",
+    "@cyco130/eslint-config": "^6.2.4",
     "@types/node": "^20.19.37",
-    "eslint": "^10.0.3",
+    "eslint": "^10.1.0",
     "publint": "^0.3.18",
-    "tsdown": "0.21.2",
+    "tsdown": "0.21.4",
     "typescript": "^5.9.3",
     "vite": "^7.3.1"
   },
