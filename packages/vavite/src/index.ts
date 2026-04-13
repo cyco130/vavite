@@ -1,5 +1,6 @@
 import {
 	isRunnableDevEnvironment,
+	type RunnableDevEnvironment,
 	type ConfigPluginContext,
 	type Connect,
 	type Plugin,
@@ -184,7 +185,7 @@ export function vavite(options: VaviteOptions = {}): Plugin[] {
 					config.environments[environmentName].build[optionsKey] ??= {};
 					config.environments[environmentName].build[optionsKey].input ??= {};
 
-					const normalizedInput = addToRollupInput(
+					const normalizedInput = addInput(
 						config.environments[environmentName].build[optionsKey].input,
 						entries,
 						this.warn,
@@ -224,6 +225,10 @@ export function vavite(options: VaviteOptions = {}): Plugin[] {
 		},
 
 		async configureServer(server) {
+			if (closers.size > 0) {
+				await Promise.all([...closers].map((closer) => closer()));
+			}
+
 			const sortedEntries = entries
 				.map((entry) => ({
 					...entry,
@@ -238,6 +243,8 @@ export function vavite(options: VaviteOptions = {}): Plugin[] {
 				});
 
 			const postMiddlewares: Connect.NextHandleFunction[] = [];
+
+			const environments = new Set<RunnableDevEnvironment>();
 
 			for (const [index, entry] of sortedEntries.entries()) {
 				const {
@@ -268,6 +275,8 @@ export function vavite(options: VaviteOptions = {}): Plugin[] {
 						`[vavite] Environment ${JSON.stringify(environmentName)} is not runnable and cannot be used as an entry`,
 					);
 				}
+
+				environments.add(environment);
 
 				const quotedEnvironmentName = JSON.stringify(environmentName);
 
@@ -376,6 +385,33 @@ export function vavite(options: VaviteOptions = {}): Plugin[] {
 				continue;
 			}
 
+			for (const environment of environments) {
+				closers.add(async () => {
+					if (environment.runner.hmrClient) {
+						const disposeDataPairs: [any, (data: any) => any][] = [];
+						for (const [id, dispose] of environment.runner.hmrClient
+							.disposeMap) {
+							const data = environment.runner.hmrClient.dataMap.get(id);
+							disposeDataPairs.push([data, dispose]);
+						}
+
+						const pruneDataPairs: [any, (data: any) => any][] = [];
+						for (const [id, prune] of environment.runner.hmrClient.pruneMap) {
+							const data = environment.runner.hmrClient.dataMap.get(id);
+							pruneDataPairs.push([data, prune]);
+						}
+
+						await Promise.allSettled(
+							disposeDataPairs.map(([data, dispose]) => dispose(data)),
+						);
+
+						await Promise.allSettled(
+							pruneDataPairs.map(([data, prune]) => prune(data)),
+						);
+					}
+				});
+			}
+
 			if (postMiddlewares.length) {
 				return () => {
 					for (const middleware of postMiddlewares) {
@@ -399,7 +435,7 @@ export function vavite(options: VaviteOptions = {}): Plugin[] {
 	return plugins;
 }
 
-function addToRollupInput(
+function addInput(
 	input: string | string[] | Record<string, string>,
 	entries: Map<string, string | null>,
 	warn: ConfigPluginContext["warn"],
@@ -465,3 +501,5 @@ function simplifyEntryName(entryPath: string) {
 
 	return result;
 }
+
+const closers = new Set<() => Promise<void>>();
