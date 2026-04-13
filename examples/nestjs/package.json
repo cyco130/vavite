@@ -8,9 +8,9 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@nestjs/common": "^11.1.18",
-    "@nestjs/core": "^11.1.18",
-    "@nestjs/platform-express": "^11.1.18",
+    "@nestjs/common": "^11.1.19",
+    "@nestjs/core": "^11.1.19",
+    "@nestjs/platform-express": "^11.1.19",
     "express": "^5.2.1"
   },
   "devDependencies": {
@@ -18,6 +18,6 @@
     "@types/node": "^20.19.39",
     "typescript": "^6.0.2",
     "vavite": "6.1.0",
-    "vite": "^8.0.7"
+    "vite": "^8.0.8"
   }
 }
