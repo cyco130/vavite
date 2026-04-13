@@ -51,7 +51,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
       vavite:
-        specifier: 6.1.0
+        specifier: 6.2.0
         version: link:../../packages/vavite
       vite:
         specifier: ^8.0.8
@@ -73,7 +73,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
       vavite:
-        specifier: 6.1.0
+        specifier: 6.2.0
         version: link:../../packages/vavite
       vite:
         specifier: ^8.0.8
@@ -95,7 +95,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
       vavite:
-        specifier: 6.1.0
+        specifier: 6.2.0
         version: link:../../packages/vavite
       vite:
         specifier: ^8.0.8
@@ -114,7 +114,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
       vavite:
-        specifier: 6.1.0
+        specifier: 6.2.0
         version: link:../../packages/vavite
       vite:
         specifier: ^8.0.8
@@ -133,7 +133,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
       vavite:
-        specifier: 6.1.0
+        specifier: 6.2.0
         version: link:../../packages/vavite
       vite:
         specifier: ^8.0.8
@@ -161,7 +161,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
       vavite:
-        specifier: 6.1.0
+        specifier: 6.2.0
         version: link:../../packages/vavite
       vite:
         specifier: ^8.0.8
@@ -192,7 +192,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
       vavite:
-        specifier: 6.1.0
+        specifier: 6.2.0
         version: link:../../packages/vavite
       vite:
         specifier: ^8.0.8
@@ -207,7 +207,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
       vavite:
-        specifier: 6.1.0
+        specifier: 6.2.0
         version: link:../../packages/vavite
       vite:
         specifier: ^8.0.8
@@ -222,7 +222,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
       vavite:
-        specifier: 6.1.0
+        specifier: 6.2.0
         version: link:../../packages/vavite
       vite:
         specifier: ^8.0.8
@@ -259,7 +259,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
       vavite:
-        specifier: 6.1.0
+        specifier: 6.2.0
         version: link:../../packages/vavite
       vite:
         specifier: ^8.0.8
@@ -287,7 +287,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
       vavite:
-        specifier: 6.1.0
+        specifier: 6.2.0
         version: link:../../packages/vavite
       vite:
         specifier: ^8.0.8
