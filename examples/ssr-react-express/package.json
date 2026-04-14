@@ -19,7 +19,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "typescript": "^6.0.2",
-    "vavite": "6.2.0",
+    "vavite": "6.2.1",
     "vite": "^8.0.8"
   }
 }
