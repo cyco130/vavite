@@ -41,11 +41,11 @@
   "devDependencies": {
     "@cyco130/eslint-config": "^7.0.1",
     "@types/node": "^20.19.39",
-    "eslint": "^10.2.0",
+    "eslint": "^10.2.1",
     "publint": "^0.3.18",
-    "tsdown": "0.21.8",
-    "typescript": "^6.0.2",
-    "vite": "^8.0.8"
+    "tsdown": "0.21.10",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.10"
   },
   "peerDependencies": {
     "vite": "~7.3 || 8"
