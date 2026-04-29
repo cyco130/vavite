@@ -15,8 +15,8 @@
     "@types/express": "^5.0.6",
     "@types/node": "^20.19.39",
     "@types/ws": "^8.18.1",
-    "typescript": "^6.0.2",
+    "typescript": "^6.0.3",
     "vavite": "6.2.1",
-    "vite": "^8.0.8"
+    "vite": "^8.0.10"
   }
 }

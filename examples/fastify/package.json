@@ -8,12 +8,12 @@
     "build": "vite build"
   },
   "dependencies": {
-    "fastify": "^5.8.4"
+    "fastify": "^5.8.5"
   },
   "devDependencies": {
     "@types/node": "^20.19.39",
-    "typescript": "^6.0.2",
+    "typescript": "^6.0.3",
     "vavite": "6.2.1",
-    "vite": "^8.0.8"
+    "vite": "^8.0.10"
   }
 }
