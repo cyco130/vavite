@@ -1,6 +1,3 @@
-# macOS files
-.DS_Store
-
 # Logs
 logs
 *.log
@@ -131,6 +128,7 @@ dist
 
 # Local files
 *.local.*
+*.local
 
 # Packed packages
 *.tgz

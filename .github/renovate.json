@@ -2,11 +2,7 @@
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": ["config:recommended", "schedule:weekly", "group:allNonMajor"],
 	"ignorePresets": ["ignorePaths"],
-	"ignorePaths": [
-		"**/node_modules/**",
-		"**/dist/**",
-		"testbed/basic/fastly/package.json"
-	],
+	"ignorePaths": ["**/node_modules/**", "**/dist/**"],
 	"labels": ["dependencies"],
 	"rangeStrategy": "bump",
 	"packageRules": [
@@ -19,7 +15,7 @@
 			"enabled": false
 		},
 		{
-			"allowedVersions": "20",
+			"allowedVersions": "22",
 			"matchPackageNames": ["/^@types/node$/"]
 		}
 	],

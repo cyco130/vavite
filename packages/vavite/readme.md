@@ -316,6 +316,10 @@ if (import.meta.hot) {
 
 In the production build, Vite will remove all HMR-related code, so there will be no performance overhead.
 
+## Migrating from v6
+
+`vavite` v7 drops support for Node 20. The minimum supported version is now Node 22. It _might_ work on Node 20 but we don't test against it anymore.
+
 ## Migrating from v5
 
 Vite has introduced a new [Environment API](https://vite.dev/guide/api-environment) that provides some of the functionality that `vavite` used to provide in a much cleaner and efficient way out-of-the-box. As a result, `vavite` v6 is a complete rewrite which is much leaner than v5. But it also means that there are some breaking changes.

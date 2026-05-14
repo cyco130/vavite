@@ -8,12 +8,12 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@hapi/hapi": "^21.4.8"
+    "@hapi/hapi": "^21.4.9"
   },
   "devDependencies": {
-    "@types/node": "^20.19.39",
-    "typescript": "^6.0.2",
+    "@types/node": "^22.19.19",
+    "typescript": "^6.0.3",
     "vavite": "6.2.1",
-    "vite": "^8.0.8"
+    "vite": "^8.0.12"
   }
 }
