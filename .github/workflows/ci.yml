@@ -14,6 +14,13 @@ defaults:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    env:
+      # Skip puppeteer's chrome download to avoid puppeteer/puppeteer#14957
+      # (extract-zip silently corrupts the extraction on Node 26). We point
+      # puppeteer at the system-installed Chrome via channel: "chrome" in
+      # ci/ci.test.ts instead. Drop this once @puppeteer/browsers >= 3 is
+      # on npm and the puppeteer dep is bumped past the fix.
+      PUPPETEER_SKIP_DOWNLOAD: "true"
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
