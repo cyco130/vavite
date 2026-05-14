@@ -11,7 +11,7 @@
     "@types/bun": "^1.3.14",
     "@types/node": "^22.19.19",
     "typescript": "^6.0.3",
-    "vavite": "6.2.1",
+    "vavite": "7.0.0",
     "vite": "^8.0.12"
   }
 }
