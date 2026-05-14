@@ -1,11 +1,15 @@
+strictPeerDependencies: false
+sideEffectsCache: false
+linkWorkspacePackages: true
+
 packages:
   - packages/*
   - examples/*
   - ci
 
-onlyBuiltDependencies:
-  - "@nestjs/core"
-  - "@swc/core"
-  - esbuild
-  - puppeteer
-  - unrs-resolver
+allowBuilds:
+  "@nestjs/core": true
+  "@swc/core": true
+  esbuild: true
+  puppeteer: true
+  unrs-resolver: true
