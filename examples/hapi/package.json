@@ -11,7 +11,7 @@
     "@hapi/hapi": "^21.4.8"
   },
   "devDependencies": {
-    "@types/node": "^20.19.39",
+    "@types/node": "^22.19.19",
     "typescript": "^6.0.2",
     "vavite": "6.2.1",
     "vite": "^8.0.8"

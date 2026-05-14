@@ -5,8 +5,8 @@ import {
 	type Connect,
 	type Plugin,
 } from "vite";
-import { exposeEnvironment as exposeEnvironmentPlugin } from "./expose-environment";
-import { exposeDevServer as exposeDevServerPlugin } from "./expose-dev-server";
+import { exposeEnvironment as exposeEnvironmentPlugin } from "./expose-environment.ts";
+import { exposeDevServer as exposeDevServerPlugin } from "./expose-dev-server.ts";
 import { basename } from "node:path";
 import { createProxy, type ServerOptions as ProxyOptions } from "http-proxy-3";
 

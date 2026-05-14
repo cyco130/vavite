@@ -29,25 +29,28 @@
   "scripts": {
     "build": "tsdown --clean",
     "dev": "tsdown --watch",
-    "prepack": "rm -rf dist && pnpm build",
+    "prepack": "pnpm build",
     "test": "pnpm run /^test:/",
-    "test:typecheck": "tsc -p tsconfig.json --noEmit",
-    "test:lint": "eslint . --max-warnings 0 --ignore-pattern dist",
+    "test:typecheck": "tsc -p tsconfig.json",
+    "test:lint": "eslint . --max-warnings 0",
     "test:package": "publint"
   },
   "dependencies": {
     "http-proxy-3": "^1.23.2"
   },
   "devDependencies": {
-    "@cyco130/eslint-config": "^7.0.1",
-    "@types/node": "^20.19.39",
-    "eslint": "^10.2.0",
-    "publint": "^0.3.18",
-    "tsdown": "0.21.8",
-    "typescript": "^6.0.2",
+    "@cyco130/eslint-config": "^8.0.0",
+    "@types/node": "^22.19.19",
+    "eslint": "^10.3.0",
+    "publint": "^0.3.20",
+    "tsdown": "0.22.0",
+    "typescript": "^6.0.3",
     "vite": "^8.0.8"
   },
   "peerDependencies": {
     "vite": "~7.3 || 8"
+  },
+  "engines": {
+    "node": "22 || 24 || 25 || 26"
   }
 }

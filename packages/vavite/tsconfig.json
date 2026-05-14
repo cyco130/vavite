@@ -10,16 +10,17 @@
 		"noImplicitOverride": true,
 		"noUncheckedIndexedAccess": true,
 
-		"module": "preserve",
+		"module": "nodenext",
 		"esModuleInterop": true,
 		"verbatimModuleSyntax": true,
 		"isolatedModules": true,
 		"moduleDetection": "force",
 		"resolveJsonModule": true,
-		"customConditions": ["import"],
+		"allowImportingTsExtensions": true,
 
 		"target": "es2022",
-		"lib": ["es2022"]
+		"lib": ["es2022"],
+		"types": ["node"]
 	},
 	"exclude": ["node_modules", "dist"]
 }
