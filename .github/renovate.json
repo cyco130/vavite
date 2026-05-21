@@ -5,6 +5,7 @@
 	"ignorePaths": ["**/node_modules/**", "**/dist/**"],
 	"labels": ["dependencies"],
 	"rangeStrategy": "bump",
+	"minimumReleaseAge": "1 day",
 	"packageRules": [
 		{
 			"matchManagers": ["github-actions"],
