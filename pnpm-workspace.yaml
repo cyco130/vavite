@@ -2,6 +2,10 @@ strictPeerDependencies: false
 sideEffectsCache: false
 linkWorkspacePackages: true
 
+minimumReleaseAgeExclude:
+  - "@cyco130/eslint-config"
+  - "kill-em-all"
+
 packages:
   - packages/*
   - examples/*

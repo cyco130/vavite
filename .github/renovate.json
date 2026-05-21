@@ -5,7 +5,12 @@
 	"ignorePaths": ["**/node_modules/**", "**/dist/**"],
 	"labels": ["dependencies"],
 	"rangeStrategy": "bump",
+	"minimumReleaseAge": "1 day",
 	"packageRules": [
+		{
+			"matchPackageNames": ["@cyco130/eslint-config", "kill-em-all"],
+			"minimumReleaseAge": "0"
+		},
 		{
 			"matchManagers": ["github-actions"],
 			"rangeStrategy": "replace"
