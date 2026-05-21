@@ -10,6 +10,6 @@
     "kill-em-all": "^0.1.0",
     "puppeteer": "^24.43.1",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.6"
+    "vitest": "^4.1.7"
   }
 }
