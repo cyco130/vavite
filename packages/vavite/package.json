@@ -36,16 +36,16 @@
     "test:package": "publint"
   },
   "dependencies": {
-    "http-proxy-3": "^1.23.2"
+    "http-proxy-3": "^1.23.3"
   },
   "devDependencies": {
-    "@cyco130/eslint-config": "^9.0.1",
-    "@types/node": "^22.19.19",
+    "@cyco130/eslint-config": "^9.0.2",
+    "@types/node": "^22.19.20",
     "eslint": "^10.4.1",
     "publint": "^0.3.21",
-    "tsdown": "0.22.1",
+    "tsdown": "0.22.2",
     "typescript": "^6.0.3",
-    "vite": "^8.0.15"
+    "vite": "^8.0.16"
   },
   "peerDependencies": {
     "vite": "~7.3 || 8"
