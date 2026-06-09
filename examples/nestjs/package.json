@@ -17,7 +17,7 @@
     "@types/express": "^5.0.6",
     "@types/node": "^22.19.20",
     "typescript": "^6.0.3",
-    "vavite": "7.0.0",
+    "vavite": "7.0.1",
     "vite": "^8.0.16"
   }
 }
