@@ -296,8 +296,8 @@ importers:
   packages/vavite:
     dependencies:
       http-proxy-3:
-        specifier: ^1.23.3
-        version: 1.23.3
+        specifier: ^2.0.1
+        version: 2.0.1
     devDependencies:
       '@cyco130/eslint-config':
         specifier: ^9.0.2
@@ -1957,9 +1957,9 @@ packages:
     resolution: {integrity: sha512-4FbRdAX+bSdmo4AUFuS0WNiPz8NgFt+r8ThgNWmlrjQjt1Q7ZR9+zTlce2859x4KSXrwIsaeTqDoKQmtP8pLmQ==}
     engines: {node: '>= 0.8'}
 
-  http-proxy-3@1.23.3:
-    resolution: {integrity: sha512-zm8JCrJUwB3Rn0HJypwwDraljDt7YbF+r7Gz0exDRlaT8Yimjs5VRfwug1GrhoasMna1DjwHeEs48+iKxCozyA==}
-    engines: {node: '>=18'}
+  http-proxy-3@2.0.1:
+    resolution: {integrity: sha512-CK9FEsoFko6wv5Y5+YvO6A0KANMZEXh7SvHjbne6zzQpih6qhTmA3xgS/5/QFlIF2HIFH5vZhtvk1Fk2udIsDw==}
+    engines: {node: '>=22'}
 
   husky@9.1.7:
     resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
@@ -4031,7 +4031,7 @@ snapshots:
       '@typescript-eslint/visitor-keys': 8.60.1
       debug: 4.4.3
       minimatch: 10.2.5
-      semver: 7.8.0
+      semver: 7.8.2
       tinyglobby: 0.2.17
       ts-api-utils: 2.5.0(typescript@6.0.3)
       typescript: 6.0.3
@@ -5054,7 +5054,7 @@ snapshots:
       statuses: 2.0.2
       toidentifier: 1.0.1
 
-  http-proxy-3@1.23.3:
+  http-proxy-3@2.0.1:
     dependencies:
       debug: 4.4.3
       follow-redirects: 1.16.0(debug@4.4.3)
