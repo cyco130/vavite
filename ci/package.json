@@ -6,10 +6,10 @@
     "ci": "vitest run --reporter=verbose"
   },
   "dependencies": {
-    "@types/node": "^22.19.20",
+    "@types/node": "^22.20.1",
     "kill-em-all": "^0.1.0",
-    "puppeteer": "^25.1.0",
+    "puppeteer": "^25.10.0",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.11"
   }
 }
