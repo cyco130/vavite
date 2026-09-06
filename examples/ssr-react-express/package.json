@@ -8,18 +8,18 @@
     "build": "vite build --app"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "^6.0.2",
+    "@vitejs/plugin-react": "^6.1.1",
     "express": "^5.2.1",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
-    "@types/node": "^22.19.20",
-    "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3",
+    "@types/node": "^22.20.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
     "typescript": "^6.0.3",
     "vavite": "7.0.1",
-    "vite": "^8.0.16"
+    "vite": "^8.2.2"
   }
 }
