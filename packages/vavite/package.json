@@ -44,7 +44,7 @@
     "eslint": "^10.4.1",
     "publint": "^0.3.21",
     "tsdown": "0.22.2",
-    "typescript": "^6.0.3",
+    "typescript": "^7.0.2",
     "vite": "^8.0.16"
   },
   "peerDependencies": {
