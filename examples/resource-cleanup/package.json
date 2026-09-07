@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.19.20",
-    "typescript": "^6.0.3",
+    "typescript": "^7.0.2",
     "vavite": "7.0.1",
     "vite": "^8.0.16"
   }
