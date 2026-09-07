@@ -36,7 +36,7 @@
     "test:package": "publint"
   },
   "dependencies": {
-    "http-proxy-3": "^1.23.3"
+    "http-proxy-3": "^2.0.1"
   },
   "devDependencies": {
     "@cyco130/eslint-config": "^9.0.2",
