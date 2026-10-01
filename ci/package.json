@@ -9,7 +9,7 @@
     "@types/node": "^22.19.20",
     "kill-em-all": "^0.1.0",
     "puppeteer": "^25.1.0",
-    "typescript": "^6.0.3",
+    "typescript": "^7.0.2",
     "vitest": "^4.1.8"
   }
 }
