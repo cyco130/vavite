@@ -7,5 +7,5 @@ Make sure to run the script with `bun run --bun` instead of `npm`, e.g. `bun run
 Clone with:
 
 ```bash
-npx degit cyco130/vavite/examples/express
+npx degit cyco130/vavite/examples/bun-server
 ```
