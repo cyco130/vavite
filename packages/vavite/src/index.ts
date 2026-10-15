@@ -188,7 +188,7 @@ export function vavite(options: VaviteOptions = {}): Plugin[] {
 					const normalizedInput = addInput(
 						config.environments[environmentName].build[optionsKey].input,
 						entries,
-						this.warn,
+						this.warn.bind(this),
 					);
 
 					config.environments[environmentName].build[optionsKey].input =
