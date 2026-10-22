@@ -152,8 +152,8 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       '@types/koa__router':
-        specifier: ^12.0.5
-        version: 12.0.5
+        specifier: ^15.0.0
+        version: 15.0.0(koa@3.2.1)
       '@types/node':
         specifier: ^22.19.20
         version: 22.19.20
@@ -970,8 +970,9 @@ packages:
   '@types/koa@3.0.3':
     resolution: {integrity: sha512-TdtNEJ7sYSrFQcVuS2ySsVqnq5EyE3oJbnfFJvkC9UtGP4Kpem5KE7r+ivHIbIAQAofSqnlB5D3vkfYO69TQpg==}
 
-  '@types/koa__router@12.0.5':
-    resolution: {integrity: sha512-1HeLxuDn4n5it1yZYCSyOYXo++73zT0ffoviXnPxbwbxLbvDFEvWD9ZzpRiIpK4oKR0pi+K+Mk/ZjyROjW3HSw==}
+  '@types/koa__router@15.0.0':
+    resolution: {integrity: sha512-B7HZ7M32qSQg1Z7VD2G4w1gZvAsd/kuifW0WYbidFqrYzw9RasY/BO64EQYnaZl3KNU9PK2DyeVuSZHY6gqKVQ==}
+    deprecated: This is a stub types definition. @koa/router provides its own type definitions, so you do not need this installed.
 
   '@types/node@22.19.19':
     resolution: {integrity: sha512-dyh/xO2Fh5bYrfWaaqGrRQQGkNdmYw6AmaAUvYeUMNTWQtvb796ikLdmTchRmOlOiIJ1TDXfWgVx1QkUlQ6Hew==}
@@ -3427,7 +3428,7 @@ snapshots:
   '@fastify/ajv-compiler@4.0.5':
     dependencies:
       ajv: 8.20.0
-      ajv-formats: 3.0.1(ajv@8.20.0)
+      ajv-formats: 3.0.1
       fast-uri: 3.1.2
 
   '@fastify/error@4.2.0': {}
@@ -3924,9 +3925,12 @@ snapshots:
       '@types/koa-compose': 3.2.9
       '@types/node': 22.19.19
 
-  '@types/koa__router@12.0.5':
+  '@types/koa__router@15.0.0(koa@3.2.1)':
     dependencies:
-      '@types/koa': 3.0.2
+      '@koa/router': 15.6.0(koa@3.2.1)
+    transitivePeerDependencies:
+      - koa
+      - supports-color
 
   '@types/node@22.19.19':
     dependencies:
@@ -4177,8 +4181,8 @@ snapshots:
 
   acorn@8.16.0: {}
 
-  ajv-formats@3.0.1(ajv@8.20.0):
-    optionalDependencies:
+  ajv-formats@3.0.1:
+    dependencies:
       ajv: 8.20.0
 
   ajv@6.14.0:
@@ -4831,7 +4835,7 @@ snapshots:
     dependencies:
       '@fastify/merge-json-schemas': 0.2.1
       ajv: 8.20.0
-      ajv-formats: 3.0.1(ajv@8.20.0)
+      ajv-formats: 3.0.1
       fast-uri: 3.1.2
       json-schema-ref-resolver: 3.0.0
       rfdc: 1.4.1
