@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@types/koa": "^3.0.3",
-    "@types/koa__router": "^12.0.5",
+    "@types/koa__router": "^15.0.0",
     "@types/node": "^22.19.20",
     "typescript": "^6.0.3",
     "vavite": "7.0.1",
